@@ -33,7 +33,7 @@ public class Array {
 
         for (int i = 0; i < length; i++) {
 
-            String.valueOf(nums[i]).length()
+            String.valueOf(nums[i]).length();
         }
         return count;
     }
