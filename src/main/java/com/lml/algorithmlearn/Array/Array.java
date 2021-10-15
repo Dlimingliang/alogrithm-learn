@@ -17,14 +17,25 @@ public class Array {
         for (int i = 0; i < length; i++) {
 
             if (nums[i] == 1) {
-                currentConsecutive += 1;
+                currentConsecutive++;
             } else {
-                maxConsecutive = (currentConsecutive >= maxConsecutive) ? currentConsecutive : maxConsecutive;
+                maxConsecutive = Math.max(maxConsecutive, currentConsecutive);
                 currentConsecutive = 0;
             }
         }
-        maxConsecutive = (currentConsecutive >= maxConsecutive) ? currentConsecutive : maxConsecutive;
+        maxConsecutive = Math.max(maxConsecutive, currentConsecutive);
         return maxConsecutive;
+    }
+
+    public static int findEvenNumberCount(int[] nums) {
+
+        int count = 0, length = nums.length;
+
+        for (int i = 0; i < length; i++) {
+
+            String.valueOf(nums[i]).length()
+        }
+        return count;
     }
 
     public static void main(String[] args) {
