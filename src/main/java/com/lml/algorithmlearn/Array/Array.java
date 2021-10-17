@@ -31,10 +31,10 @@ public class Array {
 
         //时间复杂度 O(n)
         //空间复杂度 O(1)
-        int count = 0, length = nums.length;
-        for (int i = 0; i < length; i++) {
+        int count = 0;
+        for (int i : nums) {
 
-            if (String.valueOf(nums[i]).length() % 2 == 0) {
+            if (String.valueOf(i).length() % 2 == 0) {
                 count ++;
             }
         }
