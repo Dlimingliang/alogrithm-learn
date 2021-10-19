@@ -40,9 +40,27 @@ public class DeleteArray {
         return left;
     }
 
+    public static int removeDuplicates(int[] nums) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        int index = 1, length = nums.length;
+        for (int i = 1; i < length; i++) {
+
+            if (nums[i] != nums[i - 1]) {
+                nums[index] = nums[i];
+                index++;
+            }
+        }
+        return index;
+    }
+
+
     public static void main(String[] args) {
 
-        int[] array = new int[]{0,1,2,2,3,0,4,2};
-        removeElementBetter(array, 2);
+//        int[] array = new int[]{0,1,2,2,3,0,4,2};
+//        removeElementBetter(array, 2);
+        int[] duplicateArray = new int[]{1,1,2};
+        removeDuplicates(duplicateArray);
     }
 }
