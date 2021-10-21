@@ -94,12 +94,12 @@ public class InPlaceArray {
         //时间复杂度 虽然有俩层循环，但是外层循环固定。 所以为O(n)
         //空间复杂度 因为是固定空间、所以为O(1)
         int[] arr = new int[101];
-        int length = heights.length, result = 0;
-        for (int i = 1; i < heights.length; i++) {
-            arr[heights[i]]++;
+        int result = 0, arrLength = arr.length;
+        for (int height : heights) {
+            arr[height]++;
         }
 
-        for (int i = 1, j = 0; i < length; i++) {
+        for (int i = 1, j = 0; i < arrLength; i++) {
             while (arr[i]-- > 0) {
                 if (heights[j++] != i) {
                     result++;
