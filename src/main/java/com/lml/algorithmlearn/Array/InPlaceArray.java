@@ -109,6 +109,26 @@ public class InPlaceArray {
         return result;
     }
 
+    public static int thirdMax(int[] nums) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        long firstMax = Long.MIN_VALUE, second = Long.MIN_VALUE, third = Long.MIN_VALUE, length = nums.length;
+        for (int i = 0; i < length; i++) {
+            if (nums[i] > firstMax) {
+                third = second;
+                second = firstMax;
+                firstMax = nums[i];
+            } else if (nums[i] < firstMax && nums[i] > second) {
+                third = second;
+                second = nums[i];
+            } else if (nums[i] < second && nums[i] > third){
+                third = nums[i];
+            }
+        }
+        return third == Long.MIN_VALUE ? (int)firstMax : (int)third;
+    }
+
 
     public static void main(String[] args) {
 
@@ -118,7 +138,9 @@ public class InPlaceArray {
 //        moveZeroesBetter(moveArray);
 //        int[] sortArray = new int[]{0};
 //        sortArrayByParity(sortArray);
-        int[] heightCheckerArray = new int[]{1,1,4,2,1,3};
-        System.out.println(heightChecker(heightCheckerArray));;
+//        int[] heightCheckerArray = new int[]{1,1,4,2,1,3};
+//        System.out.println(heightChecker(heightCheckerArray));;
+        int[] thirdMaxArray = new int[]{5, 2, 2};
+        System.out.println(thirdMax(thirdMaxArray));
     }
 }
