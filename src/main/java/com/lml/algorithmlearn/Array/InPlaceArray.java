@@ -1,5 +1,7 @@
 package com.lml.algorithmlearn.Array;
 
+import java.util.Arrays;
+
 /**
  * @Auther: limingliang
  * @Description:
@@ -87,6 +89,28 @@ public class InPlaceArray {
         return nums;
     }
 
+    public static int heightChecker(int[] heights) {
+
+        //时间复杂度 虽然有俩层循环，但是外层循环固定。 所以为O(n)
+        //空间复杂度 因为是固定空间、所以为O(1)
+        int[] arr = new int[101];
+        int length = heights.length, result = 0;
+        for (int i = 1; i < heights.length; i++) {
+            arr[heights[i]]++;
+        }
+
+        for (int i = 1, j = 0; i < length; i++) {
+            while (arr[i]-- > 0) {
+                if (heights[j++] != i) {
+                    result++;
+                }
+            }
+        }
+        //计算正确的数组
+
+        return result;
+    }
+
 
     public static void main(String[] args) {
 
@@ -94,7 +118,9 @@ public class InPlaceArray {
 //        replaceElements(array);
 //        int[] moveArray = new int[]{0,1,0,3,12};
 //        moveZeroesBetter(moveArray);
-        int[] sortArray = new int[]{0};
-        sortArrayByParity(sortArray);
+//        int[] sortArray = new int[]{0};
+//        sortArrayByParity(sortArray);
+        int[] heightCheckerArray = new int[]{1,1,4,2,1,3};
+        System.out.println(heightChecker(heightCheckerArray));;
     }
 }
