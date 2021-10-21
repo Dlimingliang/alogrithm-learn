@@ -106,8 +106,6 @@ public class InPlaceArray {
                 }
             }
         }
-        //计算正确的数组
-
         return result;
     }
 
