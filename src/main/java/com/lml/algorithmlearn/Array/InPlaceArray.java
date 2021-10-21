@@ -1,6 +1,8 @@
 package com.lml.algorithmlearn.Array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Auther: limingliang
@@ -127,6 +129,24 @@ public class InPlaceArray {
             }
         }
         return third == Long.MIN_VALUE ? (int)firstMax : (int)third;
+    }
+
+    public static List<Integer> findDisappearedNumbers(int[] nums) {
+
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+
+            int x = (nums[i] - 1) % length;
+            nums[x] += length;
+        }
+
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            if (nums[i] <= length) {
+                result.add(i + 1);
+            }
+        }
+        return result;
     }
 
 
