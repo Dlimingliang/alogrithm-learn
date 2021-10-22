@@ -1,5 +1,7 @@
 package com.lml.algorithmlearn.linkedList;
 
+import java.util.HashMap;
+
 /**
  * @Auther: limingliang
  * @Description:
@@ -101,18 +103,15 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
 
-        SinglyLinkedList myList = new SinglyLinkedList();
-        myList.addAtHead(5);
-        myList.addAtIndex(1, 2);
-        System.out.println(myList.get(1));
-        myList.addAtHead(6);
-        myList.addAtTail(2);
-        System.out.println(myList.get(3));
-        myList.addAtTail(1);
-        System.out.println(myList.get(5));
-        myList.addAtHead(2);
-        System.out.println(myList.get(2));
-        myList.addAtHead(6);
+        SinglyLinkedNode node1 = new SinglyLinkedNode(3);
+        SinglyLinkedNode node2 = new SinglyLinkedNode(2);
+        SinglyLinkedNode node3 = new SinglyLinkedNode(0);
+        SinglyLinkedNode node4 = new SinglyLinkedNode(-4);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+        node4.setNext(node2);
+        System.out.println(SinglyLinkedNode.detectCycle(node1));;
     }
 }
 
@@ -139,5 +138,53 @@ class SinglyLinkedNode {
 
     public void setNext(SinglyLinkedNode next) {
         this.next = next;
+    }
+
+    public static boolean hasCycle(SinglyLinkedNode head) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        SinglyLinkedNode fast = head;
+        SinglyLinkedNode slow = head;
+        while (fast != null && fast.getNext() != null) {
+            fast = fast.getNext().getNext();
+            slow = slow.getNext();
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static SinglyLinkedNode detectCycle(SinglyLinkedNode head) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        //首先计算相遇点
+        SinglyLinkedNode meetNode = null;
+        SinglyLinkedNode fast = head;
+        SinglyLinkedNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                meetNode = fast;
+                break;
+            }
+        }
+        if (meetNode == null) {
+            return meetNode;
+        }
+        //重置慢节点然后计算入环点
+        slow = head;
+        while(true) {
+            if (slow == meetNode) {
+                break;
+            } else {
+                slow = slow.next;
+                meetNode = meetNode.next;
+            }
+        }
+        return meetNode;
     }
 }
