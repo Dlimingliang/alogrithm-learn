@@ -103,15 +103,17 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
 
-        SinglyLinkedNode node1 = new SinglyLinkedNode(3);
+        SinglyLinkedNode node1 = new SinglyLinkedNode(1);
         SinglyLinkedNode node2 = new SinglyLinkedNode(2);
-        SinglyLinkedNode node3 = new SinglyLinkedNode(0);
-        SinglyLinkedNode node4 = new SinglyLinkedNode(-4);
+        SinglyLinkedNode node3 = new SinglyLinkedNode(3);
+        SinglyLinkedNode node4 = new SinglyLinkedNode(4);
+        SinglyLinkedNode node5 = new SinglyLinkedNode(5);
         node1.setNext(node2);
         node2.setNext(node3);
         node3.setNext(node4);
-        node4.setNext(node2);
-        System.out.println(SinglyLinkedNode.detectCycle(node1));;
+        node4.setNext(node5);
+        node1.removeNthFromEnd(node1, 2);
+        System.out.println(node1);
     }
 }
 
@@ -186,5 +188,59 @@ class SinglyLinkedNode {
             }
         }
         return meetNode;
+    }
+
+    public static SinglyLinkedNode getIntersectionNode(SinglyLinkedNode headA, SinglyLinkedNode headB) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if(headA==null||headB==null) return null;
+        SinglyLinkedNode pA = headA, pB =headB;
+        while (pA!=pB){
+            if (pA==null){
+                pA=headB;
+            }
+            else{
+                pA=pA.next;
+            }
+            if (pB==null){
+                pB=headA;
+            }
+            else{
+                pB=pB.next;
+            }
+        }
+        return pA;
+    }
+
+    public SinglyLinkedNode removeNthFromEnd(SinglyLinkedNode head, int n) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if(head == null || head.next == null || n < 0){
+            return null;
+        }
+        if(n == 0){
+            return head;
+        }
+
+        SinglyLinkedNode fast = head, slow = head;
+        while (n-- > 0) {
+            fast = fast.next;
+        }
+
+        //尾节点
+        if(fast == null){
+            slow = slow.next;
+            return slow;
+
+        }
+
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return head;
     }
 }
