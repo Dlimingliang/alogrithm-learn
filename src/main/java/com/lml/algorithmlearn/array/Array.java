@@ -1,4 +1,4 @@
-package com.lml.algorithmlearn.Array;
+package com.lml.algorithmlearn.array;
 
 import java.util.Arrays;
 

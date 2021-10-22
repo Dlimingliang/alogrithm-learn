@@ -1,7 +1,6 @@
-package com.lml.algorithmlearn.Array;
+package com.lml.algorithmlearn.array;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
