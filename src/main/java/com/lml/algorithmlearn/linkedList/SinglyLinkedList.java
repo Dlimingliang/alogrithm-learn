@@ -1,7 +1,5 @@
 package com.lml.algorithmlearn.linkedList;
 
-import java.util.HashMap;
-
 /**
  * @Auther: limingliang
  * @Description:
@@ -112,8 +110,8 @@ public class SinglyLinkedList {
         node2.setNext(node3);
         node3.setNext(node4);
         node4.setNext(node5);
-        SinglyLinkedNode reverseList = SinglyLinkedNode.reverseList(node1);
-        System.out.println(reverseList);
+        node1.removeElements(node1, 3);
+         System.out.println(node1);
     }
 }
 
@@ -121,6 +119,11 @@ class SinglyLinkedNode {
 
     public SinglyLinkedNode(int value) {
         this.value = value;
+    }
+
+    public SinglyLinkedNode(int value, SinglyLinkedNode next) {
+        this.value = value;
+        this.next = next;
     }
 
     private int value;
@@ -142,7 +145,7 @@ class SinglyLinkedNode {
         this.next = next;
     }
 
-    public static boolean hasCycle(SinglyLinkedNode head) {
+    public boolean hasCycle(SinglyLinkedNode head) {
 
         //时间复杂度O(n)
         //空间复杂度O(1)
@@ -158,7 +161,7 @@ class SinglyLinkedNode {
         return false;
     }
 
-    public static SinglyLinkedNode detectCycle(SinglyLinkedNode head) {
+    public SinglyLinkedNode detectCycle(SinglyLinkedNode head) {
 
         //时间复杂度O(n)
         //空间复杂度O(1)
@@ -190,7 +193,7 @@ class SinglyLinkedNode {
         return meetNode;
     }
 
-    public static SinglyLinkedNode getIntersectionNode(SinglyLinkedNode headA, SinglyLinkedNode headB) {
+    public SinglyLinkedNode getIntersectionNode(SinglyLinkedNode headA, SinglyLinkedNode headB) {
 
         //时间复杂度O(n)
         //空间复杂度O(1)
@@ -244,11 +247,11 @@ class SinglyLinkedNode {
         return head;
     }
 
-    public static SinglyLinkedNode reverseList(SinglyLinkedNode head) {
+    public SinglyLinkedNode reverseList(SinglyLinkedNode head) {
 
         //循环链表将其反转
-        //时间复杂度 O(n)
-        //空间复杂度 O(1)
+        //时间复杂度O(n)
+        //空间复杂度O(1)
         if (head == null || head.next == null) {
             return head;
         }
@@ -262,5 +265,26 @@ class SinglyLinkedNode {
             result = currentNode;
         }
         return result;
+    }
+
+    public SinglyLinkedNode removeElements(SinglyLinkedNode head, int val) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if (head == null) {
+            return head;
+        }
+
+        SinglyLinkedNode result = new SinglyLinkedNode(-1, head);
+        SinglyLinkedNode temp = result;
+        while (temp.next != null) {
+
+            if (temp.next.value == val) {
+                temp.next = temp.next.next;
+            } else {
+                temp = temp.next;
+            }
+        }
+        return result.next;
     }
 }
