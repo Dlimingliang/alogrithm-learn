@@ -267,6 +267,18 @@ class SinglyLinkedNode {
         return result;
     }
 
+    public SinglyLinkedNode reverseListOfficial(SinglyLinkedNode head) {
+        SinglyLinkedNode prev = null;
+        SinglyLinkedNode curr = head;
+        while (curr != null) {
+            SinglyLinkedNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
     public SinglyLinkedNode removeElements(SinglyLinkedNode head, int val) {
 
         //时间复杂度O(n)
@@ -307,5 +319,68 @@ class SinglyLinkedNode {
         }
         odd.next = evenHead;
         return head;
+    }
+
+    public boolean isPalindrome(SinglyLinkedNode head) {
+
+        SinglyLinkedNode firstHalf = endOfFirstHalf(head);
+        SinglyLinkedNode secondHalf = reverseListOfficial(firstHalf.next);
+
+        SinglyLinkedNode p1 = head;
+        SinglyLinkedNode p2 = secondHalf;
+        boolean result = true;
+        while (result && p2 != null) {
+            if (p1.value != p2.value) {
+                result = false;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        firstHalf.next = reverseListOfficial(secondHalf);
+        return result;
+    }
+
+    public boolean isPalindromeBetter(SinglyLinkedNode head) {
+
+        SinglyLinkedNode fast = head, slow = head;
+        SinglyLinkedNode reverseNode = null, temp = null;
+
+        while (fast != null && fast.next != null) {
+
+            //翻转前半部分
+            temp = slow;
+            //快慢指针移动到中间
+            slow = slow.next;
+            fast = fast.next.next;
+
+            temp.next = reverseNode;
+            reverseNode = temp;
+        }
+
+        if (fast != null) {
+            slow = slow.next;
+        }
+
+        while (reverseNode != null && slow != null) {
+            if (reverseNode.value != slow.value) {
+                return false;
+            }
+            reverseNode = reverseNode.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+
+    private SinglyLinkedNode endOfFirstHalf(SinglyLinkedNode head) {
+
+        SinglyLinkedNode fast = head;
+        SinglyLinkedNode slow = head;
+
+        while (fast.next != null && fast.next.next != null) {
+
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
     }
 }
