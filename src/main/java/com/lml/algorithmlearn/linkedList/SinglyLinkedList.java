@@ -112,8 +112,8 @@ public class SinglyLinkedList {
         node2.setNext(node3);
         node3.setNext(node4);
         node4.setNext(node5);
-        node1.removeNthFromEnd(node1, 2);
-        System.out.println(node1);
+        SinglyLinkedNode reverseList = SinglyLinkedNode.reverseList(node1);
+        System.out.println(reverseList);
     }
 }
 
@@ -242,5 +242,25 @@ class SinglyLinkedNode {
         }
         slow.next = slow.next.next;
         return head;
+    }
+
+    public static SinglyLinkedNode reverseList(SinglyLinkedNode head) {
+
+        //循环链表将其反转
+        //时间复杂度 O(n)
+        //空间复杂度 O(1)
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        SinglyLinkedNode result = null;
+        while (head != null) {
+
+            SinglyLinkedNode currentNode = head;
+            head = currentNode.next;
+            currentNode.next = result;
+            result = currentNode;
+        }
+        return result;
     }
 }
