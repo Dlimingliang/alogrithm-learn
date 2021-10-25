@@ -110,8 +110,8 @@ public class SinglyLinkedList {
         node2.setNext(node3);
         node3.setNext(node4);
         node4.setNext(node5);
-        node1.removeElements(node1, 3);
-         System.out.println(node1);
+        SinglyLinkedNode result = node1.oddEvenList(node1);
+        System.out.println(result);
     }
 }
 
@@ -286,5 +286,26 @@ class SinglyLinkedNode {
             }
         }
         return result.next;
+    }
+
+    public SinglyLinkedNode oddEvenList(SinglyLinkedNode head) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if (head == null) {
+            return head;
+        }
+
+        SinglyLinkedNode evenHead = head.next;
+        SinglyLinkedNode odd = head, even = evenHead;
+        while (even != null && even.next != null) {
+
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
     }
 }
