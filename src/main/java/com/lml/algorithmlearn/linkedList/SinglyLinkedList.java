@@ -101,15 +101,29 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
 
-        SinglyLinkedNode node1 = new SinglyLinkedNode(-9);
-        SinglyLinkedNode node2 = new SinglyLinkedNode(3);
+        SinglyLinkedNode node1 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node2 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node3 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node4 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node5 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node6 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node7 = new SinglyLinkedNode(9);
         node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+        node4.setNext(node5);
+        node5.setNext(node6);
+        node6.setNext(node7);
 
-        SinglyLinkedNode bNode1 = new SinglyLinkedNode(5);
-        SinglyLinkedNode bNode2 = new SinglyLinkedNode(7);
+        SinglyLinkedNode bNode1 = new SinglyLinkedNode(9);
+        SinglyLinkedNode bNode2 = new SinglyLinkedNode(9);
+        SinglyLinkedNode bNode3 = new SinglyLinkedNode(9);
+        SinglyLinkedNode bNode4 = new SinglyLinkedNode(9);
         bNode1.setNext(bNode2);
+        bNode2.setNext(bNode3);
+        bNode3.setNext(bNode4);
 
-        SinglyLinkedNode singlyLinkedNode = node1.mergeTwoLists(node1, bNode1);
+        SinglyLinkedNode singlyLinkedNode = node1.addTwoNumbers(node1, bNode1);
         System.out.println(singlyLinkedNode);
     }
 }
@@ -412,6 +426,49 @@ class SinglyLinkedNode {
         }
 
         temp.next = l1 == null ? l2 : l1;
+        return result.next;
+    }
+
+    public SinglyLinkedNode addTwoNumbers(SinglyLinkedNode l1, SinglyLinkedNode l2) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if (l1 == null) {
+            return l2;
+        }
+
+        if (l2 == null) {
+            return l1;
+        }
+
+        SinglyLinkedNode result = new SinglyLinkedNode(0);
+        SinglyLinkedNode temp = result;
+        while(l1!= null || l2 != null) {
+
+            int l1Value = l1 == null ? 0 : l1.value;
+            int l2Value = l2 == null ? 0 : l2.value;
+            int num = l1Value + l2Value;
+            if (temp.next != null) {
+                num += temp.next.value;
+            }
+            if (num >= 10) {
+
+                SinglyLinkedNode newNode = new SinglyLinkedNode(num % 10);
+                SinglyLinkedNode nextNode = new SinglyLinkedNode(1);
+                newNode.next = nextNode;
+                temp.next = newNode;
+            } else {
+                SinglyLinkedNode newNode = new SinglyLinkedNode(num);
+                temp.next = newNode;
+            }
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+            temp = temp.next;
+        }
         return result.next;
     }
 }
