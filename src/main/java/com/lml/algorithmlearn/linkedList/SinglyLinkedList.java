@@ -101,17 +101,16 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
 
-        SinglyLinkedNode node1 = new SinglyLinkedNode(1);
-        SinglyLinkedNode node2 = new SinglyLinkedNode(2);
-        SinglyLinkedNode node3 = new SinglyLinkedNode(3);
-        SinglyLinkedNode node4 = new SinglyLinkedNode(4);
-        SinglyLinkedNode node5 = new SinglyLinkedNode(5);
+        SinglyLinkedNode node1 = new SinglyLinkedNode(-9);
+        SinglyLinkedNode node2 = new SinglyLinkedNode(3);
         node1.setNext(node2);
-        node2.setNext(node3);
-        node3.setNext(node4);
-        node4.setNext(node5);
-        SinglyLinkedNode result = node1.oddEvenList(node1);
-        System.out.println(result);
+
+        SinglyLinkedNode bNode1 = new SinglyLinkedNode(5);
+        SinglyLinkedNode bNode2 = new SinglyLinkedNode(7);
+        bNode1.setNext(bNode2);
+
+        SinglyLinkedNode singlyLinkedNode = node1.mergeTwoLists(node1, bNode1);
+        System.out.println(singlyLinkedNode);
     }
 }
 
@@ -382,5 +381,37 @@ class SinglyLinkedNode {
             slow = slow.next;
         }
         return slow;
+    }
+
+    public SinglyLinkedNode mergeTwoLists(SinglyLinkedNode l1, SinglyLinkedNode l2) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if (l1 == null) {
+            return l2;
+        }
+
+        if (l2 == null) {
+            return l1;
+        }
+
+        SinglyLinkedNode result = new SinglyLinkedNode(0);
+        SinglyLinkedNode temp = result;
+        while (l1 != null && l2 != null) {
+
+            if (l1.value <= l2.value) {
+
+                temp.next = l1;
+                l1 = l1.next;
+            } else {
+
+                temp.next = l2;
+                l2 = l2.next;
+            }
+            temp = temp.next;
+        }
+
+        temp.next = l1 == null ? l2 : l1;
+        return result.next;
     }
 }
