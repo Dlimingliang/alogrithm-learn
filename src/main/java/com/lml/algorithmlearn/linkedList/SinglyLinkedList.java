@@ -101,29 +101,17 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
 
-        SinglyLinkedNode node1 = new SinglyLinkedNode(9);
-        SinglyLinkedNode node2 = new SinglyLinkedNode(9);
-        SinglyLinkedNode node3 = new SinglyLinkedNode(9);
-        SinglyLinkedNode node4 = new SinglyLinkedNode(9);
-        SinglyLinkedNode node5 = new SinglyLinkedNode(9);
-        SinglyLinkedNode node6 = new SinglyLinkedNode(9);
-        SinglyLinkedNode node7 = new SinglyLinkedNode(9);
+        SinglyLinkedNode node1 = new SinglyLinkedNode(1);
+        SinglyLinkedNode node2 = new SinglyLinkedNode(2);
+        SinglyLinkedNode node3 = new SinglyLinkedNode(3);
+        SinglyLinkedNode node4 = new SinglyLinkedNode(4);
+        SinglyLinkedNode node5 = new SinglyLinkedNode(5);
         node1.setNext(node2);
         node2.setNext(node3);
         node3.setNext(node4);
         node4.setNext(node5);
-        node5.setNext(node6);
-        node6.setNext(node7);
 
-        SinglyLinkedNode bNode1 = new SinglyLinkedNode(9);
-        SinglyLinkedNode bNode2 = new SinglyLinkedNode(9);
-        SinglyLinkedNode bNode3 = new SinglyLinkedNode(9);
-        SinglyLinkedNode bNode4 = new SinglyLinkedNode(9);
-        bNode1.setNext(bNode2);
-        bNode2.setNext(bNode3);
-        bNode3.setNext(bNode4);
-
-        SinglyLinkedNode singlyLinkedNode = node1.addTwoNumbers(node1, bNode1);
+        SinglyLinkedNode singlyLinkedNode = node1.rotateRight(node1, 1);
         System.out.println(singlyLinkedNode);
     }
 }
@@ -470,5 +458,46 @@ class SinglyLinkedNode {
             temp = temp.next;
         }
         return result.next;
+    }
+
+    public SinglyLinkedNode rotateRight(SinglyLinkedNode  head, int k) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        //首先计算个数，并且将首尾连接。
+        int size = 0;
+        SinglyLinkedNode temp = head;
+        while(temp != null) {
+            size++;
+            if (temp.next == null && k % size == 0) {
+                return head;
+            }
+            if (temp.next == null && k % size != 0) {
+                temp.next = head;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        //移动size - k. 然后解开环.
+        int moveNum = size - k % size;
+        SinglyLinkedNode result = null;
+        SinglyLinkedNode pre;
+        temp = head;
+        while (moveNum > 0) {
+            pre = temp;
+            temp = temp.next;
+            moveNum--;
+            if(moveNum == 0) {
+                result = temp;
+                pre.next = null;
+                break;
+            }
+        }
+        return result;
     }
 }
