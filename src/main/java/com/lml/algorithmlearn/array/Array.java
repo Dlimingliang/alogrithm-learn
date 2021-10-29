@@ -117,13 +117,46 @@ public class Array {
         return ans;
     }
 
+    public static int maxArea(int[] height) {
+
+        //时间复杂度O(n2)
+        //空间复杂度O(1)
+        int length = height.length, max = 0;
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
+                int currentValue = (j - i) * (height[i] > height[j] ? height[j] : height[i]);
+                if (currentValue > max) {
+                    max = currentValue;
+                }
+            }
+        }
+        return max;
+    }
+
+    public static int maxAreaBetter(int[] height) {
+
+        int max = 0, left = 0, right = height.length -1;
+        while (left < right) {
+            int area = Math.min(height[left], height[right]) * (right - left);
+            max = Math.max(max, area);
+            if (height[right] > height[left]) {
+                left ++;
+            } else {
+                right --;
+            }
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
 
 //        int[] array = new int[]{1,1,1,0,1};
 //        System.out.println(findMaxConsecutiveOnes(array));
 //        int[] evenNumberArray = new int[] {12,345,2,6,7896};
 //        System.out.println(findEvenNumberCount(evenNumberArray));
-        int [] squareArray = new int[]{-5,-3,-2,-1};
-        squareAndSortArrayByTwoPoint(squareArray);
+//        int [] squareArray = new int[]{-5,-3,-2,-1};
+//        squareAndSortArrayByTwoPoint(squareArray);
+        int [] maxAreaArray = new int[]{1,2,1};
+        System.out.println(maxAreaBetter(maxAreaArray));
     }
 }
