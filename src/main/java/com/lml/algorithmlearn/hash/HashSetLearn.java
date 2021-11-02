@@ -35,34 +35,61 @@ public class HashSetLearn {
 
     public int[] intersection(int[] nums1, int[] nums2) {
 
-        //时间复杂度O(n)
-        //空间复杂度 O(n)
-        HashSet<Integer> hashSet1 = new HashSet<>();
-        for (int x: nums1) {
-            hashSet1.add(x);
-        }
+//        hash表法
+//        //时间复杂度O(n+m)
+//        //空间复杂度 O(n+m)
+//        HashSet<Integer> hashSet1 = new HashSet<>();
+//        for (int x: nums1) {
+//            hashSet1.add(x);
+//        }
+//
+//        HashSet<Integer> hashSet2 = new HashSet<>();
+//        for (int x: nums2) {
+//            hashSet2.add(x);
+//        }
+//
+//        HashSet<Integer> hashSet3 = new HashSet<>();
+//        for(int x : hashSet1) {
+//            if (hashSet2.contains(x)) {
+//                hashSet3.add(x);
+//            }
+//        }
+//
+//        int index = 0;
+//        int[] result = new int[hashSet3.size()];
+//        Iterator<Integer> iterator = hashSet3.iterator();
+//        while (iterator.hasNext()) {
+//            Integer element = iterator.next();
+//            result[index] = element;
+//            index++;
+//        }
+//        return result;
 
-        HashSet<Integer> hashSet2 = new HashSet<>();
-        for (int x: nums2) {
-            hashSet2.add(x);
-        }
+//        双指针+排序
+        //时间复杂度O(nlogn+mlogm)
+        //空间复杂度O(logm + logn)
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int index = 0, i = 0, j = 0, length1 = nums1.length, length2 = nums2.length;
+        int[] result = new int[length1 + length2];
+        while (i < length1 && j < length2) {
 
-        HashSet<Integer> hashSet3 = new HashSet<>();
-        for(int x : hashSet1) {
-            if (hashSet2.contains(x)) {
-                hashSet3.add(x);
+            int num1 = nums1[i], num2 = nums2[j];
+            if (num1 == num2) {
+                if (index == 0 || num1 != result[index - 1]) {
+                    result[index++] = num1;
+                }
+                i++;
+                j++;
+            } else {
+                if (num1 > num2) {
+                    j++;
+                } else {
+                    i++;
+                }
             }
         }
-
-        int index = 0;
-        int[] result = new int[hashSet3.size()];
-        Iterator<Integer> iterator = hashSet3.iterator();
-        while (iterator.hasNext()) {
-            Integer element = iterator.next();
-            result[index] = element;
-            index++;
-        }
-        return result;
+        return Arrays.copyOfRange(result, 0, index);
     }
 
     public static void main(String[] args) {
