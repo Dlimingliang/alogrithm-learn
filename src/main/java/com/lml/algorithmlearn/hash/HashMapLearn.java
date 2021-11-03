@@ -34,9 +34,25 @@ public class HashMapLearn {
         return new int[0];
     }
 
+    public static boolean isIsomorphic(String s, String t) {
 
+        //时间复杂度o(n)
+        //空间复杂度O(n)
+        Map<Character, Character> map = new HashMap();
+        char[] sChar = s.toCharArray();
+        char[] tChar = t.toCharArray();
+
+        for (int i = 0; i < sChar.length; i++) {
+            if((map.containsKey(sChar[i]) && !map.get(sChar[i]).equals(tChar[i])) || (!map.containsKey(sChar[i]) && map.containsValue(tChar[i]))) {
+                return false;
+            }
+            map.put(sChar[i], tChar[i]);
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
 
+        System.out.println(isIsomorphic("paper", "title"));
     }
 }
