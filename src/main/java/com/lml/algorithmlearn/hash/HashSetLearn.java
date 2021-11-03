@@ -92,9 +92,47 @@ public class HashSetLearn {
         return Arrays.copyOfRange(result, 0, index);
     }
 
+    public static boolean isHappy(int n) {
+
+        //时间复杂度O(logn)
+        //空间复杂度O(logn)
+        HashSet hashSet = new HashSet();
+        while (n != 1 && !hashSet.contains(n)) {
+            hashSet.add(n);
+            n = getLastNum(n);
+        }
+        return n == 1;
+    }
+
+    public static boolean isHappyBetter(int n) {
+
+        //时间复杂度O(logn)
+        //空间复杂度O(1)
+        int slow = n;
+        int fast = getLastNum(n);
+        while (fast != 1 && slow != fast) {
+            slow = getLastNum(slow);
+            fast = getLastNum(getLastNum(fast));
+        }
+        return fast == 1;
+    }
+
+    private static int getLastNum(int n) {
+
+        int totalNum = 0;
+        while (n > 0) {
+            int d = n % 10;
+            n = n / 10;
+            totalNum += d * d;
+        }
+        return totalNum;
+    }
+
     public static void main(String[] args) {
 
-        int[] nums = new int[]{4,1,2,1,2};
-        System.out.println(HashSetLearn.singleNumber(nums));
+//        int[] nums = new int[]{4,1,2,1,2};
+//        System.out.println(HashSetLearn.singleNumber(nums));
+
+        System.out.println(isHappy(2));
     }
 }
