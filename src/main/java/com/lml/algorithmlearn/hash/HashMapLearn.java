@@ -81,13 +81,53 @@ public class HashMapLearn {
         return stringArrayList.toArray(new String[stringArrayList.size()]);
     }
 
+    public static int firstUniqChar(String s) {
 
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        char[] chars = s.toCharArray();
+        HashMap<Character, Integer> map = new HashMap();
+
+        for (int i = 0; i < chars.length; i++) {
+            if (map.containsKey(chars[i])) {
+                map.put(chars[i], -1);
+            } else {
+                map.put(chars[i], i);
+            }
+        }
+
+        int minIndex = -1;
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            if (entry.getValue() != -1 && (entry.getValue() < minIndex || minIndex == -1)) {
+                minIndex = entry.getValue();
+            }
+        }
+        return minIndex;
+
+        //计数法
+        //时间复杂度O(n)
+        //空间复杂度O(m 字符的长度)
+//        HashMap<Character, Integer> map = new HashMap();
+//        for (int i = 0; i < s.length(); i++) {
+//            char ch = s.charAt(i);
+//            map.put(ch, map.getOrDefault(ch, 0) + 1);
+//        }
+//
+//        for (int i = 0; i < s.length(); i++) {
+//            if (map.get(s.charAt(i)) == 1) {
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+    }
 
     public static void main(String[] args) {
 
 //        System.out.println(isIsomorphic("paper", "title"));
-        String[] list1 = new String[]{"Shogun", "Tapioca Express", "Burger King", "KFC"};
-        String[] list2 = new String[]{"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-        System.out.println(findRestaurant(list1, list2));
+//        String[] list1 = new String[]{"Shogun", "Tapioca Express", "Burger King", "KFC"};
+//        String[] list2 = new String[]{"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
+//        System.out.println(findRestaurant(list1, list2));
+        System.out.println(firstUniqChar("aadadaad"));
     }
 }
