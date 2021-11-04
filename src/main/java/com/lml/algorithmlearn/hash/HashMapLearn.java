@@ -5,8 +5,10 @@ import com.lml.algorithmlearn.array.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class HashMapLearn {
 
@@ -168,9 +170,31 @@ public class HashMapLearn {
 //        return Arrays.copyOfRange(intersection, 0, index);
     }
 
-//    public boolean containsNearbyDuplicate(int[] nums, int k) {
-//
-//    }
+    public static boolean containsNearbyDuplicate(int[] nums, int k) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        HashMap<Integer, Integer> map = new HashMap();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i]) && Math.abs(i - map.get(nums[i])) <= k) {
+                    return true;
+            }
+            map.put(nums[i], i);
+        }
+        return false;
+
+        //时间复杂度O(n)
+        //空间复杂度O(min(n,k))
+//        Set<Integer> set = new HashSet<>();
+//        for (int i = 0; i < nums.length; ++i) {
+//            if (set.contains(nums[i])) return true;
+//            set.add(nums[i]);
+//            if (set.size() > k) {
+//                set.remove(nums[i - k]);
+//            }
+//        }
+//        return false;
+    }
 
     public static void main(String[] args) {
 
@@ -179,8 +203,10 @@ public class HashMapLearn {
 //        String[] list2 = new String[]{"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
 //        System.out.println(findRestaurant(list1, list2));
 //        System.out.println(firstUniqChar("aadadaad"));
-        int[] array = new int[]{1,2,2,1};
-        int[] array2 = new int[]{1,1};
-        System.out.println(intersect(array, array2));
+//        int[] array = new int[]{1,2,2,1};
+//        int[] array2 = new int[]{1,1};
+//        System.out.println(intersect(array, array2));
+
+        System.out.println(containsNearbyDuplicate(new int[]{1,2,3,1,2,3}, 2));
     }
 }
