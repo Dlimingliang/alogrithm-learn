@@ -4,8 +4,10 @@ import com.lml.algorithmlearn.array.Array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -194,6 +196,25 @@ public class HashMapLearn {
 //            }
 //        }
 //        return false;
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+
+        //时间复杂度O(O(nklogk)) n是字符串数量 k是字符串长度 由于需要排序。所以排序的时间复杂度为O(klogk)
+        //空间复杂度O(nk)
+        int length = strs.length;
+        HashMap<String, List<String>> hashMap = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+
+            char[] stringArray = strs[i].toCharArray();
+            Arrays.sort(stringArray);
+            String key = new String(stringArray);
+            List<String> stringList = hashMap.getOrDefault(key, new LinkedList());
+            stringList.add(strs[i]);
+            hashMap.put(key, stringList);
+        }
+
+        return new ArrayList<>(hashMap.values());
     }
 
     public static void main(String[] args) {
