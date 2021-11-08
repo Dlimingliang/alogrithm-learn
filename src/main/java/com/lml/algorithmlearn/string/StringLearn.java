@@ -1,5 +1,9 @@
 package com.lml.algorithmlearn.string;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class StringLearn {
 
     public static String longestCommonPrefix(String[] strs) {
@@ -86,9 +90,22 @@ public class StringLearn {
         return true;
     }
 
+    public static String reverseWords(String s) {
+
+        //m为空格间隔的字符串个数, n为字符串长度
+        //时间复杂度o(n)
+        //空间复杂度O(n)
+        s = s.trim();
+        List<String> wordList = Arrays.asList(s.split(" "));
+        Collections.reverse(wordList);
+        return String.join(" ", wordList);
+    }
+
     public static void main(String[] args) {
 
-        String[] stringArray = new String[]{"flower","fkow"};
-        System.out.println(longestCommonPrefix(stringArray));
+//        String[] stringArray = new String[]{"flower","fkow"};
+//        System.out.println(longestCommonPrefix(stringArray));
+        String s = "  Bob    Loves  Alice   ";
+        System.out.println(reverseWords(s));
     }
 }
