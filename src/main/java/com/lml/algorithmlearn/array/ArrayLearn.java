@@ -78,6 +78,21 @@ public class ArrayLearn {
         return result;
     }
 
+    public void reverseString(char[] s) {
+
+        //n为数组长度
+        //时间复杂度O(logn)
+        //空间复杂度O(1)
+        int left = 0, right = s.length - 1;
+        while (left < right) {
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
     public static void main(String[] args) {
 
 //        int[] array = new int[]{2, 1, -1};
