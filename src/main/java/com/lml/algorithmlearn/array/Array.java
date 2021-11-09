@@ -1,6 +1,8 @@
 package com.lml.algorithmlearn.array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Auther: limingliang
@@ -170,6 +172,30 @@ public class Array {
 
     }
 
+    public static List<List<Integer>> generate(int numRows) {
+
+        //时间复杂度O(n^2)
+        //空间复杂度O(1)
+        List<List<Integer>> result = new ArrayList();
+        for (int i = 1; i <= numRows; i++) {
+            List<Integer> current = new ArrayList(i);
+            for (int j = 0; j < i; j++) {
+                if (j == 0) {
+                    current.add(1);
+                    continue;
+                }
+                if (j == i - 1) {
+                    current.add(1);
+                    continue;
+                }
+                List<Integer> pre = result.get(i - 2);
+                current.add(j, pre.get(j) + pre.get(j - 1));
+            }
+            result.add(current);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
 //        int[] array = new int[]{1,1,1,0,1};
@@ -180,7 +206,8 @@ public class Array {
 //        squareAndSortArrayByTwoPoint(squareArray);
 //        int [] maxAreaArray = new int[]{1,2,1};
 //        System.out.println(maxAreaBetter(maxAreaArray));
-        int[] array = new int[]{12,28,83,4,25,26,25,2,25,25,25,12};
-        System.out.println(minSubArrayLen(213, array));
+//        int[] array = new int[]{12,28,83,4,25,26,25,2,25,25,25,12};
+//        System.out.println(minSubArrayLen(213, array));
+        System.out.println(generate(6));
     }
 }

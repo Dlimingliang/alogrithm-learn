@@ -101,11 +101,34 @@ public class StringLearn {
         return String.join(" ", wordList);
     }
 
+    public static String reverseWords2(String s) {
+
+        //m为字符串个数，n为字符串疮长度
+        //时间复杂度O(mn)
+        //空间复杂度O(m)
+        String[] strings = s.split(" ");
+        String[] result = new String[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            char[] chars = strings[i].toCharArray();
+            int right = chars.length -1, left = 0;
+            while (left < right) {
+                char temp = chars[left];
+                chars[left] = chars[right];
+                chars[right] = temp;
+                left++;
+                right--;
+            }
+            result[i] = Arrays.toString(chars);
+        }
+        return String.join("", result);
+    }
+
     public static void main(String[] args) {
 
 //        String[] stringArray = new String[]{"flower","fkow"};
 //        System.out.println(longestCommonPrefix(stringArray));
-        String s = "  Bob    Loves  Alice   ";
-        System.out.println(reverseWords(s));
+//        String s = "  Bob    Loves  Alice   ";
+//        System.out.println(reverseWords(s));
+        System.out.println(reverseWords2("Let's take LeetCode contest"));
     }
 }
