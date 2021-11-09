@@ -124,13 +124,40 @@ public class ArrayLearn {
         return new int[0];
     }
 
+    public static int findMin(int[] nums) {
+
+//        //时间复杂度O(n)
+//        //空间复杂度O(1)
+//        int length = nums.length, min = Integer.MAX_VALUE;
+//        for (int i = 0; i < length; i++) {
+//            min = Math.min(min, nums[i]);
+//        }
+//        return min;
+
+        //时间复杂度O(logn)
+        //空间复杂度O(1)
+        int low = 0;
+        int high = nums.length - 1;
+        while (low < high) {
+            int pivot = low + (high - low) / 2;
+            if (nums[pivot] < nums[high]) {
+                high = pivot;
+            } else {
+                low = pivot + 1;
+            }
+        }
+        return nums[low];
+
+    }
+
     public static void main(String[] args) {
 
 //        int[] array = new int[]{2, 1, -1};
 //        System.out.println(pivotIndex(array));
 //        int[] array = new int[] {1,3,5,6};
 //        System.out.println(searchInsert(array, 0));
-        int[] array = new int[]{-1,0};
-        System.out.println(twoSum(array, -1));
+//        int[] array = new int[]{-1,0};
+//        System.out.println(twoSum(array, -1));
+        System.out.println(findMin(new int[]{11,13,15,17}));
     }
 }
