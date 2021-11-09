@@ -148,6 +148,28 @@ public class Array {
         return max;
     }
 
+    public static int minSubArrayLen(int target, int[] nums) {
+
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+        int ans = Integer.MAX_VALUE;
+        int start = 0, end = 0;
+        int sum = 0;
+        while (end < n) {
+            sum += nums[end];
+            while (sum >= target) {
+                ans = Math.min(ans, end - start + 1);
+                sum -= nums[start];
+                start++;
+            }
+            end++;
+        }
+        return ans == Integer.MAX_VALUE ? 0 : ans;
+
+    }
+
     public static void main(String[] args) {
 
 //        int[] array = new int[]{1,1,1,0,1};
@@ -156,7 +178,9 @@ public class Array {
 //        System.out.println(findEvenNumberCount(evenNumberArray));
 //        int [] squareArray = new int[]{-5,-3,-2,-1};
 //        squareAndSortArrayByTwoPoint(squareArray);
-        int [] maxAreaArray = new int[]{1,2,1};
-        System.out.println(maxAreaBetter(maxAreaArray));
+//        int [] maxAreaArray = new int[]{1,2,1};
+//        System.out.println(maxAreaBetter(maxAreaArray));
+        int[] array = new int[]{12,28,83,4,25,26,25,2,25,25,25,12};
+        System.out.println(minSubArrayLen(213, array));
     }
 }
