@@ -105,11 +105,32 @@ public class ArrayLearn {
         return result;
     }
 
+    public static int[] twoSum(int[] numbers, int target) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        int left = 0, right = numbers.length - 1;
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target) {
+                return new int[]{left + 1, right + 1};
+            }
+            if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return new int[0];
+    }
+
     public static void main(String[] args) {
 
 //        int[] array = new int[]{2, 1, -1};
 //        System.out.println(pivotIndex(array));
-        int[] array = new int[] {1,3,5,6};
-        System.out.println(searchInsert(array, 0));
+//        int[] array = new int[] {1,3,5,6};
+//        System.out.println(searchInsert(array, 0));
+        int[] array = new int[]{-1,0};
+        System.out.println(twoSum(array, -1));
     }
 }
