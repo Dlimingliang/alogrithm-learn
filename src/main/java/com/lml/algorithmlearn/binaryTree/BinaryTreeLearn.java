@@ -56,6 +56,52 @@ public class BinaryTreeLearn {
         return  result;
     }
 
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        //n为树的节点数
+        //时间复杂度O(n) 每个节点访问一次
+        //空间复杂度O(n) 递归的深度
+        //中序排序 先遍历左子树，然后访问根节点，然后遍历右子树
+        List<Integer> result = new LinkedList<>();
+        inorderRecursion(root, result);
+        return  result;
+    }
+
+    private void inorderRecursion(TreeNode node, List<Integer> result) {
+
+        if (node != null) {
+            inorderRecursion(node.left, result);
+            result.add(node.val);
+            inorderRecursion(node.right, result);
+        }
+    }
+
+    public List<Integer> inorderTraversalLoop(TreeNode root) {
+
+        //n为树的节点数
+        //时间复杂度 O(n)
+        //空间复杂度 O(n)
+        //中序排序 先遍历左子树，然后访问根节点，然后遍历右子树
+        List<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return  result;
+        }
+
+        TreeNode node = root;
+        Deque<TreeNode> stack = new LinkedList<>();
+        while (!stack.isEmpty() || node != null) {
+
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            node = stack.pop();
+            result.add(node.val);
+            node = node.right;
+        }
+        return result;
+    }
+
     public class TreeNode {
         int val;
         TreeNode left;
