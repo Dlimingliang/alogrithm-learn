@@ -102,6 +102,58 @@ public class BinaryTreeLearn {
         return result;
     }
 
+    public List<Integer> postorderTraversal(TreeNode root) {
+
+        //n为树的节点数
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        //后序遍历 先遍历左子树，然后遍历右子树，然后访问根元素
+        List<Integer> result = new LinkedList<>();
+        postorderRecursion(root, result);
+        return  result;
+    }
+
+    private void postorderRecursion(TreeNode node,  List<Integer> result) {
+
+        if (node != null) {
+            postorderRecursion(node.left, result);
+            postorderRecursion(node.right, result);
+            result.add(node.val);
+        }
+    }
+
+    public List<Integer> postorderTraversalLoop(TreeNode root) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        List<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return  result;
+        }
+
+        TreeNode node = root;
+        TreeNode pre = null;
+        Deque<TreeNode> stack = new LinkedList<>();
+
+        while (!stack.isEmpty() || node != null) {
+
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            node = stack.pop();
+            if (node.right != null && pre != node.right) {
+                stack.push(node);
+                node = node.right;
+            } else {
+                result.add(node.val);
+                pre = node;
+                node = null;
+            }
+        }
+        return result;
+    }
+
     public class TreeNode {
         int val;
         TreeNode left;
