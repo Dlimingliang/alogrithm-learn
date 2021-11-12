@@ -154,6 +154,46 @@ public class BinaryTreeLearn {
         return result;
     }
 
+    public List<Integer> preorderMorris(TreeNode root) {
+
+        //n为节点数
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        List<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return  result;
+        }
+
+        TreeNode cur = root;
+        TreeNode mostRight = null;
+        while (cur != null) {
+
+            mostRight = cur.left;
+            if (mostRight != null) {
+
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+
+                if (mostRight.right == null) {
+                    result.add(cur.val);
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                } else {
+                    mostRight.right = null;
+                }
+            } else {
+                result.add(cur.val);
+            }
+            cur = cur.right;
+        }
+        return result;
+    }
+
+
+
+
     public class TreeNode {
         int val;
         TreeNode left;
