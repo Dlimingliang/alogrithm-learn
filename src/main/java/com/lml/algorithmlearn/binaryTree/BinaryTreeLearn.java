@@ -1,8 +1,10 @@
 package com.lml.algorithmlearn.binaryTree;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class BinaryTreeLearn {
 
@@ -272,6 +274,38 @@ public class BinaryTreeLearn {
             left++;
             right--;
         }
+    }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+
+        //n为节点数
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+
+            List<Integer> integerList = new ArrayList<>();
+            int size = queue.size();
+            for (int i = 1; i <= size; i++) {
+
+                TreeNode node = queue.poll();
+                integerList.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            result.add(integerList);
+        }
+        return result;
     }
 
     public static void main(String[] args) {
