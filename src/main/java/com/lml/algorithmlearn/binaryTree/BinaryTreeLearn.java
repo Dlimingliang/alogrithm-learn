@@ -224,6 +224,56 @@ public class BinaryTreeLearn {
         return result;
     }
 
+    public List<Integer> postorderMorris(TreeNode root) {
+
+        List<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return result;
+        }
+
+        TreeNode cur = root;
+        TreeNode mostRight = null;
+        while (cur != null) {
+
+            mostRight = mostRight.left;
+            if (mostRight != null) {
+
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+
+                if (mostRight.right ==  null) {
+
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                } else {
+                    mostRight.right = null;
+                    addPath(result, cur.left);
+                }
+            }
+            cur = cur.right;
+        }
+        return result;
+    }
+
+    public void addPath(List<Integer> res, TreeNode node) {
+        int count = 0;
+        while (node != null) {
+            ++count;
+            res.add(node.val);
+            node = node.right;
+        }
+        int left = res.size() - count, right = res.size() - 1;
+        while (left < right) {
+            int temp = res.get(left);
+            res.set(left, res.get(right));
+            res.set(right, temp);
+            left++;
+            right--;
+        }
+    }
+
     public static void main(String[] args) {
 
         TreeNode three = new TreeNode(3);
