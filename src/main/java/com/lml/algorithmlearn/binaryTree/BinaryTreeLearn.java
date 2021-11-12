@@ -191,10 +191,48 @@ public class BinaryTreeLearn {
         return result;
     }
 
+    public static List<Integer> inorderMorris(TreeNode root) {
 
+        List<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return  result;
+        }
 
+        TreeNode cur = root;
+        TreeNode mostRight = null;
 
-    public class TreeNode {
+        while (cur != null) {
+
+            mostRight = cur.left;
+            if (mostRight != null) {
+
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+
+                if (mostRight.right == null) {
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                } else {
+                    mostRight.right = null;
+                }
+            }
+            result.add(cur.val);
+            cur = cur.right;
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+
+        TreeNode three = new TreeNode(3);
+        TreeNode two = new TreeNode(2, three, null);
+        TreeNode root = new TreeNode(1, null, two);
+        System.out.println(inorderMorris(root));
+    }
+
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
