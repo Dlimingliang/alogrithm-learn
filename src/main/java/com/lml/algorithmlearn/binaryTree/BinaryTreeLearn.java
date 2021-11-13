@@ -308,6 +308,37 @@ public class BinaryTreeLearn {
         return result;
     }
 
+    int maxDepth = 0;
+    public int maxDepth(TreeNode root) {
+
+        getDepth(root, 1);
+        return maxDepth;
+    }
+
+    private void getDepth(TreeNode root, int depth) {
+
+        if (root == null) {
+            return;
+        }
+
+        if (root.left == null && root.right == null) {
+            maxDepth = Math.max(maxDepth, depth);
+        }
+        getDepth(root.left, depth + 1);
+        getDepth(root.right, depth + 1);
+    }
+
+    public int maxDepthLow(TreeNode root) {
+
+        if (root == null) {
+            return 0;
+        }
+
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
+    }
+
     public static void main(String[] args) {
 
         TreeNode three = new TreeNode(3);
