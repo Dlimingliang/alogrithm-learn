@@ -1,5 +1,6 @@
 package com.lml.algorithmlearn.binaryTree;
 
+import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -341,11 +342,68 @@ public class BinaryTreeLearn {
 
     public static void main(String[] args) {
 
-        TreeNode three = new TreeNode(3);
-        TreeNode two = new TreeNode(2, three, null);
-        TreeNode root = new TreeNode(1, null, two);
-        System.out.println(inorderMorris(root));
+        TreeNode leftThreeLeft = new TreeNode(3);
+        TreeNode leftThreeRight = new TreeNode(3);
+        TreeNode leftTwo = new TreeNode(2, null, leftThreeRight);
+        TreeNode rightThreeLeft = new TreeNode(4);
+        TreeNode rightThreeRight = new TreeNode(3);
+        TreeNode rightTwo = new TreeNode(2, null, rightThreeRight);
+        TreeNode root = new TreeNode(1, leftTwo, rightTwo);
+        System.out.println(isSymmetric(root));
     }
+
+    public static boolean isSymmetricLoop(TreeNode root) {
+
+        //n为节点数
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        //循环的方式判断二叉树是不是一个对称二叉树
+        if (root == null) {
+            return false;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+
+            TreeNode left = queue.poll();
+            TreeNode right = queue.poll();
+            if (left == null && right == null) {
+                continue;
+            }
+
+            if (left == null || right == null || left.val != right.val) {
+                return false;
+            }
+            queue.offer(left.left);
+            queue.offer(right.right);
+            queue.offer(left.right);
+            queue.offer(right.left);
+        }
+        return true;
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        return isSymmetricRecursion(root, root);
+    }
+
+    private boolean isSymmetricRecursion(TreeNode left, TreeNode right) {
+
+        if (left == null && right == null) {
+            return true;
+        }
+
+        if (left == null || right == null) {
+            return false;
+        }
+
+        return left.val == right.val && isSymmetricRecursion(left.right, right.left) && isSymmetricRecursion(left.left, right.right);
+    }
+
 
     public static class TreeNode {
         int val;
