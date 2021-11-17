@@ -405,7 +405,35 @@ public class BinaryTreeLearn {
 
     public boolean hasPathSum(TreeNode root, int targetSum) {
 
-        return false;
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+//        if (root == null) {
+//            return false;
+//        }
+//        return hasPathSumUp(root, targetSum, 0);
+        if (root == null) {
+            return false;
+        }
+
+        if (root.left == null && root.right == null) {
+            return targetSum == root.val;
+        }
+
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }
+
+    private boolean hasPathSumUp(TreeNode root, int targetSum, int sum) {
+
+        if (root == null) {
+            return false;
+        }
+        if (root != null) {
+            sum += root.val;
+        }
+        if (root != null && root.left == null && root.right == null && sum == targetSum) {
+            return true;
+        }
+        return hasPathSumUp(root.left, targetSum, sum) || hasPathSumUp(root.right, targetSum, sum);
     }
 
 
