@@ -1,6 +1,5 @@
 package com.lml.algorithmlearn.binaryTree;
 
-import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -384,14 +383,14 @@ public class BinaryTreeLearn {
         return true;
     }
 
-    public boolean isSymmetric(TreeNode root) {
+    public static boolean isSymmetric(TreeNode root) {
 
         //时间复杂度O(n)
         //空间复杂度O(n)
         return isSymmetricRecursion(root, root);
     }
 
-    private boolean isSymmetricRecursion(TreeNode left, TreeNode right) {
+    private static boolean isSymmetricRecursion(TreeNode left, TreeNode right) {
 
         if (left == null && right == null) {
             return true;
@@ -402,6 +401,11 @@ public class BinaryTreeLearn {
         }
 
         return left.val == right.val && isSymmetricRecursion(left.right, right.left) && isSymmetricRecursion(left.left, right.right);
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+
+        return false;
     }
 
 
