@@ -2,8 +2,10 @@ package com.lml.algorithmlearn.binaryTree;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 public class BinaryTreeLearn {
@@ -434,6 +436,68 @@ public class BinaryTreeLearn {
             return true;
         }
         return hasPathSumUp(root.left, targetSum, sum) || hasPathSumUp(root.right, targetSum, sum);
+    }
+
+    Map<Integer, Integer> inorderIndex = new HashMap<>();
+    int[] inorder; int[] postorder;
+    int post_idx;
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        
+        //时间复杂度 O(n)
+        //空间复杂度O(n) 因为栈地空间复杂度为树的高度，树的高度小于节点数
+        this.inorder = inorder;
+        this.postorder = postorder;
+        post_idx = postorder.length - 1;
+        for (int i = 0; i < inorder.length; i++) {
+            inorderIndex.put(inorder[i], i);
+        }
+        return calculateBinaryTree(0, postorder.length - 1);
+    }
+
+    private TreeNode calculateBinaryTree(int left, int right) {
+
+        if (left > right) {
+            return null;
+        }
+
+        int root_val = postorder[post_idx];
+        TreeNode root = new TreeNode(root_val);
+        int index = inorderIndex.get(root_val);
+        post_idx--;
+
+
+        root.right = calculateBinaryTree(index + 1, right);
+        root.left = calculateBinaryTree(left, index - 1);
+        return root;
+    }
+
+    Map<Integer, Integer> inorderMap = new HashMap<>();
+    int[] preOrderVal; int[] inorderVal;
+    int preOrderIndex = 0;
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
+
+        this.preOrderVal = preorder;
+        this.inorderVal = inorder;
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return helpTreeNode(0, inorder.length - 1);
+    }
+
+    private TreeNode helpTreeNode(int left, int right) {
+
+        if (left > right) {
+            return null;
+        }
+
+        int val = preOrderVal[preOrderIndex];
+        TreeNode root = new TreeNode(val);
+        int index = inorderMap.get(val);
+        preOrderIndex++;
+
+        root.left = helpTreeNode(left, index - 1);
+        root.right = helpTreeNode(index + 1, right);
+        return root;
     }
 
 
