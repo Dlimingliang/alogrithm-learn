@@ -561,6 +561,27 @@ public class BinaryTreeLearn {
         }
     }
 
+    private TreeNode ans;
+    public TreeNode lowestCommonAncestorDfs(TreeNode root, TreeNode p, TreeNode q) {
+
+        this.dfs(root, p, q);
+        return ans;
+    }
+
+    private boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
+
+        if (root == null) {
+            return false;
+        }
+
+        boolean lson = dfs(root.left, p, q);
+        boolean rson = dfs(root.right, p, q);
+        if ((lson && rson) || ((p.val == root.val || q.val == root.val) && (lson || rson))) {
+            ans = root;
+        }
+        return lson || rson || (root.val == p.val || root.val == q.val);
+    }
+
     public static void main(String[] args) {
 
         TreeNode rootLeftLeft = new TreeNode(6);
