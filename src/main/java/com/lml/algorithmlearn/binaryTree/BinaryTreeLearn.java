@@ -341,18 +341,6 @@ public class BinaryTreeLearn {
         return Math.max(left, right) + 1;
     }
 
-    public static void main(String[] args) {
-
-        TreeNode leftThreeLeft = new TreeNode(3);
-        TreeNode leftThreeRight = new TreeNode(3);
-        TreeNode leftTwo = new TreeNode(2, null, leftThreeRight);
-        TreeNode rightThreeLeft = new TreeNode(4);
-        TreeNode rightThreeRight = new TreeNode(3);
-        TreeNode rightTwo = new TreeNode(2, null, rightThreeRight);
-        TreeNode root = new TreeNode(1, leftTwo, rightTwo);
-        System.out.println(isSymmetric(root));
-    }
-
     public static boolean isSymmetricLoop(TreeNode root) {
 
         //n为节点数
@@ -500,6 +488,58 @@ public class BinaryTreeLearn {
         return root;
     }
 
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
+        //n为节点数
+        //时间复杂度O(n) 因为比较的时间复杂度为o(logn),但是获取中序遍历的时间复杂度为O(n)
+        //空间复杂度O(n)
+        //大致思路,获取全部树的列表.然后比较其顺序
+        List<Integer> integerList = new ArrayList<>();
+        lowestCommonAncestorRecursion(root, integerList);
+
+        TreeNode head = root;
+        while (head != null) {
+            int pIndex = integerList.indexOf(p.val);
+            int qIndex = integerList.indexOf(q.val);
+            int rootIndex = integerList.indexOf(head.val);
+            if (pIndex == rootIndex || qIndex == rootIndex) {
+                return head;
+            }
+            if ((pIndex < rootIndex && qIndex > rootIndex) || (pIndex > rootIndex && qIndex < rootIndex)) {
+                return head;
+            }
+            if (pIndex < rootIndex && qIndex < rootIndex) {
+                head = head.left;
+            }
+            if (pIndex > rootIndex && qIndex > rootIndex) {
+                head = head.right;
+            }
+        }
+        return head;
+    }
+
+    private static void lowestCommonAncestorRecursion(TreeNode node, List<Integer> integerList) {
+
+        if (node != null) {
+            lowestCommonAncestorRecursion(node.left, integerList);
+            integerList.add(node.val);
+            lowestCommonAncestorRecursion(node.right, integerList);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        TreeNode rootLeftLeft = new TreeNode(6);
+        TreeNode rootLeftRightLeft = new TreeNode(7);
+        TreeNode rootLeftRightRight = new TreeNode(4);
+        TreeNode rootLeftRight = new TreeNode(2, rootLeftRightLeft, rootLeftRightRight);
+        TreeNode rootLeft = new TreeNode(5, rootLeftLeft, rootLeftRight);
+        TreeNode rootRightLeft = new TreeNode(0);
+        TreeNode rootRightRight = new TreeNode(8);
+        TreeNode rootRight = new TreeNode(1, rootRightLeft, rootRightRight);
+        TreeNode root = new TreeNode(3, rootLeft, rootRight);
+        System.out.println(lowestCommonAncestor(root, rootLeft, rootRight).val);
+    }
 
     public static class TreeNode {
         int val;
