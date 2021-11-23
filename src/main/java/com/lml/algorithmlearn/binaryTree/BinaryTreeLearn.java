@@ -3,10 +3,12 @@ package com.lml.algorithmlearn.binaryTree;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 public class BinaryTreeLearn {
 
@@ -518,6 +520,38 @@ public class BinaryTreeLearn {
         return head;
     }
 
+    Map<Integer, TreeNode> hashMap = new HashMap<>();
+    Set<Integer> visitNode = new HashSet<>();
+    public  TreeNode lowestCommonAncestorByHash(TreeNode root, TreeNode p, TreeNode q) {
+
+        //时间复杂度 o(n)
+        //空间复杂度  由于要进行递归和存储节点，所以空间复杂度为o(n)
+        this.depthFirstSearch(root);
+        while (p != null) {
+            visitNode.add(p.val);
+            p = hashMap.get(p.val);
+        }
+
+        while (q != null) {
+            if (visitNode.contains(q.val)) {
+                return q;
+            }
+            q = hashMap.get(q.val);
+        }
+        return null;
+    }
+
+    private void depthFirstSearch(TreeNode root) {
+        if (root.left != null) {
+            hashMap.put(root.left.val, root);
+            depthFirstSearch(root.left);
+        }
+        if (root.right != null) {
+            hashMap.put(root.right.val, root);
+            depthFirstSearch(root.right);
+        }
+    }
+
     private static void lowestCommonAncestorRecursion(TreeNode node, List<Integer> integerList) {
 
         if (node != null) {
@@ -538,7 +572,7 @@ public class BinaryTreeLearn {
         TreeNode rootRightRight = new TreeNode(8);
         TreeNode rootRight = new TreeNode(1, rootRightLeft, rootRightRight);
         TreeNode root = new TreeNode(3, rootLeft, rootRight);
-        System.out.println(lowestCommonAncestor(root, rootLeft, rootRight).val);
+        System.out.println(new BinaryTreeLearn().lowestCommonAncestorByHash(root, rootLeft, rootRight).val);
     }
 
     public static class TreeNode {
