@@ -1,6 +1,7 @@
 package com.lml.algorithmlearn.binaryTree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -582,18 +583,92 @@ public class BinaryTreeLearn {
         return lson || rson || (root.val == p.val || root.val == q.val);
     }
 
+    // Encodes a tree to a single string.
+    public String serializeBFS(TreeNode root) {
+
+        if (root == null) {
+            return "#";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+
+            TreeNode treeNode = queue.poll();
+            if (treeNode == null) {
+                builder.append("#,");
+                continue;
+            }
+            builder.append(treeNode.val + ",");
+            queue.add(treeNode.left);
+            queue.add(treeNode.right);
+        }
+        return builder.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserializeBFS(String data) {
+
+        if (data == "#")
+            return null;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        String[] strings = data.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(strings[0]));
+        queue.add(root);
+        for (int i = 1; i < strings.length; i++) {
+
+            TreeNode node = queue.poll();
+            if (!"#".equals(strings[i])) {
+                TreeNode left = new TreeNode(Integer.parseInt(strings[i]));
+                node.left = left;
+                queue.add(left);
+            }
+            if (!"#".equals(strings[++i])) {
+                TreeNode right = new TreeNode(Integer.parseInt(strings[i]));
+                node.right = right;
+                queue.add(right);
+            }
+        }
+        return root;
+    }
+
+    // Encodes a tree to a single string.
+    public String serializeDFS(TreeNode root) {
+
+        if (root == null) {
+            return "#";
+        }
+        return root.val + "," + serializeDFS(root.left) + "," + serializeDFS(root.right);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserializeDFS(String data) {
+
+        Queue<String> queue = new LinkedList(Arrays.asList(data.split(",")));
+        return deserializeDFSHelper(queue);
+    }
+
+    private TreeNode deserializeDFSHelper(Queue<String> queue) {
+
+        String sVal = queue.poll();
+        //如果是"#"表示空节点
+        if ("#".equals(sVal))
+            return null;
+
+        TreeNode root = new TreeNode(Integer.valueOf(sVal));
+        root.left = deserializeDFSHelper(queue);
+        root.right = deserializeDFSHelper(queue);
+        return root;
+    }
+
     public static void main(String[] args) {
 
-        TreeNode rootLeftLeft = new TreeNode(6);
-        TreeNode rootLeftRightLeft = new TreeNode(7);
-        TreeNode rootLeftRightRight = new TreeNode(4);
-        TreeNode rootLeftRight = new TreeNode(2, rootLeftRightLeft, rootLeftRightRight);
-        TreeNode rootLeft = new TreeNode(5, rootLeftLeft, rootLeftRight);
-        TreeNode rootRightLeft = new TreeNode(0);
-        TreeNode rootRightRight = new TreeNode(8);
-        TreeNode rootRight = new TreeNode(1, rootRightLeft, rootRightRight);
-        TreeNode root = new TreeNode(3, rootLeft, rootRight);
-        System.out.println(new BinaryTreeLearn().lowestCommonAncestorByHash(root, rootLeft, rootRight).val);
+        TreeNode rootLeft = new TreeNode(2);
+//        TreeNode rootRight = new TreeNode(1, rootRightLeft, rootRightRight);
+        TreeNode root = new TreeNode(1, rootLeft, null);
+        System.out.println(new BinaryTreeLearn().deserializeDFS(new BinaryTreeLearn().serializeDFS(root)));
     }
 
     public static class TreeNode {
