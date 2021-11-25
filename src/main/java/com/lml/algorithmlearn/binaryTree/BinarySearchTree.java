@@ -1,5 +1,8 @@
 package com.lml.algorithmlearn.binaryTree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree {
 
     long min = Long.MIN_VALUE;
@@ -40,6 +43,34 @@ public class BinarySearchTree {
         TreeNode right = new TreeNode(3);
         TreeNode root = new TreeNode(2, left, right);
         System.out.println(new BinarySearchTree().isValidBST(root));
+    }
+
+    class BSTIterator {
+
+        private List<TreeNode> treeNodeList = new ArrayList<>();
+        private int current = -1;
+        public BSTIterator(TreeNode root) {
+            recursion(root, treeNodeList);
+        }
+
+        private void recursion(TreeNode treeNode, List treeNodeList) {
+
+            if (treeNode == null) {
+                return;
+            }
+            recursion(treeNode.left, treeNodeList);
+            treeNodeList.add(treeNode);
+            recursion(treeNode.right, treeNodeList);
+        }
+
+        public int next() {
+            current++;
+            return treeNodeList.get(current).val;
+        }
+
+        public boolean hasNext() {
+            return current + 1 < treeNodeList.size();
+        }
     }
 
     public static class TreeNode {
