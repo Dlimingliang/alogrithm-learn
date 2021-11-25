@@ -6,21 +6,33 @@ public class BinarySearchTree {
     int count = 0;
     public boolean isValidBST(TreeNode root) {
 
-        isValidBSTRecursion(root);
-        return count == 0;
+//        isValidBSTInorder(root);
+//        return count == 0;
+        return isValidBSTRecursion(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    private void isValidBSTRecursion(TreeNode root) {
+    private void isValidBSTInorder(TreeNode root) {
 
         if (root == null) {
             return;
         }
-        isValidBSTRecursion(root.left);
+        isValidBSTInorder(root.left);
         if (min >= root.val) {
             count++;
         }
         min = root.val;
-        isValidBSTRecursion(root.right);
+        isValidBSTInorder(root.right);
+    }
+
+    private boolean isValidBSTRecursion(TreeNode root, long lower, long upper) {
+
+        if (root == null) {
+            return true;
+        }
+        if (root.val <= lower || root.val >= upper) {
+            return false;
+        }
+        return isValidBSTRecursion(root.left, lower, root.val) && isValidBSTRecursion(root.right, root.val, upper);
     }
 
     public static void main(String[] args) {
