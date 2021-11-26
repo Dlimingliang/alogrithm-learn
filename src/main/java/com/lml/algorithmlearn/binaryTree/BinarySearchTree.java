@@ -38,13 +38,6 @@ public class BinarySearchTree {
         return isValidBSTRecursion(root.left, lower, root.val) && isValidBSTRecursion(root.right, root.val, upper);
     }
 
-    public static void main(String[] args) {
-        TreeNode left = new TreeNode(1);
-        TreeNode right = new TreeNode(3);
-        TreeNode root = new TreeNode(2, left, right);
-        System.out.println(new BinarySearchTree().isValidBST(root));
-    }
-
     class BSTIterator {
 
         private List<TreeNode> treeNodeList = new ArrayList<>();
@@ -72,6 +65,48 @@ public class BinarySearchTree {
             return current + 1 < treeNodeList.size();
         }
     }
+
+    public TreeNode searchBST(TreeNode root, int val) {
+
+        //n为节点数，h为树的高度
+        //recursion
+        //时间复杂度 o(n)
+        //空间复杂度 递归的深度但是可能为n，所以空间复杂度O(n)
+//        if (root == null) {
+//            return null;
+//        }
+//
+//        if (root.val == val) {
+//            return root;
+//        }
+//
+//       return searchBST(val < root.val ? root.left : root.right, val);
+        //Loop
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        if (root == null) {
+            return null;
+        }
+
+        while (root != null) {
+
+            if (root.val == val) {
+                return root;
+            }
+            root = val < root.val ? root.left : root.right;
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        TreeNode leftLeft = new TreeNode(1);
+        TreeNode leftRight = new TreeNode(3);
+        TreeNode left = new TreeNode(2, leftLeft, leftRight);
+        TreeNode right = new TreeNode(7);
+        TreeNode root = new TreeNode(4, left, right);
+        System.out.println(new BinarySearchTree().searchBST(root, 5));
+    }
+
 
     public static class TreeNode {
         int val;
