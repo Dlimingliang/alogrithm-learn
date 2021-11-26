@@ -98,13 +98,79 @@ public class BinarySearchTree {
         return null;
     }
 
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+
+        //n为节点数, h为树的高度
+        //Loop
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+//        TreeNode newNode = new TreeNode(val);
+//        if (root == null) {
+//            return newNode;
+//        }
+//
+//        TreeNode head = root;
+//        while (head != null) {
+//            if (val < head.val && head.left != null) {
+//                head = head.left;
+//                continue;
+//            }
+//            if (head.val < val && head.right != null) {
+//                head = head.right;
+//                continue;
+//            }
+//            break;
+//        }
+//
+//        if (val < head.val) {
+//            head.left = newNode;
+//        } else {
+//            head.right = newNode;
+//        }
+//        return root;
+
+        //recursion
+        //时间复杂度O(n)
+        //空间复杂度O (n)
+        TreeNode newNode = new TreeNode(val);
+        if (root == null) {
+            return newNode;
+        }
+
+        TreeNode head = root;
+        head = insertIntoBSTRecursion(head, val);
+        if (val < head.val) {
+            head.left = newNode;
+        } else {
+            head.right = newNode;
+        }
+       return root;
+    }
+
+    private TreeNode insertIntoBSTRecursion(TreeNode root, int val) {
+
+        TreeNode result = null;
+        if ((val < root.val && root.left == null) || (root.val < val && root.right == null)) {
+            return root;
+        }
+        if (val < root.val && root.left != null) {
+            result = insertIntoBSTRecursion(root.left, val);
+        }
+
+        if (root.val < val && root.right != null) {
+            result = insertIntoBSTRecursion(root.right, val);
+        }
+        return result;
+    }
+
+
     public static void main(String[] args) {
         TreeNode leftLeft = new TreeNode(1);
         TreeNode leftRight = new TreeNode(3);
         TreeNode left = new TreeNode(2, leftLeft, leftRight);
         TreeNode right = new TreeNode(7);
         TreeNode root = new TreeNode(4, left, right);
-        System.out.println(new BinarySearchTree().searchBST(root, 5));
+        System.out.println(new BinarySearchTree().insertIntoBST(root, 5));
     }
 
 
