@@ -276,6 +276,8 @@ public class BinarySearchTree {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
+        //时间复杂度O(n)
+        //空间复杂度O(1)
         while (root != null) {
 
             if ((p.val < root.val && q.val > root.val) || (p.val > root.val && q.val < root.val) || p.val == root.val || q.val == root.val) {
