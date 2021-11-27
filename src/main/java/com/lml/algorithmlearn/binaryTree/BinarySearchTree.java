@@ -201,21 +201,94 @@ public class BinarySearchTree {
         return root.val;
     }
 
+    static class KthLargest {
 
+        private final int defaultChildrenNum = 1;
+        private int k;
+        private TreeNode root;
+        public KthLargest(int k, int[] nums) {
+            this.k = k;
+            for (int i = 0; i < nums.length; i++) {
+                this.root = this.insertNode(root, nums[i]);
+            }
+        }
+
+        private TreeNode insertNode(TreeNode root, int val) {
+
+            if (root == null) {
+                return new TreeNode(val, defaultChildrenNum);
+            }
+
+            TreeNode head = root;
+            while (head != null) {
+
+                head.childrenNum += 1;
+                if (val <= head.val) {
+                    if (head.left == null) {
+                        head.left = new TreeNode(val, defaultChildrenNum);
+                        break;
+                    } else {
+                        head = head.left;
+                        continue;
+                    }
+                }
+
+                if (head.val < val) {
+                    if (head.right == null) {
+                        head.right = new TreeNode(val, defaultChildrenNum);
+                        break;
+                    } else {
+                        head = head.right;
+                        continue;
+                    }
+                }
+            }
+            return root;
+        }
+
+        public int add(int val) {
+
+            this.root = this.insertNode(this.root, val);
+            return kMaxValue();
+        }
+
+        private int kMaxValue() {
+
+            TreeNode head = this.root;
+            int temp = this.k;
+
+            while (head != null) {
+
+                int value = head.right != null ? head.right.childrenNum + 1 : 1;
+                if (value == temp) {
+                    return head.val;
+                } else if (value > temp) {
+                    head = head.right;
+                    continue;
+                } else {
+                    temp = temp - value;
+                    head = head.left;
+                }
+            }
+            return -1;
+        }
+    }
 
 
     public static void main(String[] args) {
-        TreeNode leftLeft = new TreeNode(1);
-        TreeNode leftRight = new TreeNode(3);
-        TreeNode left = new TreeNode(2, leftLeft, leftRight);
-        TreeNode right = new TreeNode(7);
-        TreeNode root = new TreeNode(4, left, right);
-        System.out.println(new BinarySearchTree().insertIntoBST(root, 5));
+
+        KthLargest kthLargest = new KthLargest(3, new int[]{4, 5, 8, 2});
+        System.out.println(kthLargest.add(3));
+        System.out.println(kthLargest.add(5));
+        System.out.println(kthLargest.add(10));
+        System.out.println(kthLargest.add(9));
+        System.out.println(kthLargest.add(4));
     }
 
 
     public static class TreeNode {
         int val;
+        int childrenNum;
         TreeNode left;
         TreeNode right;
         TreeNode() {}
@@ -224,6 +297,11 @@ public class BinarySearchTree {
           this.val = val;
           this.left = left;
           this.right = right;
+        }
+
+        public TreeNode(int val, int childrenNum) {
+            this.val = val;
+            this.childrenNum = childrenNum;
         }
     }
 }
