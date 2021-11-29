@@ -291,15 +291,37 @@ public class BinarySearchTree {
         return root;
     }
 
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        //值小于t
+        //下标小于k
+        //暴力求解
+        //时间复杂度O(n^2)
+        //空间复杂度O(1)
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1 ; j < nums.length; j++) {
+
+                if ((nums[j] == Integer.MIN_VALUE && nums[i] > 0) || (nums[i] == Integer.MIN_VALUE && nums[j] > 0)) {
+                    return false;
+                }
+
+                if ((nums[j] == Integer.MAX_VALUE && nums[i] < 0) || (nums[i] == Integer.MAX_VALUE && nums[j] < 0)) {
+                    return false;
+                }
+
+                int valueAbs = Math.abs(nums[j] - nums[i]);
+                int indexAbs = Math.abs(j - i);
+                if (valueAbs <= t && indexAbs <= k) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public static void main(String[] args) {
-
-        KthLargest kthLargest = new KthLargest(3, new int[]{4, 5, 8, 2});
-        System.out.println(kthLargest.add(3));
-        System.out.println(kthLargest.add(5));
-        System.out.println(kthLargest.add(10));
-        System.out.println(kthLargest.add(9));
-        System.out.println(kthLargest.add(4));
+        System.out.println(Math.abs(-2147483648));
+        System.out.println(new BinarySearchTree().containsNearbyAlmostDuplicate(new int[]{-2147483648,2147483647}, 1, 1));
     }
 
 
