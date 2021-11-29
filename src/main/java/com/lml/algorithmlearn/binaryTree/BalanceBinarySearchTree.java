@@ -5,6 +5,8 @@ public class BalanceBinarySearchTree {
     boolean result = true;
     public boolean isBalanced(TreeNode root) {
 
+        //时间复杂度O(n)
+        //空间复杂度O(n)
         height(root);
         return result;
     }
