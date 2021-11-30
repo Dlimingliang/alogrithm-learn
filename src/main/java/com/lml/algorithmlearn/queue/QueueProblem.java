@@ -7,6 +7,9 @@ public class QueueProblem {
 
     public int numIslandsBFS(char[][] grid) {
 
+        //m为数组的长度，n为数组中元素数组的长度
+        //时间复杂度O(mn)
+        //空间复杂度O(min(m,n))
         if (grid == null || grid.length == 0) {
             return 0;
         }
