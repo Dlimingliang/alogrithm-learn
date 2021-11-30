@@ -7,6 +7,27 @@ import java.util.Random;
 
 public class PriorityQueueLearn {
 
+    class KthLargest {
+
+        private PriorityQueue<Integer> queue;
+        private int kIndex;
+        public KthLargest(int k, int[] nums) {
+            this.queue = new PriorityQueue();
+            this.kIndex = k;
+            for (int x : nums) {
+                this.add(x);
+            }
+        }
+
+        public int add(int val) {
+            this.queue.offer(val);
+            if (this.queue.size() > this.kIndex) {
+                this.queue.poll();
+            }
+            return this.queue.peek();
+        }
+    }
+
     public static void main(String[] args) {
         Queue<Integer> queue = new PriorityQueue<>(6, Comparator.reverseOrder());
         Random rand = new Random();
