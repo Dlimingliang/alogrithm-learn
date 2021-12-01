@@ -1,7 +1,10 @@
 package com.lml.algorithmlearn.queue;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 public class QueueProblem {
 
@@ -53,8 +56,49 @@ public class QueueProblem {
         return num_islands;
     }
 
+    public int openLock(String[] deadends, String target) {
+        String initialString = "0000";
+        int count = 0;
+        Set<String> deadSet = new HashSet<>(Arrays.asList(deadends));
+        if (deadSet.contains(initialString)) {
+            return -1;
+        }
+        Set<String> stringSet = new HashSet<>();
+        stringSet.add(initialString);
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(initialString);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String temp = queue.poll();
+                if (temp.equals(target)) {
+                    return count;
+                } else {
+                    //添加4个位置每个位置+1-1的值
+                    for (int j = 0; j < target.length(); j++) {
+                        char ch = temp.charAt(j);
+                        String strAdd = temp.substring(0, j) + (ch == '9' ? 0 : ch - '0' + 1) + temp.substring(j + 1);
+                        String strSub = temp.substring(0, j) + (ch == '0' ? 9 : ch - '0' - 1) + temp.substring(j + 1);
+                        if (!deadSet.contains(strAdd) && !stringSet.contains(strAdd)) {
+                            stringSet.add(strAdd);
+                            queue.add(strAdd);
+                        }
+                        if (!deadSet.contains(strSub) && !stringSet.contains(strSub)) {
+                            stringSet.add(strSub);
+                            queue.add(strSub);
+                        }
+                    }
+                }
+            }
+            count++;
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         char[][] array = new char[][]{new char[]{'1','1','1','1','0'}, new char[]{'1','1','0','1','0'}, new char[]{'1','1','0','0','0'}, new char[]{'0','0','0','0','0'}};
         System.out.println(new QueueProblem().numIslandsBFS(array));
+
+        System.out.println("1234".charAt(2) - '0' - 3);
     }
 }
