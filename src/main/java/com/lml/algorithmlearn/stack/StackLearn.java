@@ -29,20 +29,33 @@ public class StackLearn {
 
     public int[] dailyTemperatures(int[] temperatures) {
 
-        int length = temperatures.length;
-        int[] result = new int[length];
-        for (int i = 0; i < length; i++) {
+//        int length = temperatures.length;
+//        int[] result = new int[length];
+//        for (int i = 0; i < length; i++) {
+//
+//            int temp = 0;
+//            for (int j = i + 1; j < length; j++) {
+//                if (temperatures[j] > temperatures[i]) {
+//                    temp = j - i;
+//                    break;
+//                }
+//            }
+//            result[i] = temp;
+//        }
+//        return result;
 
-            int temp = 0;
-            for (int j = i + 1; j < length; j++) {
-                if (temperatures[j] > temperatures[i]) {
-                    temp = j - i;
-                    break;
-                }
+        int length = temperatures.length;
+        int[] ans = new int[length];
+        Deque<Integer> stack = new LinkedList();
+        for (int i = 0; i < length; i++) {
+            int temperature = temperatures[i];
+            while (!stack.isEmpty() && temperature > temperatures[stack.peek()]) {
+                int prevIndex = stack.pop();
+                ans[prevIndex] = i - prevIndex;
             }
-            result[i] = temp;
+            stack.push(i);
         }
-        return result;
+        return ans;
     }
 
     public static void main(String[] args) {
