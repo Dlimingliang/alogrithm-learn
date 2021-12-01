@@ -95,10 +95,44 @@ public class QueueProblem {
         return -1;
     }
 
-    public static void main(String[] args) {
-        char[][] array = new char[][]{new char[]{'1','1','1','1','0'}, new char[]{'1','1','0','1','0'}, new char[]{'1','1','0','0','0'}, new char[]{'0','0','0','0','0'}};
-        System.out.println(new QueueProblem().numIslandsBFS(array));
+    public int numSquares(int n) {
 
-        System.out.println("1234".charAt(2) - '0' - 3);
+        if (n == 1) {
+            return 1;
+        }
+
+        int step = 1;
+        while (Math.pow(step, 2) <= n) {
+            step++;
+        }
+
+        Set<Integer> visitSet = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(0);
+        visitSet.add(0);
+        int count = 0;
+        while (!queue.isEmpty()) {
+            count++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int temp = queue.poll();
+                for (int j = 1; j < step; j++) {
+
+                    int value = (int) (temp + Math.pow(j, 2));
+                    if (value == n) {
+                        return count;
+                    }
+                    if (!visitSet.contains(value)) {
+                        visitSet.add(value);
+                        queue.add(value);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new QueueProblem().numSquares(2));
     }
 }
