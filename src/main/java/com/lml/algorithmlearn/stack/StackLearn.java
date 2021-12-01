@@ -4,6 +4,29 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 public class StackLearn {
+
+    public boolean isValid(String s) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        Deque<Character> deque = new LinkedList<>();
+        for (int i = 0; i < s.length(); i++) {
+
+           if (s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '[') {
+                deque.push(s.charAt(i));
+           } else {
+               if (deque.isEmpty()) {
+                   return false;
+               }
+               Character c = deque.pop();
+               if ((s.charAt(i) == ')' && c != '(') || (s.charAt(i) == '}' && c != '{') || (s.charAt(i) == ']' && c != '[')) {
+                    return false;
+               }
+           }
+        }
+        return deque.isEmpty();
+    }
+
     public static void main(String[] args) {
         // 1. Initialize a stack.
         Deque<Integer> s = new LinkedList<>();
