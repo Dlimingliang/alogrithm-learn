@@ -60,6 +60,9 @@ public class StackLearn {
 
     private char[][] globalGrid;
     public int numIslands(char[][] grid) {
+
+        //时间复杂度o(mn)
+        //空间复杂度O(mn)
         this.globalGrid = grid;
         int depth = grid.length;
         int breadth = grid[0].length;
