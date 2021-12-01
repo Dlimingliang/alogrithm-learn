@@ -58,7 +58,39 @@ public class StackLearn {
         return ans;
     }
 
+    private char[][] globalGrid;
+    public int numIslands(char[][] grid) {
+        this.globalGrid = grid;
+        int depth = grid.length;
+        int breadth = grid[0].length;
+        int result = 0;
+        for (int d = 0; d < depth; d++) {
+            for (int b = 0; b < breadth; b++) {
+                if (grid[d][b] == '1') {
+                    result++;
+                    setZero(d, b);
+                }
+            }
+        }
+        return result;
+    }
+
+    private void setZero(int d, int b) {
+
+        if (d < 0 || d >= this.globalGrid.length || b < 0 || b >= this.globalGrid[0].length || this.globalGrid[d][b] == '0') {
+            return;
+        }
+        this.globalGrid[d][b] = '0';
+        setZero(d - 1, b);
+        setZero(d + 1, b);
+        setZero(d, b - 1);
+        setZero(d, b + 1);
+    }
+
     public static void main(String[] args) {
-        System.out.println(new StackLearn().dailyTemperatures(new int[]{30,40,50,60}));
+        System.out.println(new StackLearn().numIslands(new char[][]{new char[]{'1','1','1','1','0'},
+                new char[]{'1','1','0','1','0'},
+                new char[]{'1','1','0','0','0'},
+                new char[]{'0','0','0','0','0'}}));
     }
 }
