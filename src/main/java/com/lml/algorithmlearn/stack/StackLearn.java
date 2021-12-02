@@ -90,10 +90,29 @@ public class StackLearn {
         setZero(d, b + 1);
     }
 
+    private int result = 0;
+    private int[] globalNums;
+    public int findTargetSumWays(int[] nums, int target) {
+
+        int depth = nums.length -1;
+        this.globalNums = nums;
+        findTargetSumWaysRecursion(0, depth, target);
+        return result;
+    }
+
+    private void findTargetSumWaysRecursion(int nums, int depth, int target) {
+
+        if (depth < 0) {
+            if (nums== target) {
+                result ++;
+            }
+        } else {
+            findTargetSumWaysRecursion(nums + this.globalNums[depth], depth - 1, target);
+            findTargetSumWaysRecursion(nums - this.globalNums[depth], depth - 1, target);
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println(new StackLearn().numIslands(new char[][]{new char[]{'1','1','1','1','0'},
-                new char[]{'1','1','0','1','0'},
-                new char[]{'1','1','0','0','0'},
-                new char[]{'0','0','0','0','0'}}));
+        System.out.println(new StackLearn().findTargetSumWays(new int[]{1,1}, 1));
     }
 }
