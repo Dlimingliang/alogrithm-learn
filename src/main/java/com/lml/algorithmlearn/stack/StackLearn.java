@@ -114,34 +114,60 @@ public class StackLearn {
 
     public String decodeString(String s) {
 
-        int length = s.length();
-        Deque<String> stringDeque = new LinkedList<>();
-        Deque<Integer> integerDeque = new LinkedList<>();
-        StringBuilder multiBuilder = new StringBuilder();
+//        int length = s.length();
+//        Deque<String> stringDeque = new LinkedList<>();
+//        Deque<Integer> integerDeque = new LinkedList<>();
+//        StringBuilder multiBuilder = new StringBuilder();
+//        StringBuilder res = new StringBuilder();
+//        for (int i = 0; i < length; i++) {
+//            char ch = s.charAt(i);
+//            if (ch >= '0' && ch <= '9') {
+//                multiBuilder.append(ch);
+//            }else if (ch == '[') {
+//                integerDeque.push(Integer.valueOf(multiBuilder.toString()));
+//                stringDeque.push(res.toString());
+//                multiBuilder = new StringBuilder();
+//                res = new StringBuilder();
+//            }else if (ch == ']') {
+//                String tempString = stringDeque.poll();
+//                Integer tempInt = integerDeque.poll();
+//                StringBuilder tempRes = new StringBuilder();
+//                tempRes.append(tempString);
+//                for (int j = 0; j < tempInt; j++) {
+//                    tempRes.append(res);
+//                }
+//                res = tempRes;
+//            } else {
+//                res.append(ch);
+//            }
+//        }
+//        return res.toString();
+        return decodeStringRecursion(s, 0)[0];
+    }
+
+    private String[] decodeStringRecursion(String s, int i) {
+
         StringBuilder res = new StringBuilder();
-        for (int i = 0; i < length; i++) {
+        int multi = 0;
+        while(i < s.length()) {
             char ch = s.charAt(i);
             if (ch >= '0' && ch <= '9') {
-                multiBuilder.append(ch);
+                multi = multi * 10 + Integer.parseInt(String.valueOf(ch));
             }else if (ch == '[') {
-                integerDeque.push(Integer.valueOf(multiBuilder.toString()));
-                stringDeque.push(res.toString());
-                multiBuilder = new StringBuilder();
-                res = new StringBuilder();
-            }else if (ch == ']') {
-                String tempString = stringDeque.poll();
-                Integer tempInt = integerDeque.poll();
-                StringBuilder tempRes = new StringBuilder();
-                tempRes.append(tempString);
-                for (int j = 0; j < tempInt; j++) {
-                    tempRes.append(res);
+                String[] tmp = decodeStringRecursion(s, i + 1);
+                i = Integer.parseInt(tmp[0]);
+                while(multi > 0) {
+                    res.append(tmp[1]);
+                    multi--;
                 }
-                res = tempRes;
+            }else if (ch == ']') {
+                return new String[] { String.valueOf(i), res.toString() };
             } else {
                 res.append(ch);
             }
+            i++;
         }
-        return res.toString();
+        return new String[] { res.toString() };
     }
 
 
