@@ -112,7 +112,40 @@ public class StackLearn {
         }
     }
 
+    public String decodeString(String s) {
+
+        int length = s.length();
+        Deque<String> stringDeque = new LinkedList<>();
+        Deque<Integer> integerDeque = new LinkedList<>();
+        StringBuilder multiBuilder = new StringBuilder();
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            char ch = s.charAt(i);
+            if (ch >= '0' && ch <= '9') {
+                multiBuilder.append(ch);
+            }else if (ch == '[') {
+                integerDeque.push(Integer.valueOf(multiBuilder.toString()));
+                stringDeque.push(res.toString());
+                multiBuilder = new StringBuilder();
+                res = new StringBuilder();
+            }else if (ch == ']') {
+                String tempString = stringDeque.poll();
+                Integer tempInt = integerDeque.poll();
+                StringBuilder tempRes = new StringBuilder();
+                tempRes.append(tempString);
+                for (int j = 0; j < tempInt; j++) {
+                    tempRes.append(res);
+                }
+                res = tempRes;
+            } else {
+                res.append(ch);
+            }
+        }
+        return res.toString();
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(new StackLearn().findTargetSumWays(new int[]{1,1}, 1));
+        System.out.println(new StackLearn().decodeString("3[a2[c]]"));
     }
 }
