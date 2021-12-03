@@ -2,6 +2,7 @@ package com.lml.algorithmlearn.stack;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class StackLearn {
 
@@ -170,8 +171,77 @@ public class StackLearn {
         return new String[] { res.toString() };
     }
 
+    public int[][] updateMatrix(int[][] mat) {
+
+        //d为数组的个数，b为数组中每个数组的长度
+        //时间复杂度O(mn) 但是超时
+        //空间复杂度O(4)
+        int depth = mat.length;
+        int breadth = mat[0].length;
+        int [][] result = new int[depth][breadth];
+        for (int d = 0; d < depth; d++) {
+            for (int b = 0; b < breadth; b++) {
+                int currentValue = mat[d][b];
+                if (currentValue == 0) {
+                    result[d][b] = 0;
+                } else {
+                    Queue<Integer> neighbors = new LinkedList<>();
+                    neighbors.add(d * breadth + b);
+                    int step = 0;
+                    while (!neighbors.isEmpty()) {
+                        int size = neighbors.size();
+                        step++;
+                        for (int i = 0; i < size; i++) {
+                            int id = neighbors.remove();
+                            int row = id / breadth;
+                            int col = id % breadth;
+                            if (row - 1 >= 0) {
+                                if (mat[row-1][col] == 0) {
+                                    result[d][b] = step;
+                                    neighbors.clear();
+                                    break;
+                                } else {
+                                    neighbors.add((row-1) * breadth + col);
+                                }
+                            }
+                            if (row + 1 < depth) {
+                                if (mat[row+1][col] == 0) {
+                                    result[d][b] = step;
+                                    neighbors.clear();
+                                    break;
+                                } else {
+                                    neighbors.add((row+1) * breadth + col);
+                                }
+                            }
+                            if (col - 1 >= 0) {
+                                if (mat[row][col-1] == 0) {
+                                    result[d][b] = step;
+                                    neighbors.clear();
+                                    break;
+                                } else {
+                                    neighbors.add(row * breadth + col-1);
+                                }
+
+                            }
+                            if (col + 1 < breadth) {
+                                if (mat[row][col+1] == 0) {
+                                    result[d][b] = step;
+                                    neighbors.clear();
+                                    break;
+                                } else {
+                                    neighbors.add(row * breadth + col+1);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
-        System.out.println(new StackLearn().decodeString("3[a2[c]]"));
+        new StackLearn().updateMatrix(new int[][]{new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1}, new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1}, new int[]{0,0,0}});
     }
 }
