@@ -1,7 +1,9 @@
 package com.lml.algorithmlearn.stack;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class StackLearn {
@@ -275,7 +277,35 @@ public class StackLearn {
 //        return result;
     }
 
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+
+        int roomCount = rooms.size();
+        Queue<Integer> queue = new LinkedList<>();
+        List<Integer> visited = new LinkedList<>();
+        queue.add(0);
+        while (!queue.isEmpty()) {
+            int index = queue.poll();
+            if (visited.contains(index)) {
+                continue;
+            }
+            visited.add(index);
+            List<Integer> keyList = rooms.get(index);
+            roomCount--;
+            if (keyList.size() > 0) {
+                for (int key : keyList) {
+                    queue.add(key);
+                }
+            }
+        }
+        return roomCount == 0;
+    }
+
     public static void main(String[] args) {
-        new StackLearn().updateMatrix(new int[][]{new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1}, new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1},new int[]{1,1,1}, new int[]{0,0,0}});
+        List<List<Integer>> rooms = new LinkedList<>();
+        rooms.add(Arrays.asList(new Integer[]{1}));
+        rooms.add(Arrays.asList(new Integer[]{2}));
+        rooms.add(Arrays.asList(new Integer[]{3}));
+        rooms.add(Arrays.asList(new Integer[]{}));
+        new StackLearn().canVisitAllRooms(rooms);
     }
 }
