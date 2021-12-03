@@ -171,74 +171,108 @@ public class StackLearn {
         return new String[] { res.toString() };
     }
 
+    static int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     public int[][] updateMatrix(int[][] mat) {
+
+        //时间复杂度O(mn)
+        //空间复杂度O(mn)
+        int depth = mat.length;
+        int breadth = mat[0].length;
+        boolean[][] visited = new boolean[depth][breadth];
+        int[][] result = new int[depth][breadth];
+        Queue<int[]> queue = new LinkedList<>();
+        for (int d = 0; d < depth; d++) {
+            for (int b = 0; b < breadth; b++) {
+                if (mat[d][b] == 0) {
+                    queue.add(new int[]{d, b});
+                    visited[d][b] = true;
+                }
+            }
+        }
+
+        while (!queue.isEmpty()) {
+
+            int[] value = queue.poll();
+            int i = value[0], j = value[1];
+            for (int k = 0; k < 4; k++) {
+                int ni = i + dirs[k][0];
+                int nj = j + dirs[k][1];
+                if (ni >=0 && ni < depth && nj >=0 && nj < breadth && !visited[ni][nj]) {
+                    result[ni][nj] = result[i][j] + 1;
+                    queue.offer(new int[]{ni,nj});
+                    visited[ni][nj] = true;
+                }
+            }
+        }
+
+        return result;
 
         //d为数组的个数，b为数组中每个数组的长度
         //时间复杂度O(mn) 但是超时
         //空间复杂度O(4)
-        int depth = mat.length;
-        int breadth = mat[0].length;
-        int [][] result = new int[depth][breadth];
-        for (int d = 0; d < depth; d++) {
-            for (int b = 0; b < breadth; b++) {
-                int currentValue = mat[d][b];
-                if (currentValue == 0) {
-                    result[d][b] = 0;
-                } else {
-                    Queue<Integer> neighbors = new LinkedList<>();
-                    neighbors.add(d * breadth + b);
-                    int step = 0;
-                    while (!neighbors.isEmpty()) {
-                        int size = neighbors.size();
-                        step++;
-                        for (int i = 0; i < size; i++) {
-                            int id = neighbors.remove();
-                            int row = id / breadth;
-                            int col = id % breadth;
-                            if (row - 1 >= 0) {
-                                if (mat[row-1][col] == 0) {
-                                    result[d][b] = step;
-                                    neighbors.clear();
-                                    break;
-                                } else {
-                                    neighbors.add((row-1) * breadth + col);
-                                }
-                            }
-                            if (row + 1 < depth) {
-                                if (mat[row+1][col] == 0) {
-                                    result[d][b] = step;
-                                    neighbors.clear();
-                                    break;
-                                } else {
-                                    neighbors.add((row+1) * breadth + col);
-                                }
-                            }
-                            if (col - 1 >= 0) {
-                                if (mat[row][col-1] == 0) {
-                                    result[d][b] = step;
-                                    neighbors.clear();
-                                    break;
-                                } else {
-                                    neighbors.add(row * breadth + col-1);
-                                }
-
-                            }
-                            if (col + 1 < breadth) {
-                                if (mat[row][col+1] == 0) {
-                                    result[d][b] = step;
-                                    neighbors.clear();
-                                    break;
-                                } else {
-                                    neighbors.add(row * breadth + col+1);
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return result;
+//        int depth = mat.length;
+//        int breadth = mat[0].length;
+//        int [][] result = new int[depth][breadth];
+//        for (int d = 0; d < depth; d++) {
+//            for (int b = 0; b < breadth; b++) {
+//                int currentValue = mat[d][b];
+//                if (currentValue == 0) {
+//                    result[d][b] = 0;
+//                } else {
+//                    Queue<Integer> neighbors = new LinkedList<>();
+//                    neighbors.add(d * breadth + b);
+//                    int step = 0;
+//                    while (!neighbors.isEmpty()) {
+//                        int size = neighbors.size();
+//                        step++;
+//                        for (int i = 0; i < size; i++) {
+//                            int id = neighbors.remove();
+//                            int row = id / breadth;
+//                            int col = id % breadth;
+//                            if (row - 1 >= 0) {
+//                                if (mat[row-1][col] == 0) {
+//                                    result[d][b] = step;
+//                                    neighbors.clear();
+//                                    break;
+//                                } else {
+//                                    neighbors.add((row-1) * breadth + col);
+//                                }
+//                            }
+//                            if (row + 1 < depth) {
+//                                if (mat[row+1][col] == 0) {
+//                                    result[d][b] = step;
+//                                    neighbors.clear();
+//                                    break;
+//                                } else {
+//                                    neighbors.add((row+1) * breadth + col);
+//                                }
+//                            }
+//                            if (col - 1 >= 0) {
+//                                if (mat[row][col-1] == 0) {
+//                                    result[d][b] = step;
+//                                    neighbors.clear();
+//                                    break;
+//                                } else {
+//                                    neighbors.add(row * breadth + col-1);
+//                                }
+//
+//                            }
+//                            if (col + 1 < breadth) {
+//                                if (mat[row][col+1] == 0) {
+//                                    result[d][b] = step;
+//                                    neighbors.clear();
+//                                    break;
+//                                } else {
+//                                    neighbors.add(row * breadth + col+1);
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return result;
     }
 
     public static void main(String[] args) {
