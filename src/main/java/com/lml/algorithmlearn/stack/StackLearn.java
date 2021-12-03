@@ -279,21 +279,23 @@ public class StackLearn {
 
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
 
+        //时间复杂度O(m+n)
+        //空间复杂度O(n)
         int roomCount = rooms.size();
         Queue<Integer> queue = new LinkedList<>();
         List<Integer> visited = new LinkedList<>();
         queue.add(0);
+        visited.add(0);
         while (!queue.isEmpty()) {
             int index = queue.poll();
-            if (visited.contains(index)) {
-                continue;
-            }
-            visited.add(index);
-            List<Integer> keyList = rooms.get(index);
             roomCount--;
+            List<Integer> keyList = rooms.get(index);
             if (keyList.size() > 0) {
                 for (int key : keyList) {
-                    queue.add(key);
+                    if (!visited.contains(key)) {
+                        visited.add(key);
+                        queue.add(key);
+                    }
                 }
             }
         }
