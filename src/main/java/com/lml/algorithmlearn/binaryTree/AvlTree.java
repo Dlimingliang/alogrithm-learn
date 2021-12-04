@@ -1,7 +1,7 @@
 package com.lml.algorithmlearn.binaryTree;
 
 public class AvlTree {
-    private class TreeNode {
+    private static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -57,6 +57,57 @@ public class AvlTree {
 
     public TreeNode deleteNode(TreeNode root, int key) {
 
+        if (root == null) {
+            return null;
+        }
+
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else if(key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            if (root.left == null && root.right == null) {
+                //没有子节点
+                root = null;
+            } else if (root.right != null) {
+                //存在右节点，后继节点和当前节点替换，然后删除这个节点
+                TreeNode almostLeftNode = getAlmostLeftNode(root.right);
+                root.val = almostLeftNode.val;
+                root.right = deleteNode(root.right, almostLeftNode.val);
+            } else if (root.left != null) {
+                //存在左节点，前置节点和当前节点替换，然后删除这个节点
+                TreeNode almostRightNode = getAlmostRightNode(root.left);
+                root.val = almostRightNode.val;
+                root.left =deleteNode(root.left, almostRightNode.val);
+            }
+        }
+        return root;
+    }
+
+    private TreeNode getAlmostLeftNode(TreeNode treeNode) {
+
+        while (treeNode.left != null) {
+            treeNode = treeNode.left;
+        }
+        return treeNode;
+    }
+
+    private TreeNode getAlmostRightNode(TreeNode treeNode) {
+        while (treeNode.right != null) {
+            treeNode = treeNode.right;
+        }
+        return treeNode;
+    }
+
+    public static void main(String[] args) {
+
+        TreeNode threeLeftLeft = new TreeNode(2);
+        TreeNode threeLeftRight = new TreeNode(4);
+        TreeNode threeRightRight = new TreeNode(7);
+        TreeNode twoRight = new TreeNode(6, null, threeRightRight);
+        TreeNode twoLeft = new TreeNode(3, threeLeftLeft, threeLeftRight);
+        TreeNode root = new TreeNode(5, twoLeft, twoRight);
+        new AvlTree().deleteNode(root, 5);
     }
 
 }
