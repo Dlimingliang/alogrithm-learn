@@ -16,15 +16,39 @@ public class AvlTree {
 
     public TreeNode searchBST(TreeNode root, int val) {
 
+        while (root != null) {
+            if (val == root.val) {
+                return root;
+            }
+            root = val < root.val ? root.left : root.right;
+        }
+        return null;
+    }
+
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+
         if (root == null) {
-            return null;
+            return new TreeNode(val);
         }
-
-        if (root.val == val) {
-            return root;
+        TreeNode pos = root;
+        while (pos != null) {
+            if (val < pos.val) {
+                if (pos.left == null) {
+                    pos.left = new TreeNode(val);
+                    break;
+                } else {
+                    pos = pos.left;
+                }
+            } else {
+                if (pos.right == null) {
+                    pos.right = new TreeNode(val);
+                    break;
+                } else {
+                    pos = pos.right;
+                }
+            }
         }
-
-        return root.val > val ? searchBST(root.left, val) : searchBST(root.right, val);
+        return root;
     }
 
 }
