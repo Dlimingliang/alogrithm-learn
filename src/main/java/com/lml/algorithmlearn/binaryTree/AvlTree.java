@@ -98,16 +98,4 @@ public class AvlTree {
         }
         return treeNode;
     }
-
-    public static void main(String[] args) {
-
-        TreeNode threeLeftLeft = new TreeNode(2);
-        TreeNode threeLeftRight = new TreeNode(4);
-        TreeNode threeRightRight = new TreeNode(7);
-        TreeNode twoRight = new TreeNode(6, null, threeRightRight);
-        TreeNode twoLeft = new TreeNode(3, threeLeftLeft, threeLeftRight);
-        TreeNode root = new TreeNode(5, twoLeft, twoRight);
-        new AvlTree().deleteNode(root, 5);
-    }
-
 }
