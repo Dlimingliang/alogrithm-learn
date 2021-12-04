@@ -16,6 +16,8 @@ public class AvlTree {
 
     public TreeNode searchBST(TreeNode root, int val) {
 
+        //时间复杂度O(n)
+        //空间复杂度O(1)
         while (root != null) {
             if (val == root.val) {
                 return root;
@@ -27,6 +29,8 @@ public class AvlTree {
 
     public TreeNode insertIntoBST(TreeNode root, int val) {
 
+        //时间复杂度O(n)
+        //空间复杂度O(1)
         if (root == null) {
             return new TreeNode(val);
         }
@@ -49,6 +53,10 @@ public class AvlTree {
             }
         }
         return root;
+    }
+
+    public TreeNode deleteNode(TreeNode root, int key) {
+
     }
 
 }
