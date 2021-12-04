@@ -1,101 +1,150 @@
 package com.lml.algorithmlearn.binaryTree;
 
-public class AvlTree {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
+public class AvlTree<E extends Comparable<E>> {
+    private class TreeNode {
+        public E e;
+        public TreeNode left;
+        public TreeNode right;
+        public int height;
+        TreeNode(E e) {
+            this.e = e;
+            this.height = 1;
+        }
+        TreeNode(E e, TreeNode left, TreeNode right) {
+            this.e = e;
             this.left = left;
             this.right = right;
+            this.height = 1;
         }
     }
 
-    public TreeNode searchBST(TreeNode root, int val) {
+    private TreeNode root;
+    private int size;
 
-        //时间复杂度O(n)
-        //空间复杂度O(1)
-        while (root != null) {
-            if (val == root.val) {
-                return root;
-            }
-            root = val < root.val ? root.left : root.right;
-        }
-        return null;
+    public AvlTree(TreeNode root, int size) {
+        this.root = null;
+        this.size = 0;
     }
 
-    public TreeNode insertIntoBST(TreeNode root, int val) {
-
-        //时间复杂度O(n)
-        //空间复杂度O(1)
-        if (root == null) {
-            return new TreeNode(val);
+    private int getHeight(TreeNode treeNode) {
+        if (treeNode != null) {
+            return root.height;
         }
-        TreeNode pos = root;
-        while (pos != null) {
-            if (val < pos.val) {
-                if (pos.left == null) {
-                    pos.left = new TreeNode(val);
-                    break;
-                } else {
-                    pos = pos.left;
-                }
-            } else {
-                if (pos.right == null) {
-                    pos.right = new TreeNode(val);
-                    break;
-                } else {
-                    pos = pos.right;
-                }
-            }
-        }
-        return root;
+        return 0;
     }
 
-    public TreeNode deleteNode(TreeNode root, int key) {
-
-        if (root == null) {
-            return null;
-        }
-
-        if (key < root.val) {
-            root.left = deleteNode(root.left, key);
-        } else if(key > root.val) {
-            root.right = deleteNode(root.right, key);
-        } else {
-            if (root.left == null && root.right == null) {
-                //没有子节点
-                root = null;
-            } else if (root.right != null) {
-                //存在右节点，后继节点和当前节点替换，然后删除这个节点
-                TreeNode almostLeftNode = getAlmostLeftNode(root.right);
-                root.val = almostLeftNode.val;
-                root.right = deleteNode(root.right, almostLeftNode.val);
-            } else if (root.left != null) {
-                //存在左节点，前置节点和当前节点替换，然后删除这个节点
-                TreeNode almostRightNode = getAlmostRightNode(root.left);
-                root.val = almostRightNode.val;
-                root.left =deleteNode(root.left, almostRightNode.val);
-            }
-        }
-        return root;
+    public int getSize() {
+        return size;
     }
 
-    private TreeNode getAlmostLeftNode(TreeNode treeNode) {
-
-        while (treeNode.left != null) {
-            treeNode = treeNode.left;
-        }
-        return treeNode;
+    public boolean isEmpty() {
+        return size == 0;
     }
 
-    private TreeNode getAlmostRightNode(TreeNode treeNode) {
-        while (treeNode.right != null) {
-            treeNode = treeNode.right;
+    public int getBalanceFactory(TreeNode node) {
+        if (node == null) {
+            return 0;
         }
-        return treeNode;
+        return this.getHeight(node.left) - this.getHeight(node.right);
     }
+
+    public boolean isBalance() {
+        return isBalance(this.root);
+    }
+
+    private boolean isBalance(TreeNode node) {
+        if (node == null) {
+            return true;
+        }
+        int balanceFactory = Math.abs(getBalanceFactory(node));
+        if (balanceFactory > 1) {
+            return false;
+        }
+        return isBalance(node.left) && isBalance(node.right);
+    }
+
+    //    public TreeNode searchBST(TreeNode root, int val) {
+//
+//        //时间复杂度O(n)
+//        //空间复杂度O(1)
+//        while (root != null) {
+//            if (val == root.val) {
+//                return root;
+//            }
+//            root = val < root.val ? root.left : root.right;
+//        }
+//        return null;
+//    }
+//
+//    public TreeNode insertIntoBST(TreeNode root, int val) {
+//
+//        //时间复杂度O(n)
+//        //空间复杂度O(1)
+//        if (root == null) {
+//            return new TreeNode(val);
+//        }
+//        TreeNode pos = root;
+//        while (pos != null) {
+//            if (val < pos.val) {
+//                if (pos.left == null) {
+//                    pos.left = new TreeNode(val);
+//                    break;
+//                } else {
+//                    pos = pos.left;
+//                }
+//            } else {
+//                if (pos.right == null) {
+//                    pos.right = new TreeNode(val);
+//                    break;
+//                } else {
+//                    pos = pos.right;
+//                }
+//            }
+//        }
+//        return root;
+//    }
+//
+//    public TreeNode deleteNode(TreeNode root, int key) {
+//
+//        if (root == null) {
+//            return null;
+//        }
+//
+//        if (key < root.val) {
+//            root.left = deleteNode(root.left, key);
+//        } else if(key > root.val) {
+//            root.right = deleteNode(root.right, key);
+//        } else {
+//            if (root.left == null && root.right == null) {
+//                //没有子节点
+//                root = null;
+//            } else if (root.right != null) {
+//                //存在右节点，后继节点和当前节点替换，然后删除这个节点
+//                TreeNode almostLeftNode = getAlmostLeftNode(root.right);
+//                root.val = almostLeftNode.val;
+//                root.right = deleteNode(root.right, almostLeftNode.val);
+//            } else if (root.left != null) {
+//                //存在左节点，前置节点和当前节点替换，然后删除这个节点
+//                TreeNode almostRightNode = getAlmostRightNode(root.left);
+//                root.val = almostRightNode.val;
+//                root.left =deleteNode(root.left, almostRightNode.val);
+//            }
+//        }
+//        return root;
+//    }
+//
+//    private TreeNode getAlmostLeftNode(TreeNode treeNode) {
+//
+//        while (treeNode.left != null) {
+//            treeNode = treeNode.left;
+//        }
+//        return treeNode;
+//    }
+//
+//    private TreeNode getAlmostRightNode(TreeNode treeNode) {
+//        while (treeNode.right != null) {
+//            treeNode = treeNode.right;
+//        }
+//        return treeNode;
+//    }
 }
