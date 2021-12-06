@@ -1,7 +1,7 @@
 package com.lml.algorithmlearn.binaryTree;
 
 public class AvlTree {
-    private class TreeNode {
+    private static class TreeNode {
         public int val;
         public TreeNode left;
         public TreeNode right;
@@ -22,23 +22,23 @@ public class AvlTree {
     private int size;
 
     public AvlTree(TreeNode root, int size) {
-        this.root = null;
+        this.root = root;
         this.size = 0;
     }
 
     private int getHeight(TreeNode treeNode) {
         if (treeNode != null) {
-            return root.height;
+            return treeNode.height;
         }
         return 0;
     }
 
     public int getSize() {
-        return size;
+        return this.size;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return this.size == 0;
     }
 
     public int getBalanceFactory(TreeNode node) {
@@ -87,7 +87,7 @@ public class AvlTree {
         return x;
     }
 
-        public TreeNode searchBST(TreeNode root, int val) {
+    public TreeNode searchBST(TreeNode root, int val) {
 
         //时间复杂度O(n)
         //空间复杂度O(1)
@@ -111,23 +111,10 @@ public class AvlTree {
         if (root == null) {
             return new TreeNode(val);
         }
-        TreeNode pos = root;
-        while (pos != null) {
-            if (val < pos.val) {
-                if (pos.left == null) {
-                    pos.left = new TreeNode(val);
-                    break;
-                } else {
-                    pos = pos.left;
-                }
-            } else {
-                if (pos.right == null) {
-                    pos.right = new TreeNode(val);
-                    break;
-                } else {
-                    pos = pos.right;
-                }
-            }
+        if (val < root.val) {
+            root.left = insertIntoBST(root.left, val);
+        } else if (root.val < val) {
+            root.right = insertIntoBST(root.right, val);
         }
 
         root.height = 1 + Math.max(getHeight(root.left), getHeight(root.right));
@@ -216,5 +203,13 @@ public class AvlTree {
             treeNode = treeNode.right;
         }
         return treeNode;
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(3);
+        AvlTree avlTree = new AvlTree(root, 0);
+        root = avlTree.insertIntoBST(root, 2);
+        root = avlTree.insertIntoBST(root, 1);
+        System.out.println(root);
     }
 }
