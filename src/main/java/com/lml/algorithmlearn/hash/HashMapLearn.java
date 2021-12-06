@@ -1,16 +1,11 @@
 package com.lml.algorithmlearn.hash;
 
-import com.lml.algorithmlearn.array.Array;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class HashMapLearn {
 
@@ -63,7 +58,7 @@ public class HashMapLearn {
     public static String[] findRestaurant(String[] list1, String[] list2) {
 
         //时间复杂度O(l1 + l2)
-        //空间复杂度O(l1 * x)
+        //空间复杂度O(l1  x)
         HashMap<String, Integer> map = new HashMap();
         int minIndex = Integer.MAX_VALUE, num = 0;
         ArrayList<String> stringArrayList = new ArrayList();
@@ -217,6 +212,29 @@ public class HashMapLearn {
         return new ArrayList<>(hashMap.values());
     }
 
+    private HashMap<String, Integer> countMap = new HashMap<>();
+    private List<TreeNode> result = new LinkedList<>();
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+
+        //时间复杂度O(n2)
+        //空间复杂度O(n2)
+        subStrRecursion(root);
+        return result;
+    }
+
+    private String subStrRecursion(TreeNode node) {
+
+        if (node == null) {
+            return "#";
+        }
+        String str = node.val + "," + subStrRecursion(node.left) + "," + subStrRecursion(node.right);
+        this.countMap.put(str, this.countMap.getOrDefault(str, 0) + 1);
+        if (this.countMap.get(str) == 2) {
+            result.add(node);
+        }
+        return str;
+    }
+
     public static void main(String[] args) {
 
 //        System.out.println(isIsomorphic("paper", "title"));
@@ -229,5 +247,24 @@ public class HashMapLearn {
 //        System.out.println(intersect(array, array2));
 
         System.out.println(containsNearbyDuplicate(new int[]{1,2,3,1,2,3}, 2));
+    }
+    
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
