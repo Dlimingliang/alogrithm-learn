@@ -1,7 +1,9 @@
 package com.lml.algorithmlearn.hash;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class HashSetLearn {
@@ -146,10 +148,28 @@ public class HashSetLearn {
         return count;
     }
 
+    public int lengthOfLongestSubstring(String s) {
+
+        int result = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (map.containsKey(ch)) {
+                result = Math.max(result, map.size());
+                int index = map.get(ch);
+                map.clear();
+                i = index;
+            } else {
+                map.put(ch, i);
+            }
+        }
+        return Math.max(result, map.size());
+    }
+
     public static void main(String[] args) {
 
 //        int[] nums = new int[]{4,1,2,1,2};
 //        System.out.println(HashSetLearn.singleNumber(nums));
-        System.out.println(new HashSetLearn().numJewelsInStones("aA", "aAAbbbb"));
+        System.out.println(new HashSetLearn().lengthOfLongestSubstring(""));
     }
 }
