@@ -1,9 +1,7 @@
 package com.lml.algorithmlearn.hash;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class HashSetLearn {
@@ -151,25 +149,40 @@ public class HashSetLearn {
     public int lengthOfLongestSubstring(String s) {
 
         int result = 0;
-        Map<Character, Integer> map = new HashMap<>();
+        Set<Character> set = new HashSet<>();
+        int start = 0;
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
-            if (map.containsKey(ch)) {
-                result = Math.max(result, map.size());
-                int index = map.get(ch);
-                map.clear();
-                i = index;
+            if (set.contains(ch)) {
+                result = Math.max(result, set.size());
+                set.remove(s.charAt(start));
+                start++;
+                i --;
             } else {
-                map.put(ch, i);
+                set.add(ch);
             }
         }
-        return Math.max(result, map.size());
+        return Math.max(result, set.size());
+
+//        int result = 0, right = -1, length = s.length();
+//        Set<Character> set = new HashSet<>();
+//        for (int i = 0; i < length; i++) {
+//            if (i != 0) {
+//                set.remove(s.charAt(i - 1));
+//            }
+//            while (right + 1 < length && !set.contains(s.charAt(right + 1))) {
+//                set.add(s.charAt(right + 1));
+//                ++right;
+//            }
+//            result = Math.max(result, right - i + 1);
+//        }
+//        return result;
     }
 
     public static void main(String[] args) {
 
 //        int[] nums = new int[]{4,1,2,1,2};
 //        System.out.println(HashSetLearn.singleNumber(nums));
-        System.out.println(new HashSetLearn().lengthOfLongestSubstring(""));
+        System.out.println(new HashSetLearn().lengthOfLongestSubstring("dvdf"));
     }
 }
