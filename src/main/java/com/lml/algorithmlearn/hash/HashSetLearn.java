@@ -1,10 +1,8 @@
 package com.lml.algorithmlearn.hash;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 public class HashSetLearn {
 
@@ -128,11 +126,30 @@ public class HashSetLearn {
         return totalNum;
     }
 
+    public int numJewelsInStones(String jewels, String stones) {
+
+        //n为jewels字符串的长度, m为stones字符串的长度
+        //时间复杂度O(m + n)
+        //空间复杂度O(n)
+        int count = 0;
+        Set<String> map = new HashSet<>();
+        for (int i = 0; i < jewels.length(); i++) {
+            map.add(String.valueOf(jewels.charAt(i)));
+        }
+
+        for (int i = 0; i < stones.length(); i++) {
+            String s = String.valueOf(stones.charAt(i));
+            if (map.contains(s)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
 
 //        int[] nums = new int[]{4,1,2,1,2};
 //        System.out.println(HashSetLearn.singleNumber(nums));
-
-        System.out.println(isHappy(2));
+        System.out.println(new HashSetLearn().numJewelsInStones("aA", "aAAbbbb"));
     }
 }
