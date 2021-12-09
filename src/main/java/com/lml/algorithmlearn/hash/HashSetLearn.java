@@ -1,7 +1,9 @@
 package com.lml.algorithmlearn.hash;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class HashSetLearn {
@@ -179,10 +181,30 @@ public class HashSetLearn {
 //        return result;
     }
 
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+
+        //时间复杂度O(n^2)
+        //空间复杂度O(n^2)
+        Map<Integer, Integer> countAB = new HashMap<>();
+        for (int i: nums1) {
+            for (int j : nums2) {
+                countAB.put(i + j, countAB.getOrDefault(i + j, 0) + 1);
+            }
+        }
+
+        int result = 0;
+        for (int i: nums3) {
+            for (int j : nums4) {
+                if (countAB.containsKey(-i - j)) {
+                    result += countAB.get(-i - j);
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
-//        int[] nums = new int[]{4,1,2,1,2};
-//        System.out.println(HashSetLearn.singleNumber(nums));
-        System.out.println(new HashSetLearn().lengthOfLongestSubstring("dvdf"));
+        System.out.println(new HashSetLearn().fourSumCount(new int[] {1,2}, new int[]{-2,-1}, new int[]{-1,2}, new int[]{0,2}));
     }
 }
