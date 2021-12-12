@@ -158,9 +158,29 @@ public class RecursionLearn {
         return result;
     }
 
+    Map<Integer, Integer> climbStairsCache = new HashMap<>();
+    public int climbStairs(int n) {
+
+        if (climbStairsCache.containsKey(n)) {
+            return climbStairsCache.get(n);
+        }
+
+        int result;
+
+        if (n == 0) {
+            result = 1;
+        } else if (n < 0) {
+            result = 0;
+        } else {
+            result = climbStairs(n - 1) + climbStairs(n - 2);
+        }
+        climbStairsCache.put(n, result);
+        return result;
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(new RecursionLearn().fib(4));
+        System.out.println(new RecursionLearn().climbStairs(44));
     }
     
     public static class ListNode {
