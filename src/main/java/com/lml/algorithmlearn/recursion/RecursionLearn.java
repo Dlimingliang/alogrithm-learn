@@ -51,13 +51,33 @@ public class RecursionLearn {
 //        return pre.next;
     }
 
+    public ListNode reverseList(ListNode head) {
+
+        //递归方式
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        return reverseListRecursion(head, null);
+    }
+
+    private ListNode reverseListRecursion(ListNode currentNode, ListNode pre) {
+
+        if (currentNode == null) {
+            return pre;
+        }
+
+        ListNode next = currentNode.next;
+        currentNode.next = pre;
+        return reverseListRecursion(next, currentNode);
+    }
+
     public static void main(String[] args) {
 
         ListNode four = new ListNode(4);
         ListNode three = new ListNode(3, four);
         ListNode two = new ListNode(2, three);
         ListNode root = new ListNode(1, two);
-        System.out.println(new RecursionLearn().swapPairs(root));
+        ListNode result = new RecursionLearn().reverseList(root);
+        System.out.println(result);
     }
     
     public static class ListNode {
