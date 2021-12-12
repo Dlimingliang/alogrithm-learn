@@ -53,10 +53,20 @@ public class RecursionLearn {
 
     public ListNode reverseList(ListNode head) {
 
-        //递归方式
-        //时间复杂度O(n)
-        //空间复杂度O(n)
-        return reverseListRecursion(head, null);
+//        //递归方式
+//        //时间复杂度O(n)
+//        //空间复杂度O(n)
+//        return reverseListRecursion(head, null);
+
+        //循环方式
+        ListNode pre = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
     }
 
     private ListNode reverseListRecursion(ListNode currentNode, ListNode pre) {
