@@ -88,6 +88,23 @@ public class RecursionLearn {
         return reverseListRecursion(next, currentNode);
     }
 
+    public TreeNode searchBST(TreeNode root, int val) {
+
+        //递归方式 h为树的高度
+        //时间复杂度O(h)
+        //空间复杂度O(h)
+        TreeNode result;
+        if (root == null || root.val == val) {
+            return root;
+        }
+        if (root.val < val) {
+            result = searchBST(root.right, val);
+        } else {
+            result = searchBST(root.left, val);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
         ListNode four = new ListNode(4);
@@ -104,5 +121,18 @@ public class RecursionLearn {
         ListNode() {}
         ListNode(int val) { this.val = val; }
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+    
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
