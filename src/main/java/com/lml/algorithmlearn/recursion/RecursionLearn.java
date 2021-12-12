@@ -1,5 +1,9 @@
 package com.lml.algorithmlearn.recursion;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class RecursionLearn {
 
     public void reverseString(char[] s) {
@@ -105,14 +109,40 @@ public class RecursionLearn {
         return result;
     }
 
+    public List<Integer> getRow(int rowIndex) {
+
+        if (rowIndex == 0) {
+            List<Integer> integerList = new LinkedList<>();
+            integerList.add(1);
+            return integerList;
+        }
+
+        if (rowIndex == 1) {
+            List<Integer> integerList = new LinkedList<>();
+            integerList.add(1);
+            integerList.add(1);
+            return integerList;
+        }
+
+        List<Integer> preRow = getRow(rowIndex - 1);
+        List<Integer> result = new ArrayList<>();
+        if (rowIndex > 1) {
+            for (int i = 0; i <= rowIndex; i++) {
+                if (i == 0 || i == rowIndex) {
+                    result.add(1);
+                } else {
+                    result.add(preRow.get(i - 1) + preRow.get(i));
+                }
+            }
+        } else {
+            result = preRow;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
-        ListNode four = new ListNode(4);
-        ListNode three = new ListNode(3, four);
-        ListNode two = new ListNode(2, three);
-        ListNode root = new ListNode(1, two);
-        ListNode result = new RecursionLearn().reverseList(root);
-        System.out.println(result);
+        System.out.println(new RecursionLearn().getRow(3));
     }
     
     public static class ListNode {
