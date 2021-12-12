@@ -1,8 +1,10 @@
 package com.lml.algorithmlearn.recursion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class RecursionLearn {
 
@@ -140,9 +142,25 @@ public class RecursionLearn {
         return result;
     }
 
+    Map<Integer, Integer> fibCache = new HashMap<>();
+    public int fib(int n) {
+
+        if (fibCache.containsKey(n)) {
+            return fibCache.get(n);
+        }
+        int result;
+        if (n < 2) {
+            result = n;
+        } else {
+            result = fib(n - 1) + fib(n - 2);
+        }
+        fibCache.put(n, result);
+        return result;
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(new RecursionLearn().getRow(3));
+        System.out.println(new RecursionLearn().fib(4));
     }
     
     public static class ListNode {
