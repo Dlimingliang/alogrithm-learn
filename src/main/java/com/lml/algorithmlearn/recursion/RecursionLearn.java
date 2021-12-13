@@ -214,9 +214,40 @@ public class RecursionLearn {
         return result;
     }
 
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+
+        ListNode root = new ListNode(0);
+        ListNode pre = root;
+        ListNode node1 = list1;
+        ListNode node2 = list2;
+        while (node1 != null || node2 != null) {
+            if (node1 == null || (node2 != null && node1.val > node2.val)) {
+                pre.next = node2;
+                pre = pre.next;
+                node2 = node2.next;
+                continue;
+            }
+            if (node2 == null || node1.val <= node2.val) {
+                pre.next = node1;
+                pre = pre.next;
+                node1 = node1.next;
+                continue;
+            }
+        }
+        return root.next;
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(new RecursionLearn().myPow(2,3));
+        ListNode list13 = new ListNode(4);
+        ListNode list12 = new ListNode(2, list13);
+        ListNode list11 = new ListNode(1, list12);
+
+        ListNode list23 = new ListNode(4);
+        ListNode list22 = new ListNode(2, list23);
+        ListNode list21 = new ListNode(1, list22);
+
+        System.out.println(new RecursionLearn().mergeTwoLists(list11,list21));
     }
     
     public static class ListNode {
