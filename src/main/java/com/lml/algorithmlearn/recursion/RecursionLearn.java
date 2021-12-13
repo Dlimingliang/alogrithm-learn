@@ -178,11 +178,6 @@ public class RecursionLearn {
         return result;
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(new RecursionLearn().climbStairs(44));
-    }
-
     public int maxDepth(TreeNode root) {
 
         //h为树的高度 n为节点数
@@ -192,6 +187,30 @@ public class RecursionLearn {
             return 0;
         }
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    public double myPow(double x, int n) {
+
+        if (n < 0) {
+            x = 1 / x;
+            n = Math.abs(n);
+        }
+        return myPowRecursion(x, n);
+    }
+
+    private double myPowRecursion(double x, long n) {
+
+        if (n == 0) {
+            return 1;
+        }
+
+        double y = myPowRecursion(x, n / 2);
+        return n % 2 == 0 ? y * y : y * y * x;
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(new RecursionLearn().myPow(2,3));
     }
     
     public static class ListNode {
