@@ -205,7 +205,13 @@ public class RecursionLearn {
         }
 
         double y = myPowRecursion(x, n / 2);
-        return n % 2 == 0 ? y * y : y * y * x;
+        double result;
+        if (n % 2 == 0) {
+            result = y * y;
+        } else {
+            result = y * y * x;
+        }
+        return result;
     }
 
     public static void main(String[] args) {
