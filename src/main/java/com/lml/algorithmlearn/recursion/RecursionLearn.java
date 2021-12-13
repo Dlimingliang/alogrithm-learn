@@ -182,6 +182,17 @@ public class RecursionLearn {
 
         System.out.println(new RecursionLearn().climbStairs(44));
     }
+
+    public int maxDepth(TreeNode root) {
+
+        //h为树的高度 n为节点数
+        //时间复杂度O(n)
+        //空间复杂度O(h)
+        if (root == null) {
+            return 0;
+        }
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
     
     public static class ListNode {
         int val;
