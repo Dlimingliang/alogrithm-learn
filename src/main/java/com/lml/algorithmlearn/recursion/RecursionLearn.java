@@ -48,10 +48,10 @@ public class RecursionLearn {
 //        ListNode temp = pre;
 //        while (temp.next != null && temp.next.next != null) {
 //            ListNode node1 = temp.next;
-//            ListNode node2 = temp.next.next;
-//            temp.next = node2;
-//            node1.next = node2.next;
-//            node2.next = node1;
+//            ListNode list2 = temp.next.next;
+//            temp.next = list2;
+//            node1.next = list2.next;
+//            list2.next = node1;
 //            temp = node1;
 //        }
 //        return pre.next;
@@ -218,19 +218,17 @@ public class RecursionLearn {
 
         ListNode root = new ListNode(0);
         ListNode pre = root;
-        ListNode node1 = list1;
-        ListNode node2 = list2;
-        while (node1 != null || node2 != null) {
-            if (node1 == null || (node2 != null && node1.val > node2.val)) {
-                pre.next = node2;
+        while (list1 != null || list2 != null) {
+            if (list1 == null || (list2 != null && list1.val > list2.val)) {
+                pre.next = list2;
                 pre = pre.next;
-                node2 = node2.next;
+                list2 = list2.next;
                 continue;
             }
-            if (node2 == null || node1.val <= node2.val) {
-                pre.next = node1;
+            if (list2 == null || list1.val <= list2.val) {
+                pre.next = list1;
                 pre = pre.next;
-                node1 = node1.next;
+                list1 = list1.next;
                 continue;
             }
         }
