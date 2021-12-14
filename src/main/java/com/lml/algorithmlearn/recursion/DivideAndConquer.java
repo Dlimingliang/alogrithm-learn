@@ -148,6 +148,8 @@ public class DivideAndConquer {
 
     public boolean searchMatrixBetter(int[][] matrix, int target) {
 
+        //时间复杂度O(m+n)
+        // 空间复杂度O(1)
         int m = matrix.length;
         int n = matrix[0].length;
         int x = 0, y = n - 1;
