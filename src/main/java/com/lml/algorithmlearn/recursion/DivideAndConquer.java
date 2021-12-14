@@ -94,9 +94,13 @@ public class DivideAndConquer {
             return true;
         }
 
+        if (min >= node.val || node.val >= max) {
+            return false;
+        }
+
         boolean leftResult = isValidBSTRecrusion(node.left, min, node.val) ;
         boolean rightResult = isValidBSTRecrusion(node.right, node.val, max);
-        return leftResult && rightResult && min < node.val && node.val < max;
+        return leftResult && rightResult;
     }
 
     public static void main(String[] args) {
