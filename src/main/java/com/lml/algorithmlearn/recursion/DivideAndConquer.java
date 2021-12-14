@@ -54,9 +54,9 @@ public class DivideAndConquer {
         //外层循环控制合并排序的个数，按照1，2，4，8，16的次数递增
         for (int i = 1; i < nums.length; i = i + i) {
             //内层控制按照外层合并排序的个数来计算需要多少次合并计算
-            for (int j = 0; j < nums.length; j = j + 2 * i) {
+            for (int j = 0; j < nums.length; j = j + 2  i) {
                 //开始合并
-                mergeBottomUp(nums, j, j+ i - 1, Math.min(j + 2 * i - 1, nums.length - 1));
+                mergeBottomUp(nums, j, j+ i - 1, Math.min(j + 2  i - 1, nums.length - 1));
             }
         }
         return nums;
@@ -83,8 +83,37 @@ public class DivideAndConquer {
         }
     }
 
+    public boolean isValidBST(TreeNode root) {
+
+        return isValidBSTRecrusion(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValidBSTRecrusion(TreeNode node, long min, long max) {
+
+        if (node == null) {
+            return true;
+        }
+
+        boolean leftResult = isValidBSTRecrusion(node.left, min, node.val) ;
+        boolean rightResult = isValidBSTRecrusion(node.right, node.val, max);
+        return leftResult && rightResult && min < node.val && node.val < max;
+    }
+
     public static void main(String[] args) {
         System.out.println(Arrays.toString(new DivideAndConquer().sortArrayBottomUp(new int[] {1,4,5,6,7,8,2,3})));
+    }
+    
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 
 }
