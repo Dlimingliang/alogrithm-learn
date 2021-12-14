@@ -146,6 +146,23 @@ public class DivideAndConquer {
         }
     }
 
+    public boolean searchMatrixBetter(int[][] matrix, int target) {
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int x = 0, y = n - 1;
+        while (x < m && y >= 0) {
+            if (matrix[x][y] == target) {
+                return true;
+            } else if (matrix[x][y] < target) {
+                x++;
+            } else {
+                y--;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         System.out.println(Arrays.toString(new DivideAndConquer().sortArrayBottomUp(new int[] {1,4,5,6,7,8,2,3})));
     }
