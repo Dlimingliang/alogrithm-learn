@@ -8,6 +8,8 @@ public class DivideAndConquer {
 
     public int[] sortArray(int[] nums) {
 
+        //时间复杂度 因为每次合并的时候需要的时间复杂度为O(n),并且我们需要合并Olog(n)次. 所以归并排序的时间复杂度为O(nlogn)
+        //空间复杂度 我们需要额外O(n)的空间来存储中间元素，同时我们的递归深度为Olog(n). 总共我们需要的空间为O(n)
         if (nums.length <= 1) {
             return nums;
         }
