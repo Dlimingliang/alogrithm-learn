@@ -1,8 +1,6 @@
 package com.lml.algorithmlearn.recursion;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DivideAndConquer {
 
@@ -53,18 +51,36 @@ public class DivideAndConquer {
 
     public int[] sortArrayBottomUp(int[] nums) {
 
-        List<int[]> integers = new LinkedList<>();
-        for (int i = 0; i < nums.length; i++) {
-            integers.add(new int[]{nums[i]});
+        //外层循环控制合并排序的个数，按照1，2，4，8，16的次数递增
+        for (int i = 1; i < nums.length; i = i + i) {
+            //内层控制按照外层合并排序的个数来计算需要多少次合并计算
+            for (int j = 0; j < nums.length; j = j + 2 * i) {
+                //开始合并
+                mergeBottomUp(nums, j, j+ i - 1, Math.min(j + 2 * i - 1, nums.length - 1));
+            }
         }
-        while (integers.size() > 1) {
-            int[] list1 = integers.get(0);
-            int[] list2 = integers.get(1);
-            integers.remove(0);
-            integers.remove(0);
-            integers.add(mergeList(list1, list2));
+        return nums;
+    }
+
+    private static void mergeBottomUp(int[] nums, int min, int mid, int max) {
+
+        int i = min;
+        int j = mid + 1;
+        int[] aux = new int[nums.length];
+        for (int k = 0; k < nums.length; k++) {
+           aux[k] = nums[k];
         }
-        return integers.get(0);
+        for (int k = min; k <= max; k++) {
+            if (i > mid) {
+                nums[k] = aux[j++];
+            } else if(j > max) {
+                nums[k] = aux[i++];
+            } else if(aux[i] < aux[j]) {
+                nums[k] =  aux[i++];
+            } else {
+                nums[k] = aux[j++];
+            }
+        }
     }
 
     public static void main(String[] args) {
