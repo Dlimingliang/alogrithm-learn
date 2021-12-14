@@ -1,6 +1,8 @@
 package com.lml.algorithmlearn.recursion;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DivideAndConquer {
 
@@ -47,8 +49,24 @@ public class DivideAndConquer {
         return result;
     }
 
+    public int[] sortArrayBottomUp(int[] nums) {
+
+        List<int[]> integers = new LinkedList<>();
+        for (int i = 0; i < nums.length; i++) {
+            integers.add(new int[]{nums[i]});
+        }
+        while (integers.size() > 1) {
+            int[] list1 = integers.get(0);
+            int[] list2 = integers.get(1);
+            integers.remove(0);
+            integers.remove(0);
+            integers.add(mergeList(list1, list2));
+        }
+        return integers.get(0);
+    }
+
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(new DivideAndConquer().sortArray(new int[] {1,4,5,6,7,8,2,3})));
+        System.out.println(Arrays.toString(new DivideAndConquer().sortArrayBottomUp(new int[] {1,4,5,6,7,8,2,3})));
     }
 
 }
