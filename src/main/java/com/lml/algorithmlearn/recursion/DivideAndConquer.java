@@ -54,9 +54,9 @@ public class DivideAndConquer {
         //外层循环控制合并排序的个数，按照1，2，4，8，16的次数递增
         for (int i = 1; i < nums.length; i = i + i) {
             //内层控制按照外层合并排序的个数来计算需要多少次合并计算
-            for (int j = 0; j < nums.length; j = j + 2  i) {
+            for (int j = 0; j < nums.length; j = j + 2 * i) {
                 //开始合并
-                mergeBottomUp(nums, j, j+ i - 1, Math.min(j + 2  i - 1, nums.length - 1));
+                mergeBottomUp(nums, j, j+ i - 1, Math.min(j + 2 * i - 1, nums.length - 1));
             }
         }
         return nums;
