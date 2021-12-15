@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class NQueenProblem {
+public class NQueenProblemSecond {
 
     private Map<String, Set<String>> attackPoint = new HashMap<>();
     public int totalNQueens(int n) {
@@ -92,6 +92,6 @@ public class NQueenProblem {
     }
 
     public static void main(String[] args) {
-        System.out.println(new NQueenProblem().totalNQueens(1));
+        System.out.println(new NQueenProblemSecond().totalNQueens(1));
     }
 }
