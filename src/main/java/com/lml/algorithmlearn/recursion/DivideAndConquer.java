@@ -1,6 +1,8 @@
 package com.lml.algorithmlearn.recursion;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DivideAndConquer {
 
@@ -146,6 +148,7 @@ public class DivideAndConquer {
         }
     }
 
+
     public boolean searchMatrixBetter(int[][] matrix, int target) {
 
         //时间复杂度O(m+n)
@@ -165,8 +168,55 @@ public class DivideAndConquer {
         return false;
     }
 
+    private void quickSort(int[] nums) {
+
+        System.out.println(Arrays.toString(quickSortRecursion(nums)));
+    }
+
+    private int[] quickSortRecursion(int[] nums) {
+
+        if (nums.length <= 1) {
+            return nums;
+        }
+
+        int val = nums[0];
+        List<Integer> leftList = new LinkedList();
+        List<Integer> rightList = new LinkedList();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < val) {
+                leftList.add(nums[i]);
+            } else if (nums[i] > val) {
+                rightList.add(nums[i]);
+            }
+        }
+        int[] leftArray = new int[leftList.size()];
+        for (int i = 0; i < leftList.size(); i++) {
+            leftArray[i] = leftList.get(i);
+        }
+        int[] rightArray = new int[rightList.size()];
+        for (int i = 0; i < rightList.size(); i++) {
+            rightArray[i] = rightList.get(i);
+        }
+
+        return quickSortConcat(quickSortRecursion(leftArray), val, quickSortRecursion(rightArray));
+    }
+
+    private int[] quickSortConcat(int[] nums1, int val, int[] nums2) {
+
+        int[] result = new int[nums1.length + 1 + nums2.length];
+        int index = 0;
+        for (int i = 0; i < nums1.length; i++) {
+            result[index++] = nums1[i];
+        }
+        result[index++] = val;
+        for (int i = 0; i < nums2.length; i++) {
+            result[index++] = nums2[i];
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(new DivideAndConquer().sortArrayBottomUp(new int[] {1,4,5,6,7,8,2,3})));
+        new DivideAndConquer().quickSort(new int[]{1,5,3,2,8,7,6,4});
     }
     
     public class TreeNode {
