@@ -2,8 +2,11 @@ package com.lml.algorithmlearn.recursion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Backtracking {
@@ -99,6 +102,101 @@ public class Backtracking {
         }
     }
 
+    public void solveSudoku(char[][] board) {
+
+        int x = board[0].length;
+        int y = board.length;
+        List<List<Character>> rowCheckList = new ArrayList<>(y);
+        List<List<Character>> colCheckList = new ArrayList<>(x);
+        Map<String, List<Character>> blocCheckkMap = new HashMap<>();
+        backTracking(board, x, y, 0, 0, rowCheckList, colCheckList, blocCheckkMap);
+    }
+
+    private void backTracking(char[][] board, int x, int y, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
+
+        if (row == 10) {
+            return;
+        }
+
+        if (board[row][col] != '.') {
+            placeNum(board, board[row][col], x, y, rowCheckList, colCheckList, blocCheckkMap);
+        } else {
+            for (int i = 1; i < 10; i++) {
+                char num = (char)('0' + i);
+                if (isValid(num, row, col, rowCheckList, colCheckList, blocCheckkMap)) {
+                    placeNum(board, num, row, col, rowCheckList, colCheckList, blocCheckkMap);
+                    if (col == 9) {
+                        backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
+                    } else {
+                        backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
+                    }
+                    removeNum(board, num, row, col, rowCheckList, colCheckList, blocCheckkMap);
+                }
+            }
+        }
+    }
+
+    private boolean isValid(char num, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
+
+        List<Character> rowList = rowCheckList.get(row);
+        if (rowList.contains(num)) {
+            return false;
+        }
+        List<Character> colList = colCheckList.get(row);
+        if (colList.contains(num)) {
+            return false;
+        }
+        int rowIndex = row / 3;
+        int colIndex = col / 3;
+        List<Character> blockList = blocCheckkMap.getOrDefault(rowIndex + "" + colIndex, new LinkedList<>());
+        if (blockList.contains(num)) {
+            return false;
+        }
+        return true;
+    }
+
+    private void placeNum(char[][] board, char num, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
+
+        board[row][col] = num;
+
+        List<Character> rowList = rowCheckList.get(row);
+        if (rowList == null) {
+            rowList = new LinkedList<>();
+        }
+        rowList.add(num);
+
+        List<Character> colList = colCheckList.get(row);
+        if (colList == null) {
+            colList = new LinkedList<>();
+        }
+        colList.add(num);
+
+        int rowIndex = row / 3;
+        int colIndex = col / 3;
+        List<Character> blockList = blocCheckkMap.getOrDefault(rowIndex + "" + colIndex, new LinkedList<>());
+        blockList.add(num);
+    }
+
+    private void removeNum(char[][] board, char num, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
+        board[row][col] = '.';
+
+        List<Character> rowList = rowCheckList.get(row);
+        if (rowList == null) {
+            rowList = new LinkedList<>();
+        }
+        rowList.remove(num);
+
+        List<Character> colList = colCheckList.get(row);
+        if (colList == null) {
+            colList = new LinkedList<>();
+        }
+        colList.remove(num);
+
+        int rowIndex = row / 3;
+        int colIndex = col / 3;
+        List<Character> blockList = blocCheckkMap.getOrDefault(rowIndex + "" + colIndex, new LinkedList<>());
+        blockList.remove(num);
+    }
 
 
     public static void main(String[] args) {
