@@ -107,25 +107,37 @@ public class Backtracking {
         int x = board[0].length;
         int y = board.length;
         List<List<Character>> rowCheckList = new ArrayList<>(y);
+        for (int i = 0; i < y; i++) {
+            rowCheckList.add(i, new LinkedList<>());
+        }
         List<List<Character>> colCheckList = new ArrayList<>(x);
+        for (int i = 0; i < y; i++) {
+            colCheckList.add(i, new LinkedList<>());
+        }
         Map<String, List<Character>> blocCheckkMap = new HashMap<>();
         backTracking(board, x, y, 0, 0, rowCheckList, colCheckList, blocCheckkMap);
+        System.out.println(board);
     }
 
     private void backTracking(char[][] board, int x, int y, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
 
-        if (row == 10) {
+        if (row == 9) {
             return;
         }
 
         if (board[row][col] != '.') {
-            placeNum(board, board[row][col], x, y, rowCheckList, colCheckList, blocCheckkMap);
+            placeNum(board, board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap);
+            if (col == 8) {
+                backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
+            } else {
+                backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
+            }
         } else {
             for (int i = 1; i < 10; i++) {
                 char num = (char)('0' + i);
                 if (isValid(num, row, col, rowCheckList, colCheckList, blocCheckkMap)) {
                     placeNum(board, num, row, col, rowCheckList, colCheckList, blocCheckkMap);
-                    if (col == 9) {
+                    if (col == 8) {
                         backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
                     } else {
                         backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
@@ -160,36 +172,26 @@ public class Backtracking {
         board[row][col] = num;
 
         List<Character> rowList = rowCheckList.get(row);
-        if (rowList == null) {
-            rowList = new LinkedList<>();
-        }
         rowList.add(num);
 
         List<Character> colList = colCheckList.get(row);
-        if (colList == null) {
-            colList = new LinkedList<>();
-        }
         colList.add(num);
 
         int rowIndex = row / 3;
         int colIndex = col / 3;
-        List<Character> blockList = blocCheckkMap.getOrDefault(rowIndex + "" + colIndex, new LinkedList<>());
+        String key = rowIndex + "" + colIndex;
+        List<Character> blockList = blocCheckkMap.getOrDefault(key, new LinkedList<>());
         blockList.add(num);
+        blocCheckkMap.put(key, blockList);
     }
 
     private void removeNum(char[][] board, char num, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
         board[row][col] = '.';
 
         List<Character> rowList = rowCheckList.get(row);
-        if (rowList == null) {
-            rowList = new LinkedList<>();
-        }
         rowList.remove(num);
 
         List<Character> colList = colCheckList.get(row);
-        if (colList == null) {
-            colList = new LinkedList<>();
-        }
         colList.remove(num);
 
         int rowIndex = row / 3;
@@ -200,7 +202,16 @@ public class Backtracking {
 
 
     public static void main(String[] args) {
-        new Backtracking().solveNQueens(4);
+        char[] char1 = new char[]{'5','3','.','.','7','.','.','.','.'};
+        char[] char2 = new char[]{'6','.','.','1','9','5','.','.','.'};
+        char[] char3 = new char[]{'.','9','8','.','.','.','.','6','.'};
+        char[] char4 = new char[]{'8','.','.','.','6','.','.','.','3'};
+        char[] char5 = new char[]{'4','.','.','8','.','3','.','.','1'};
+        char[] char6 = new char[]{'7','.','.','.','2','.','.','.','6'};
+        char[] char7 = new char[]{'.','6','.','.','.','.','2','8','.'};
+        char[] char8 = new char[]{'.','.','.','4','1','9','.','.','5'};
+        char[] char9 = new char[]{'.','.','.','.','8','.','.','7','9'};
+        new Backtracking().solveSudoku(new char[][]{char1, char2, char3, char4, char5, char6, char7, char8, char9});
     }
 
 }
