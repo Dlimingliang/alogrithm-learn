@@ -265,6 +265,31 @@ public class Backtracking {
         combineNum[index] = 0;
     }
 
+    List<Integer> temp = new ArrayList<Integer>();
+    List<List<Integer>> ans = new ArrayList<List<Integer>>();
+
+    public List<List<Integer>> combineBetter(int n, int k) {
+        dfs(1, n, k);
+        return ans;
+    }
+
+    public void dfs(int cur, int n, int k) {
+        // 剪枝：temp 长度加上区间 [cur, n] 的长度小于 k，不可能构造出长度为 k 的 temp
+        if (temp.size() + (n - cur + 1) < k) {
+            return;
+        }
+        // 记录合法的答案
+        if (temp.size() == k) {
+            ans.add(new ArrayList<Integer>(temp));
+            return;
+        }
+        // 考虑选择当前位置
+        temp.add(cur);
+        dfs(cur + 1, n, k);
+        temp.remove(temp.size() - 1);
+        // 考虑不选择当前位置
+        dfs(cur + 1, n, k);
+    }
 
     public static void main(String[] args) {
 //        char[] char1 = new char[]{'5','3','.','.','7','.','.','.','.'};
@@ -277,7 +302,7 @@ public class Backtracking {
 //        char[] char8 = new char[]{'.','.','.','4','1','9','.','.','5'};
 //        char[] char9 = new char[]{'.','.','.','.','8','.','.','7','9'};
 //        new Backtracking().solveSudoku(new char[][]{char1, char2, char3, char4, char5, char6, char7, char8, char9});
-        new Backtracking().combine(1,1);
+        new Backtracking().combineBetter(4,2);
     }
 
 }
