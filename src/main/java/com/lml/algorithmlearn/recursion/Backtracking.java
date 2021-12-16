@@ -126,11 +126,14 @@ public class Backtracking {
         }
 
         if (board[row][col] != '.') {
-            placeNum(board, board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap);
-            if (col == 8) {
-                backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
-            } else {
-                backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
+            if (isValid(board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap)) {
+                placeNum(board, board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap);
+                if (col == 8) {
+                    backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
+                } else {
+                    backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
+                }
+                removeNum(board, board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap);
             }
         } else {
             for (int i = 1; i < 10; i++) {
@@ -189,15 +192,15 @@ public class Backtracking {
         board[row][col] = '.';
 
         List<Character> rowList = rowCheckList.get(row);
-        rowList.remove(num);
+        rowList.remove(new Character(num));
 
         List<Character> colList = colCheckList.get(row);
-        colList.remove(num);
+        colList.remove(new Character(num));
 
         int rowIndex = row / 3;
         int colIndex = col / 3;
         List<Character> blockList = blocCheckkMap.getOrDefault(rowIndex + "" + colIndex, new LinkedList<>());
-        blockList.remove(num);
+        blockList.remove(new Character(num));
     }
 
 
