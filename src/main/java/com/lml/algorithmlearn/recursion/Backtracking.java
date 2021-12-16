@@ -102,6 +102,8 @@ public class Backtracking {
         }
     }
 
+    private boolean soduvalid = false;
+    private List<int[]> spaces = new ArrayList<int[]>();
     public void solveSudoku(char[][] board) {
 
         int x = board[0].length;
@@ -115,40 +117,40 @@ public class Backtracking {
             colCheckList.add(i, new LinkedList<>());
         }
         Map<String, List<Character>> blocCheckkMap = new HashMap<>();
-        backTracking(board, x, y, 0, 0, rowCheckList, colCheckList, blocCheckkMap);
+
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                if (board[i][j] == '.') {
+                    spaces.add(new int[]{i, j});
+                } else {
+                    placeNum(board, board[i][j], i, j, rowCheckList, colCheckList, blocCheckkMap);
+                }
+            }
+        }
+
+        backTracking(board, 0, rowCheckList, colCheckList, blocCheckkMap);
         System.out.println(board);
     }
 
-    private void backTracking(char[][] board, int x, int y, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
+    private void backTracking(char[][] board, int n, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
 
-        if (row == 9) {
+        if (n == spaces.size()) {
+            soduvalid = true;
             return;
         }
 
-        if (board[row][col] != '.') {
-            if (isValid(board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap)) {
-                placeNum(board, board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap);
-                if (col == 8) {
-                    backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
-                } else {
-                    backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
-                }
-                removeNum(board, board[row][col], row, col, rowCheckList, colCheckList, blocCheckkMap);
-            }
-        } else {
-            for (int i = 1; i < 10; i++) {
-                char num = (char)('0' + i);
-                if (isValid(num, row, col, rowCheckList, colCheckList, blocCheckkMap)) {
-                    placeNum(board, num, row, col, rowCheckList, colCheckList, blocCheckkMap);
-                    if (col == 8) {
-                        backTracking(board, x, y, row + 1, 0, rowCheckList, colCheckList, blocCheckkMap);
-                    } else {
-                        backTracking(board, x, y, row, col + 1, rowCheckList, colCheckList, blocCheckkMap);
-                    }
-                    removeNum(board, num, row, col, rowCheckList, colCheckList, blocCheckkMap);
-                }
+        int[] space = spaces.get(n);
+        int i = space[0], j = space[1];
+        for (int k = 0; k < 9 && !soduvalid; k++) {
+
+            char ch = (char) (k + '0' + 1);
+            if (isValid(ch, i, j, rowCheckList, colCheckList, blocCheckkMap)) {
+                placeNum(board, ch, i, j, rowCheckList, colCheckList, blocCheckkMap);
+                backTracking(board, n + 1, rowCheckList, colCheckList, blocCheckkMap);
+                removeNum(board, ch, i, j, rowCheckList, colCheckList, blocCheckkMap);
             }
         }
+
     }
 
     private boolean isValid(char num, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
@@ -157,7 +159,7 @@ public class Backtracking {
         if (rowList.contains(num)) {
             return false;
         }
-        List<Character> colList = colCheckList.get(row);
+        List<Character> colList = colCheckList.get(col);
         if (colList.contains(num)) {
             return false;
         }
@@ -175,10 +177,10 @@ public class Backtracking {
         board[row][col] = num;
 
         List<Character> rowList = rowCheckList.get(row);
-        rowList.add(num);
+        rowList.add(new Character(num));
 
-        List<Character> colList = colCheckList.get(row);
-        colList.add(num);
+        List<Character> colList = colCheckList.get(col);
+        colList.add(new Character(num));
 
         int rowIndex = row / 3;
         int colIndex = col / 3;
@@ -189,12 +191,11 @@ public class Backtracking {
     }
 
     private void removeNum(char[][] board, char num, int row, int col, List<List<Character>> rowCheckList, List<List<Character>> colCheckList, Map<String, List<Character>> blocCheckkMap) {
-        board[row][col] = '.';
 
         List<Character> rowList = rowCheckList.get(row);
         rowList.remove(new Character(num));
 
-        List<Character> colList = colCheckList.get(row);
+        List<Character> colList = colCheckList.get(col);
         colList.remove(new Character(num));
 
         int rowIndex = row / 3;
