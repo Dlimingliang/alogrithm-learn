@@ -204,18 +204,80 @@ public class Backtracking {
         blockList.remove(new Character(num));
     }
 
+    List<List<Integer>> result = new LinkedList<>();
+    int globalK;
+    int globalN;
+    int maxStart;
+    Integer[] combineNum;
+    public List<List<Integer>> combine(int n, int k) {
+
+        maxStart = n - k + 1;
+        globalK = k;
+        globalN = n;
+        combineNum = new Integer[k];
+        for (int i = 0; i < k; i++) {
+            combineNum[i] = 0;
+        }
+        combineBacktracking(0);
+        return result;
+    }
+
+    private void combineBacktracking(int index) {
+
+        if (index == globalK) {
+            result.add(Arrays.asList(Arrays.copyOf(combineNum, combineNum.length)));
+            return;
+        }
+
+        for (int val = 1; val <= globalN; val++) {
+            if (isValidCombine(index, val)){
+                lanceNum(index, val);
+                combineBacktracking(index + 1);
+                removeNum(index);
+            }
+        }
+    }
+
+    private boolean isValidCombine(int index, int val) {
+
+        if (index > 0 && val <= combineNum[index - 1]) {
+            return false;
+        }
+
+        if (index == 0 && val > maxStart) {
+            return false;
+        }
+
+        for (int i = 0; i < combineNum.length; i++) {
+            if (val == combineNum[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void lanceNum(int index, int val) {
+        combineNum[index] = val;
+    }
+
+    private void removeNum(int index){
+        combineNum[index] = 0;
+    }
+
 
     public static void main(String[] args) {
-        char[] char1 = new char[]{'5','3','.','.','7','.','.','.','.'};
-        char[] char2 = new char[]{'6','.','.','1','9','5','.','.','.'};
-        char[] char3 = new char[]{'.','9','8','.','.','.','.','6','.'};
-        char[] char4 = new char[]{'8','.','.','.','6','.','.','.','3'};
-        char[] char5 = new char[]{'4','.','.','8','.','3','.','.','1'};
-        char[] char6 = new char[]{'7','.','.','.','2','.','.','.','6'};
-        char[] char7 = new char[]{'.','6','.','.','.','.','2','8','.'};
-        char[] char8 = new char[]{'.','.','.','4','1','9','.','.','5'};
-        char[] char9 = new char[]{'.','.','.','.','8','.','.','7','9'};
-        new Backtracking().solveSudoku(new char[][]{char1, char2, char3, char4, char5, char6, char7, char8, char9});
+//        char[] char1 = new char[]{'5','3','.','.','7','.','.','.','.'};
+//        char[] char2 = new char[]{'6','.','.','1','9','5','.','.','.'};
+//        char[] char3 = new char[]{'.','9','8','.','.','.','.','6','.'};
+//        char[] char4 = new char[]{'8','.','.','.','6','.','.','.','3'};
+//        char[] char5 = new char[]{'4','.','.','8','.','3','.','.','1'};
+//        char[] char6 = new char[]{'7','.','.','.','2','.','.','.','6'};
+//        char[] char7 = new char[]{'.','6','.','.','.','.','2','8','.'};
+//        char[] char8 = new char[]{'.','.','.','4','1','9','.','.','5'};
+//        char[] char9 = new char[]{'.','.','.','.','8','.','.','7','9'};
+//        new Backtracking().solveSudoku(new char[][]{char1, char2, char3, char4, char5, char6, char7, char8, char9});
+        new Backtracking().combine(1,1);
     }
 
 }
