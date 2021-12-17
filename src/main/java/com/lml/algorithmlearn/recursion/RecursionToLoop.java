@@ -111,11 +111,31 @@ public class RecursionToLoop {
         }
     }
 
-    public static void main(String[] args) {
-        new RecursionToLoop().generateParenthesis(3);
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        List<Integer> result = new LinkedList<>();
+        inorderTraversalRecursion(result, root);
+        return result;
     }
 
-    public class TreeNode {
+    private void inorderTraversalRecursion(List<Integer> result, TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        inorderTraversalRecursion(result, node.left);
+        result.add(node.val);
+        inorderTraversalRecursion(result, node.right);
+    }
+
+    public static void main(String[] args) {
+
+        TreeNode three = new TreeNode(3);
+        TreeNode two  = new TreeNode(2,three, null);
+        TreeNode root = new TreeNode(1, null, two);
+        new RecursionToLoop().inorderTraversal(root);
+    }
+
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
