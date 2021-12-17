@@ -2,6 +2,8 @@ package com.lml.algorithmlearn.recursion;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class RecursionToLoop {
 
@@ -47,6 +49,47 @@ public class RecursionToLoop {
         return result;
     }
 
+    public List<String> generateParenthesis(int n) {
+
+        //m为组合数
+        //时间复杂度O(m)
+        //空间复杂度O(m)
+        int maxLength = 2 * n;
+        List<String> result = new LinkedList<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.offer("");
+        while (!queue.isEmpty()) {
+
+            String str = queue.poll();
+            int leftNum = 0; int rightNum = 0;
+            for (int i = 0; i < str.length(); i++) {
+                if ("(".equals(str.substring(i,i + 1))) {
+                    leftNum++;
+                } else {
+                    rightNum++;
+                }
+            }
+            if (str.length() == maxLength) {
+                result.add(str);
+            } else if(leftNum == rightNum){
+                String newStr = new StringBuilder(str).append("(").toString();
+                queue.offer(newStr);
+            } else if (leftNum == n) {
+                String newStr = new StringBuilder(str).append(")").toString();
+                queue.offer(newStr);
+            } else {
+                String newStr = new StringBuilder(str).append("(").toString();
+                queue.offer(newStr);
+                String newStr2 = new StringBuilder(str).append(")").toString();
+                queue.offer(newStr2);
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        new RecursionToLoop().generateParenthesis(3);
+    }
 
     public class TreeNode {
         int val;
