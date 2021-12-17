@@ -127,12 +127,39 @@ public class RecursionToLoop {
         inorderTraversalRecursion(result, node.right);
     }
 
+    public List<List<Integer>> levelOrder(TreeNode root) {
+
+        if (root == null) {
+            return null;
+        }
+
+        List<List<Integer>> result = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> currentList = new LinkedList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                currentList.add(node.val);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            result.add(currentList);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
         TreeNode three = new TreeNode(3);
         TreeNode two  = new TreeNode(2,three, null);
         TreeNode root = new TreeNode(1, null, two);
-        new RecursionToLoop().inorderTraversal(root);
+        new RecursionToLoop().levelOrder(root);
     }
 
     public static class TreeNode {
