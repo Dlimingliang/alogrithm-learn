@@ -154,12 +154,28 @@ public class RecursionToLoop {
         return result;
     }
 
+    public int largestRectangleArea(int[] heights) {
+
+        //执行超时
+        //时间复杂度O(n2)
+        //空间复杂度O(1)
+        int area = Integer.MIN_VALUE;
+        int minHeight = Integer.MAX_VALUE;
+        int length = heights.length;
+        for (int i = 0; i < length; i++) {
+            minHeight = Math.min(minHeight, heights[i]);
+            for (int j = i; j < length; j++) {
+                minHeight = Math.min(minHeight, heights[j]);
+                area = Math.max(area, (j - i + 1) * minHeight);
+            }
+            minHeight = Integer.MAX_VALUE;
+        }
+        return area;
+    }
+
     public static void main(String[] args) {
 
-        TreeNode three = new TreeNode(3);
-        TreeNode two  = new TreeNode(2,three, null);
-        TreeNode root = new TreeNode(1, null, two);
-        new RecursionToLoop().levelOrder(root);
+        System.out.println(new RecursionToLoop().largestRectangleArea(new int[]{2,5}));
     }
 
     public static class TreeNode {
