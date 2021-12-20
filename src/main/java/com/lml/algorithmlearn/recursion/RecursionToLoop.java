@@ -221,9 +221,38 @@ public class RecursionToLoop {
         return ans;
     }
 
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new LinkedList<>();
+        int length = nums.length;
+        List<Integer> tempArray = new ArrayList(length);
+        permuteBacktracking(0, length, result, tempArray, nums);
+        return result;
+    }
+
+    public void permuteBacktracking(int index, int length, List<List<Integer>> result, List<Integer> tempArray, int[] nums) {
+
+        if (index == length) {
+            List array = new ArrayList(length);
+            for (int i = 0; i < tempArray.size(); i++) {
+                array.add(i, nums[tempArray.get(i)]);
+            }
+            result.add(array);
+            return;
+        }
+
+        for (int i = 0; i < length; i++) {
+
+            if (!tempArray.contains(i)) {
+                tempArray.add(index, i);
+                permuteBacktracking(index + 1, length, result, tempArray, nums);
+                tempArray.remove(index);
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(new RecursionToLoop().largestRectangleArea(new int[]{2,1,5,6,2,3}));
+        System.out.println(new RecursionToLoop().permute(new int[]{1}));
     }
 
     public static class TreeNode {
