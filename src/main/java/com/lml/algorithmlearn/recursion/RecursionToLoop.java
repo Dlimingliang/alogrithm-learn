@@ -156,19 +156,36 @@ public class RecursionToLoop {
 
     public int largestRectangleArea(int[] heights) {
 
-        //执行超时
-        //时间复杂度O(n2)
+//        //固定宽度,执行超时
+//        //时间复杂度O(n2)
+//        //空间复杂度O(1)
+//        int area = Integer.MIN_VALUE;
+//        int length = heights.length;
+//        for (int i = 0; i < length; i++) {
+//            int minHeight = Integer.MAX_VALUE;
+//            for (int j = i; j < length; j++) {
+//                minHeight = Math.min(minHeight, heights[j]);
+//                area = Math.max(area, (j - i + 1) * minHeight);
+//            }
+//
+//        }
+//        return area;
+
+        //固定高度
+        //时间复杂度O(n^2)
         //空间复杂度O(1)
         int area = Integer.MIN_VALUE;
-        int minHeight = Integer.MAX_VALUE;
         int length = heights.length;
         for (int i = 0; i < length; i++) {
-            minHeight = Math.min(minHeight, heights[i]);
-            for (int j = i; j < length; j++) {
-                minHeight = Math.min(minHeight, heights[j]);
-                area = Math.max(area, (j - i + 1) * minHeight);
+            int height = heights[i];
+            int left = i, right = i;
+            while (left - 1 >= 0 && heights[left - 1] >= height) {
+                left--;
             }
-            minHeight = Integer.MAX_VALUE;
+            while (right + 1 < length && heights[right + 1] >= height) {
+                right++;
+            }
+            area = Math.max(area, (right - left + 1) * height);
         }
         return area;
     }
