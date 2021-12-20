@@ -1,5 +1,6 @@
 package com.lml.algorithmlearn.recursion;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -171,28 +172,58 @@ public class RecursionToLoop {
 //        }
 //        return area;
 
-        //固定高度
-        //时间复杂度O(n^2)
-        //空间复杂度O(1)
-        int area = Integer.MIN_VALUE;
-        int length = heights.length;
-        for (int i = 0; i < length; i++) {
-            int height = heights[i];
-            int left = i, right = i;
-            while (left - 1 >= 0 && heights[left - 1] >= height) {
-                left--;
+//        //固定高度
+//        //时间复杂度O(n^2)
+//        //空间复杂度O(1)
+//        int area = Integer.MIN_VALUE;
+//        int length = heights.length;
+//        for (int i = 0; i < length; i++) {
+//            int height = heights[i];
+//            int left = i, right = i;
+//            while (left - 1 >= 0 && heights[left - 1] >= height) {
+//                left--;
+//            }
+//            while (right + 1 < length && heights[right + 1] >= height) {
+//                right++;
+//            }
+//            area = Math.max(area, (right - left + 1) * height);
+//        }
+//        return area;
+
+        //利用堆栈来记录坐标，求取面积
+        //时间复杂度O(n)
+        //时间复杂度O(n)
+        int n = heights.length;
+        int []left = new int[n];
+        int []right = new int[n];
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                stack.pop();
             }
-            while (right + 1 < length && heights[right + 1] >= height) {
-                right++;
-            }
-            area = Math.max(area, (right - left + 1) * height);
+            left[i] = (stack.isEmpty()) ? -1 : stack.peek();
+            stack.push(i);
         }
-        return area;
+        stack.clear();
+
+        for (int i = n -1; i >= 0; --i) {
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                stack.pop();
+            }
+            right[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans = Math.max(ans, (right[i] - left[i] - 1) * heights[i]);
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
 
-        System.out.println(new RecursionToLoop().largestRectangleArea(new int[]{2,5}));
+        System.out.println(new RecursionToLoop().largestRectangleArea(new int[]{2,1,5,6,2,3}));
     }
 
     public static class TreeNode {
