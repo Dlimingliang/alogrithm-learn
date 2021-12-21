@@ -41,7 +41,35 @@ public class BinarySearchLearn {
         return result;
     }
 
+    public int searchA(int[] nums, int target) {
+
+        //时间复杂度O(n)
+        //空间复杂度O(1)
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+
+            int mid = (right - left) / 2 + left;
+            int num = nums[mid];
+            if (num == target) {
+                return mid;
+            } else if(num < target) {
+                if (nums[left] > nums[right] && target >= nums[left]) {
+                    right = right - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if (nums[left] > nums[right] && target <= nums[right]) {
+                    left = left + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn().mySqrt(2147395599));
+        System.out.println(new BinarySearchLearn().searchA(new int[]{4,5,6,7,8,1,2,3}, 8));
     }
 }
