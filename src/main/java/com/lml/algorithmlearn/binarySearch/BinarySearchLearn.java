@@ -134,7 +134,7 @@ public class BinarySearchLearn {
 
             if ((mid == 0 || nums[mid - 1] < nums[mid]) && (mid == nums.length - 1 || nums[mid] > nums[mid + 1])) {
                 return mid;
-            } else if ((mid == = || nums[mid - 1] < nums[mid]) && (mid == nums.length - 1 || nums[mid] < nums[mid + 1])) {
+            } else if ((mid == 0 || nums[mid - 1] < nums[mid]) && (mid == nums.length - 1 || nums[mid] < nums[mid + 1])) {
                 left = mid + 1;
             } else {
                 right = mid;
