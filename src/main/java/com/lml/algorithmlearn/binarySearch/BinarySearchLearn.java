@@ -1,5 +1,9 @@
 package com.lml.algorithmlearn.binarySearch;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class BinarySearchLearn {
 
     public int search(int[] nums, int target) {
@@ -203,7 +207,28 @@ public class BinarySearchLearn {
         return ans;
     }
 
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+
+        int length = arr.length, left = 0, right = length - 1;
+        while (right - left + 1 > k) {
+
+            int leftNum = arr[left];
+            int rightNum = arr[right];
+            if (Math.abs(leftNum - x) < Math.abs(rightNum -x) || Math.abs(leftNum - x) == Math.abs(rightNum -x)) {
+                right = right - 1;
+            } else {
+                left = left + 1;
+            }
+        }
+        int[] temp = Arrays.copyOfRange(arr, left, right + 1);
+        List<Integer> list = new LinkedList<>();
+        for (int i = 0; i < temp.length; i++) {
+            list.add(temp[i]);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn().findMin(new int[]{11,13,15,17}));
+        System.out.println(new BinarySearchLearn().findClosestElements(new int[]{0,0,0,1,3,5,6,7,8,8},2, 2));
     }
 }
