@@ -6,14 +6,14 @@ public class BinarySearchLearn {
 
         //时间复杂度O(logn)
         //空间复杂度O(1)
-        int length = nums.length;
-        int left = 0, right = length - 1;
+        int left = 0, right = nums.length - 1;
         while (left <= right) {
 
             int mid = (left + right);
-            if (nums[mid] == target) {
+            int num = nums[mid];
+            if (num == target) {
                 return mid;
-            } else if(nums[mid] < target) {
+            } else if(num < target) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
