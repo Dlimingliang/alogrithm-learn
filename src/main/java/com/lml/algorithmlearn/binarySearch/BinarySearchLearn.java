@@ -1,0 +1,28 @@
+package com.lml.algorithmlearn.binarySearch;
+
+public class BinarySearchLearn {
+
+    public int search(int[] nums, int target) {
+
+        //时间复杂度O(logn)
+        //空间复杂度O(1)
+        int length = nums.length;
+        int left = 0, right = length - 1;
+        while (left <= right) {
+
+            int mid = (left + right);
+            if (nums[mid] == target) {
+                return mid;
+            } else if(nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new BinarySearchLearn().search(new int[]{-1,0,3,5,9,12}, 2));
+    }
+}
