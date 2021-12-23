@@ -43,7 +43,25 @@ public class BinarySearchLearn2 {
         return ans;
     }
 
+    public boolean isPerfectSquare(int num) {
+
+        long left = 1, right = num;
+        while (left <= right) {
+
+            long mid = left + (right - left) / 2;
+            long midNum = mid * mid;
+            if (midNum == num) {
+                return true;
+            } else if (midNum < num) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn2().myPow(2, -3));
+        System.out.println(new BinarySearchLearn2().isPerfectSquare(9));
     }
 }
