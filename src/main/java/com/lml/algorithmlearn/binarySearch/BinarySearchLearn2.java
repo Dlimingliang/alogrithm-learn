@@ -61,7 +61,25 @@ public class BinarySearchLearn2 {
         return false;
     }
 
+    public char nextGreatestLetter(char[] letters, char target) {
+
+        int left = 0, right = letters.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            char midChar = letters[mid];
+            if (midChar <= target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        if(left != letters.length && letters[left] == target) {
+            return left + 1 == letters.length ? letters[0] : letters[left + 1];
+        };
+        return left == letters.length ? letters[0] : letters[left];
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn2().isPerfectSquare(9));
+        System.out.println(new BinarySearchLearn2().nextGreatestLetter(new char[]{'e', 'e', 'n', 'n'}, 'n'));
     }
 }
