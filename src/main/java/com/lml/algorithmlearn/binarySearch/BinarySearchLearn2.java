@@ -73,10 +73,8 @@ public class BinarySearchLearn2 {
                 right = mid;
             }
         }
-        if(left != letters.length && letters[left] == target) {
-            return left + 1 == letters.length ? letters[0] : letters[left + 1];
-        };
-        return left == letters.length ? letters[0] : letters[left];
+//        return left == letters.length ? letters[0] : letters[left];
+        return letters[left % letters.length];
     }
 
     public static void main(String[] args) {
