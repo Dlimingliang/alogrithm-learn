@@ -138,7 +138,32 @@ public class BinarySearchLearn2 {
         return result;
     }
 
+    public int findDuplicate(int[] nums) {
+
+//        //排序再查找
+//        //时间复杂度O(nlogn)
+//        Arrays.sort(nums);
+//        for (int i = 0; i < nums.length; i++) {
+//            if (nums[i] == nums[i + 1]) {
+//                return nums[i];
+//            }
+//        }
+//        return -1;
+
+        //时间复杂度O(n)
+        //空间复杂度O(n)
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(nums[i])) {
+                return nums[i];
+            } else {
+                set.add(nums[i]);
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn2().findMinTwo(new int[]{3,3,1,3,3}));
+        System.out.println(new BinarySearchLearn2().findDuplicate(new int[]{3,1,3,4,2}));
     }
 }
