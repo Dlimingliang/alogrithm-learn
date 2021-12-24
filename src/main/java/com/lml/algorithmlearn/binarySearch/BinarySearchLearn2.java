@@ -1,5 +1,10 @@
 package com.lml.algorithmlearn.binarySearch;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 public class BinarySearchLearn2 {
 
     public double myPow(double x, int n) {
@@ -111,6 +116,26 @@ public class BinarySearchLearn2 {
             }
         }
         return nums[left];
+    }
+
+    public int[] intersection(int[] nums1, int[] nums2) {
+
+        List<Integer> list = new LinkedList<>();
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums1.length; i++) {
+            set.add(nums1[i]);
+        }
+        for (int i = 0; i < nums2.length; i++) {
+            if (set.contains(nums2[i])) {
+                list.add(nums2[i]);
+                set.remove(nums2[i]);
+            }
+        }
+        int[] result = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        return result;
     }
 
     public static void main(String[] args) {
