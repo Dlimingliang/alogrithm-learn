@@ -94,7 +94,26 @@ public class BinarySearchLearn2 {
         return nums[left];
     }
 
+    public int findMinTwo(int[] nums) {
+
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+
+            int mid = left + (right -  left) / 2;
+            int midNum = nums[mid];
+            if (midNum > nums[right]) {
+
+                left = mid + 1;
+            } else if (midNum < nums[right]) {
+                right = mid;
+            } else {
+                right--;
+            }
+        }
+        return nums[left];
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn2().findMin(new int[]{2, 1}));
+        System.out.println(new BinarySearchLearn2().findMinTwo(new int[]{3,3,1,3,3}));
     }
 }
