@@ -201,7 +201,43 @@ public class BinarySearchLearn2 {
 //        return slow;
     }
 
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+        //时间复杂度O(m+n)
+        //空间复杂度O(1)
+        int length1 = nums1.length;
+        int length2 = nums2.length;
+        int[] array = new int[length1 + length2];
+        int index = 0, index1 = 0, index2 = 0;
+        while (index1 < length1 && index2 < length2) {
+
+            if (nums1[index1] < nums2[index2]) {
+                array[index] = nums1[index1];
+                index1++;
+            } else {
+                array[index] = nums2[index2];
+                index2++;
+            }
+            index++;
+        }
+
+        while (index1 < length1) {
+            array[index] = nums1[index1];
+            index1++;
+            index++;
+        }
+
+        while (index2 < length2) {
+            array[index] = nums2[index2];
+            index2++;
+            index++;
+        }
+
+        int n = (length1 + length2) / 2;
+        return (length1 + length2) % 2 == 0 ? (double)(array[n -1] + array[n]) / 2 :  array[n];
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BinarySearchLearn2().findDuplicate(new int[]{3,1,3,4,2}));
+        System.out.println(new BinarySearchLearn2().findMedianSortedArrays(new int[]{1,2}, new int[]{3,4}));
     }
 }
