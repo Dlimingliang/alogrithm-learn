@@ -36,10 +36,23 @@ public class SortLearn {
         return nums;
     }
 
+    private int[] insertSort(int[] nums) {
+        
+        int length = nums.length, temp, j, i;
+        for (i = 1; i < length; i++) {
+            temp = nums[i];
+            for (j = i - 1; j >= 0 && temp < nums[j]; j--) {
+                nums[j + 1] = nums[j];
+            }
+            nums[j + 1] = temp;
+        }
+        return nums;
+    }
+
     public static void main(String[] args) {
 
         int[] array = new int[]{8,9,6,5,4,7,3,1,2};
-        array = new SortLearn().selectSort(array);
+        array = new SortLearn().insertSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
