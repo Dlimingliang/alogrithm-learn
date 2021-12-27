@@ -1,6 +1,7 @@
 package com.lml.algorithmlearn.sort;
 
-import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class SortProblem {
 
@@ -37,9 +38,47 @@ public class SortProblem {
         }
     }
 
+    public int findKthLargest(int[] nums, int k) {
+
+//        //选择排序方案
+//        //时间复杂度O(k * n)
+//        //空间复杂度
+//        int length = nums.length;
+//        for (int i = 0; i < k; i++) {
+//            int minKey = nums[i];
+//            for (int j = i; j < length; j++) {
+//                if (nums[j] > minKey) {
+//                    int temp = nums[j];
+//                    nums[j] = minKey;
+//                    minKey = temp;
+//                }
+//            }
+//            nums[i] = minKey;
+//        }
+//        return nums[k - 1];
+        //滑动窗口方案
+        //时间复杂度O(n)
+        //空间复杂度O(k)
+        int length = nums.length, index = 0;
+        Queue<Integer> queue = new PriorityQueue<>(k);
+        while (index < length) {
+
+            if (queue.size() < k) {
+                queue.offer(nums[index]);
+                index++;
+                continue;
+            }
+            if (nums[index] > queue.peek()) {
+                queue.poll();
+                queue.offer(nums[index]);
+            }
+            index++;
+        }
+        return queue.poll();
+    }
+
     public static void main(String[] args) {
-        int[] nums = new int[]{0,1,0,3,12};
-        new SortProblem().moveZeroes(nums);
-        System.out.println(Arrays.toString(nums));
+        int[] nums = new int[]{3,2,1,5,6,4};
+        System.out.println(new SortProblem().findKthLargest(nums, 2));
     }
 }
