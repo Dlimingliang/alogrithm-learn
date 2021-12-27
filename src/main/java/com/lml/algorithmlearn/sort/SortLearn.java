@@ -19,10 +19,27 @@ public class SortLearn {
         return nums;
     }
 
+    private int[] selectSort(int[] nums) {
+
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            int minkey = nums[i];
+            for (int j = i; j < length; j++) {
+                if (nums[j] < minkey) {
+                    int temp = nums[j];
+                    nums[j] = minkey;
+                    minkey = temp;
+                }
+            }
+            nums[i] = minkey;
+        }
+        return nums;
+    }
+
     public static void main(String[] args) {
 
         int[] array = new int[]{8,9,6,5,4,7,3,1,2};
-        array = new SortLearn().bubbleSort(array);
+        array = new SortLearn().selectSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
