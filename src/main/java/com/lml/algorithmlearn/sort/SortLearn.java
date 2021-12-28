@@ -49,10 +49,48 @@ public class SortLearn {
         return nums;
     }
 
+    private int[] stackSort(int[] nums) {
+
+        for (int i = nums.length/2 -1; i >= 0; i--) {
+            adjustHeap(nums, i, nums.length);
+        }
+
+        for (int i = nums.length - 1; i > 0; i--) {
+            swap(nums, 0, i);
+            adjustHeap(nums, 0, i);
+        }
+        return nums;
+    }
+
+    private static void adjustHeap(int[] nums, int i, int length) {
+
+        int temp = nums[i];
+        for (int k = 2 * i + 1; k < length; k= 2 * k + 1) {
+
+            if (k + 1 < length && nums[k] < nums[k + 1]) {
+                k++;
+            }
+            if (nums[k] > temp) {
+                nums[i] = nums[k];
+                i = k;
+            } else {
+                break;
+            }
+        }
+        nums[i] = temp;
+    }
+
+    private void swap(int[] nums, int a, int b) {
+
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+
     public static void main(String[] args) {
 
-        int[] array = new int[]{8,9,6,5,4,7,3,1,2};
-        array = new SortLearn().insertSort(array);
+        int[] array = new int[]{4,6,8,5,9};
+        array = new SortLearn().stackSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
