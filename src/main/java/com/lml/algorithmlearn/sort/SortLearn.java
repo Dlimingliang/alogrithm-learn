@@ -87,10 +87,24 @@ public class SortLearn {
         nums[b] = temp;
     }
 
+    private int[] shellSort(int[] nums) {
+
+        for(int gap = nums.length/2; gap > 0; gap /= 2){
+            for (int i = gap; i < nums.length; i++) {
+                int j = i;
+                while(j - gap >= 0 && nums[j] < nums[j - gap]) {
+                    swap(nums, j, j-gap);
+                    j -= gap;
+                }
+            }
+        }
+        return nums;
+    }
+
     public static void main(String[] args) {
 
-        int[] array = new int[]{4,6,8,5,9};
-        array = new SortLearn().stackSort(array);
+        int[] array = new int[]{4,6,8,5,9,1,2,3,7};
+        array = new SortLearn().shellSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
