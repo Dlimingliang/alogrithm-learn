@@ -111,6 +111,10 @@ public class SortProblem {
         nums[b] = temp;
     }
 
+    public int[] getLeastNumbers(int[] arr, int k) {
+
+    }
+
     public static void main(String[] args) {
         int[] nums = new int[]{2,1};
         System.out.println(new SortProblem().findKthLargest(nums, 2));
