@@ -144,10 +144,43 @@ public class SortLearn {
         return result;
     }
 
+    private int[] quickSort(int[] nums) {
+
+        quickSort(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    private void quickSort(int[] nums, int start, int end) {
+
+        if (start < end) {
+            int p = getPosition(nums, start, end);
+            quickSort(nums, start, p - 1);
+            quickSort(nums, p + 1, end);
+        }
+    }
+
+    private int getPosition(int[] nums, int start, int end) {
+
+        int temp = nums[end];
+        int i = start;
+        for (int j = start; j < end; ++j) {
+            if (nums[j] < temp) {
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+                i++;
+            }
+        }
+        int tmp = nums[i];
+        nums[i] = nums[end];
+        nums[end] = tmp;
+        return i;
+    }
+
     public static void main(String[] args) {
 
         int[] array = new int[]{4,6,8,5,9,1,2,3,7};
-        array = new SortLearn().mergeSort(array);
+        array = new SortLearn().quickSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
