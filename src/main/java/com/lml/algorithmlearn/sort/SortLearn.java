@@ -101,10 +101,53 @@ public class SortLearn {
         return nums;
     }
 
+    private int[] mergeSort(int[] nums) {
+
+        if (nums.length <= 1) {
+            return nums;
+        }
+
+        int mid = nums.length / 2;
+        int[] leftNums = mergeSort(Arrays.copyOfRange(nums, 0, mid));
+        int[] rightNums = mergeSort(Arrays.copyOfRange(nums, mid , nums.length));
+        return merge(leftNums, rightNums);
+    }
+
+    private int[] merge(int[] nums1, int[] nums2) {
+
+        int length1 = nums1.length;
+        int length2 = nums2.length;
+        int[] result = new int[length1 + length2];
+        int index = 0, index1 = 0, index2 = 0;
+        while (index1 < length1 && index2 < length2) {
+
+            if (nums1[index1] < nums2[index2]) {
+                result[index] = nums1[index1];
+                index1++;
+            } else {
+                result[index] = nums2[index2];
+                index2++;
+            }
+            index++;
+        }
+
+        while(index1 == length1 && index2 < length2) {
+            result[index] = nums2[index2];
+            index2++;
+            index++;
+        }
+        while(index2 == length2 && index1 < length1) {
+            result[index] = nums1[index1];
+            index1++;
+            index++;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
         int[] array = new int[]{4,6,8,5,9,1,2,3,7};
-        array = new SortLearn().shellSort(array);
+        array = new SortLearn().mergeSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
