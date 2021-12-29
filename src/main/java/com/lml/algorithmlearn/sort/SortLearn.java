@@ -177,10 +177,72 @@ public class SortLearn {
         return i;
     }
 
+    private int[] countSort(int[] nums) {
+
+//        //朴素版计数排序
+//        int max = nums[0], min = nums[0];
+//        for (int i = 0; i < nums.length; i++) {
+//            if (nums[i] > max) {
+//                max = nums[i];
+//            }
+//            if (nums[i] < min) {
+//                min = nums[i];
+//            }
+//        }
+//
+//        int[] array = new int[max - min + 1];
+//        for (int i = 0; i < nums.length; i++) {
+//            array[nums[i] - min] += 1;
+//        }
+//
+//        int index = 0;
+//        for (int i = 0; i < array.length; i++) {
+//            while (array[i] > 0) {
+//                nums[index] = i + min;
+//                index++;
+//                array[i] -= 1;
+//            }
+//        }
+//        return nums;
+
+        //升级版计数排序,保留原来的位置
+        //原数组个数N,最大和最小数的差值为M
+        //时间复杂度O(N + M)
+        //空间复杂度O(M)
+        int  max = nums[0]; int min = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > max) {
+                max = nums[i];
+            }
+            if (nums[i] < min) {
+                min = nums[i];
+            }
+        }
+
+        int[] countArray = new int[max - min + 1];
+        for (int i = 0; i < nums.length; i++) {
+            countArray[nums[i] - min] += 1;
+        }
+
+        //变形数组，保留原来的位置
+        int sum = 0;
+        for (int i = 0; i < countArray.length; i++) {
+            sum += countArray[i];
+            countArray[i] = sum;
+        }
+
+        int[] sortedArray = new int[nums.length];
+        for (int i = nums.length - 1; i >= 0; i--) {
+            sortedArray[countArray[nums[i] - min] - 1] = nums[i];
+            countArray[nums[i] - min]--;
+        }
+        return sortedArray;
+    }
+
     public static void main(String[] args) {
 
-        int[] array = new int[]{4,6,8,5,9,1,2,3,7};
-        array = new SortLearn().quickSort(array);
+        int[] array = new int[]{0,4,6,8,5,9,1,2,3,7};
+        array = new SortLearn().countSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
