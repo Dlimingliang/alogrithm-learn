@@ -1,6 +1,8 @@
 package com.lml.algorithmlearn.sort;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class SortLearn {
 
@@ -239,10 +241,46 @@ public class SortLearn {
         return sortedArray;
     }
 
+    private int[] bucketSort(int[] nums) {
+
+        int max = nums[0], min = nums[0];
+        for (int i = 0; i < nums[i]; i++) {
+            if (nums[i] > max) {
+                max = nums[i];
+            }
+            if (nums[i] < min) {
+                min = nums[i];
+            }
+        }
+
+        //创建桶
+        int bucketNum = (max - min) / nums.length + 1;
+        ArrayList<ArrayList<Integer>> bucketArr = new ArrayList<>(bucketNum);
+        for (int i = 0; i < bucketNum; i++) {
+            bucketArr.add(new ArrayList<>());
+        }
+        
+        for (int i = 0; i < nums.length; i++) {
+            int num = (nums[i] - min) / nums.length;
+            bucketArr.get(num).add(nums[i]);
+        }
+        for (int i = 0; i < bucketNum; i++) {
+            Collections.sort(bucketArr.get(i));
+        }
+        int index = 0;
+        for (int i = 0; i < bucketArr.size(); i++) {
+            for (int j = 0; j < bucketArr.get(i).size(); j++) {
+                nums[index] = bucketArr.get(i).get(j);
+                index++;
+            }
+        }
+        return nums;
+    }
+
     public static void main(String[] args) {
 
         int[] array = new int[]{0,4,6,8,5,9,1,2,3,7};
-        array = new SortLearn().countSort(array);
+        array = new SortLearn().bucketSort(array);
         System.out.println(Arrays.toString(array));
     }
 }
