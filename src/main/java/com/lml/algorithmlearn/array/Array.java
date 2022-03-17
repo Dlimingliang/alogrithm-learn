@@ -8,6 +8,16 @@ public class Array {
         System.out.println(result);
     }
 
+    public static int findNumbers(int[] nums) {
+        int result = 0;
+        for (int num : nums) {
+            if (String.valueOf(num).length() % 2 == 0) {
+                result++;
+            }
+        }
+        return result;
+    }
+
     public static int findMaxConsecutiveOnes(int[] nums) {
         int max = 0, current = 0;
         for (int i = 0; i < nums.length; i++) {
