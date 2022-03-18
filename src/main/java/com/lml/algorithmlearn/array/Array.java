@@ -3,10 +3,38 @@ package com.lml.algorithmlearn.array;
 public class Array {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{-7,-3,2,3,11};
+        int[] nums = new int[]{1,0,2,3,0,4,5,0};
 //        int result = findMaxConsecutiveOnes(nums);
 //        System.out.println(result);
-        sortedSquares(nums);
+//        sortedSquares(nums);
+        duplicateZeros(nums);
+    }
+
+    public static void duplicateZeros(int[] arr) {
+
+        int length = arr.length;
+        int moveNum = 0;
+
+        for (int i = 0; i < length - moveNum; i++) {
+            if (arr[i] == 0) {
+                if (i + moveNum + 1 == length) {
+                    arr[length - 1] = 0;
+                    length--;
+                    break;
+                }
+                moveNum ++;
+            }
+        }
+
+        for (int i = length - moveNum - 1; i >= 0; i--) {
+            if (arr[i] == 0) {
+                arr[i + moveNum] = arr[i];
+                moveNum --;
+                arr[i + moveNum] = arr[i];
+            } else {
+                arr[i + moveNum] = arr[i];
+            }
+        }
     }
 
     public static int[] sortedSquares(int[] nums) {
