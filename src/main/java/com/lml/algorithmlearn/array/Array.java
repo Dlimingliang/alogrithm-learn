@@ -10,6 +10,21 @@ public class Array {
 //        duplicateZeros(nums);
     }
 
+    public int removeDuplicates(int[] nums) {
+        int length = nums.length;
+        if (length == 0) {
+            return 0;
+        }
+        int slow = 1;
+        for (int i = 1; i < length; i++) {
+            if (nums[i] != nums[i - 1]) {
+                nums[slow] = nums[i];
+                slow++;
+            }
+        }
+        return slow;
+    }
+
     public int removeElement(int[] nums, int val) {
 
         int left = 0, right = nums.length;
