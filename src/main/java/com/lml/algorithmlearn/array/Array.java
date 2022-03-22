@@ -10,6 +10,20 @@ public class Array {
 //        duplicateZeros(nums);
     }
 
+    public int removeElement(int[] nums, int val) {
+
+        int left = 0, right = nums.length;
+        while (left < right) {
+            if (nums[left] == val) {
+                nums[left] = nums[right - 1];
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return right;
+    }
+
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
 
         int capacityIndex = nums1.length;
