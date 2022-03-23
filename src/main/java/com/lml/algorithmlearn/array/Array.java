@@ -20,7 +20,7 @@ public class Array {
             if (map.containsKey(arr[i] * 2) && i != map.get(arr[i] * 2)) {
                 return true;
             }
-            if (arr[i] % 2 == 0 &&map.containsKey(arr[i] / 2) && i != map.get(arr[i] / 2 )) {
+            if (arr[i] % 2 == 0 && map.containsKey(arr[i] / 2) && i != map.get(arr[i] / 2 )) {
                 return true;
             }
             map.put(arr[i], i);
