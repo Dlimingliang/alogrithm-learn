@@ -1,5 +1,8 @@
 package com.lml.algorithmlearn.array;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Array {
 
     public static void main(String[] args) {
@@ -8,6 +11,21 @@ public class Array {
 //        System.out.println(result);
 //        sortedSquares(nums);
 //        duplicateZeros(nums);
+    }
+
+    public boolean checkIfExist(int[] arr) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            if (map.containsKey(arr[i] * 2) && i != map.get(arr[i] * 2)) {
+                return true;
+            }
+            if (arr[i] % 2 == 0 &&map.containsKey(arr[i] / 2) && i != map.get(arr[i] / 2 )) {
+                return true;
+            }
+            map.put(arr[i], i);
+        }
+        return false;
     }
 
     public int removeDuplicates(int[] nums) {
