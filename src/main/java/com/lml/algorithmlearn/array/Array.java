@@ -13,6 +13,19 @@ public class Array {
 //        duplicateZeros(nums);
     }
 
+    public int[] replaceElements(int[] arr) {
+        int max = -1, length = arr.length;
+        int current;
+        for (int i = length - 1; i >= 0; i--) {
+            current = arr[i];
+            arr[i] = max;
+            if (current > max) {
+                max = current;
+            }
+        }
+        return arr;
+    }
+
     public boolean validMountainArray(int[] arr) {
 
         int i = 0, length = arr.length;
