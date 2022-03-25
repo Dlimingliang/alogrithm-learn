@@ -11,6 +11,24 @@ public class Array {
 //        System.out.println(result);
 //        sortedSquares(nums);
 //        duplicateZeros(nums);
+        sortArrayByParity(new int[]{3,1,2,4});
+    }
+
+    public static int[] sortArrayByParity(int[] nums) {
+        int length = nums.length;
+        for (int i = 0; i < length;) {
+            if (nums[i] % 2 != 0) {
+                if (nums[length - 1] % 2 == 0) {
+                    int temp = nums[length - 1];
+                    nums[length - 1] = nums[i];
+                    nums[i] = temp;
+                }
+                length--;
+            } else {
+                i++;
+            }
+        }
+        return nums;
     }
 
     public int[] replaceElements(int[] arr) {
