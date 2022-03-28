@@ -1,6 +1,8 @@
 package com.lml.algorithmlearn.array;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class Array {
@@ -13,6 +15,23 @@ public class Array {
 //        duplicateZeros(nums);
 //        sortArrayByParity(new int[]{3,1,2,4});
         System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
+    }
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+
+        List<Integer> result = new LinkedList<>();
+        int length = nums.length;
+        int v;
+        for (int i = 0; i < length; i++) {
+            v = (nums[i] - 1) % length;
+            nums[v] += length;
+        }
+        for (int i = 0; i < length; i++) {
+            if (nums[i] <= length) {
+                result.add(i + 1);
+            }
+        }
+        return result;
     }
 
     public static int thirdMax(int[] nums) {
