@@ -11,7 +11,26 @@ public class Array {
 //        System.out.println(result);
 //        sortedSquares(nums);
 //        duplicateZeros(nums);
-        sortArrayByParity(new int[]{3,1,2,4});
+//        sortArrayByParity(new int[]{3,1,2,4});
+        System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
+    }
+
+    public static int thirdMax(int[] nums) {
+
+       long a = Long.MIN_VALUE, b = Long.MIN_VALUE, c = Long.MIN_VALUE;
+       for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > a) {
+                c = b;
+                b = a;
+                a = nums[i];
+            } else if(a > nums[i] && nums[i] > b) {
+                c = b;
+                b = nums[i];
+            } else if (b > nums[i] && nums[i] > c) {
+                c = nums[i];
+            }
+        }
+        return c == Long.MIN_VALUE ? (int) a : (int) c;
     }
 
     public int heightChecker(int[] heights) {
