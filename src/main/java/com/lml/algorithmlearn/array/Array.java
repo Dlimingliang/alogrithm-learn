@@ -14,6 +14,23 @@ public class Array {
         sortArrayByParity(new int[]{3,1,2,4});
     }
 
+    public int heightChecker(int[] heights) {
+
+        int[] arr = new int[101];
+        for (int i = 0; i < heights.length; i++) {
+            arr[heights[i]]++;
+        }
+        int result = 0;
+        for (int i = 1, j = 0; i < arr.length; i++) {
+            while (arr[i]-- > 0) {
+                if (heights[j++] != i) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
     public static int[] sortArrayByParity(int[] nums) {
         int length = nums.length;
         for (int i = 0; i < length;) {
