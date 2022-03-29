@@ -17,6 +17,27 @@ public class Array {
         System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
     }
 
+    public int dominantIndex(int[] nums) {
+        int n = nums.length;
+        if (n <= 1) {
+            return 0;
+        }
+        int max = -1, second = -1, index = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > max) {
+                second = max;
+                max = nums[i];
+                index = i;
+            } else if (nums[i] < max && nums[i] > second) {
+                second = nums[i];
+            }
+        }
+        if (max >= 2 * second) {
+            return index;
+        }
+        return -1;
+    }
+
     public int pivotIndex(int[] nums) {
         int total = 0;
         for (int v : nums) {
