@@ -14,7 +14,24 @@ public class Array {
 //        sortedSquares(nums);
 //        duplicateZeros(nums);
 //        sortArrayByParity(new int[]{3,1,2,4});
-        System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
+//        System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
+    }
+
+    public static int[] plusOne(int[] digits) {
+        int n = digits.length;
+        for (int i = n - 1; i >= 0; i--) {
+            if (digits[i] != 9) {
+                digits[i]++;
+                for (int j = i + 1; j < n; j++) {
+                    digits[j] = 0;
+                }
+                return digits;
+            }
+        }
+
+        int[] arr = new int[n + 1];
+        arr[0] = 1;
+        return arr;
     }
 
     public int dominantIndex(int[] nums) {
