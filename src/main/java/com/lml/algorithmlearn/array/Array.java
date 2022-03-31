@@ -17,6 +17,22 @@ public class Array {
 //        System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
     }
 
+    public int searchInsert(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0, right = n - 1, ans = n;
+        int mid;
+        while (left <= right) {
+            mid = ((right - left) >> 1) + left;
+            if (target <= nums[mid]) {
+                right = mid - 1;
+                ans = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+
     public static int[] plusOne(int[] digits) {
         int n = digits.length;
         for (int i = n - 1; i >= 0; i--) {
