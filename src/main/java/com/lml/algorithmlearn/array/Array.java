@@ -20,6 +20,20 @@ public class Array {
 //        System.out.println(thirdMax(new int[]{3, 2, 1, 2, 2}));
     }
 
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        int temp;
+        for (int i = 0; i < n / 2; i++) {
+            for (int j = 0; j < (n + 1) / 2; j++) {
+                temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n-j-1][i] = matrix[n-i-1][n-j-1];
+                matrix[n-i-1][n-j-1] = matrix[j][n-i-1];
+                matrix[j][n-i-1] = temp;
+            }
+        }
+    }
+
     public int[][] merge(int[][] intervals) {
         //时间复杂度O(nlogn) 空间复杂度O(logn)
         if (intervals.length == 0) {
