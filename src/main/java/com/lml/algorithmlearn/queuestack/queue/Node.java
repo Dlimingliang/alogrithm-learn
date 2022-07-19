@@ -1,4 +1,4 @@
-package com.lml.algorithmlearn.queuestack;
+package com.lml.algorithmlearn.queuestack.queue;
 
 class Node {
   public int value;

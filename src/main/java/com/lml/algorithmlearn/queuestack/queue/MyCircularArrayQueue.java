@@ -1,27 +1,23 @@
-package com.lml.algorithmlearn.queuestack;
+package com.lml.algorithmlearn.queuestack.queue;
 
-class MyCircularLinkedListQueue {
+class MyCircularArrayQueue {
 
-    private Node head, tail;
-    private int count;
-    private int capacity;
+    private int[] queue;
+    private int head;
+    private int size;
 
 
-    public MyCircularLinkedListQueue(int k) {
-       this.capacity = k;
+    public MyCircularArrayQueue(int k) {
+        queue = new int[k];
+        this.size = 0;
+        this.head = 0;
     }
     
     public boolean enQueue(int value) {
         if (!isFull()) {
-            Node node = new Node(value);
-            if (this.count == 0) {
-                this.head = node;
-                this.tail = node;
-            } else {
-                this.tail.nextNode = node;
-                this.tail = this.tail.nextNode;
-            }
-            this.count++;
+            int tail = (this.head + this.size) % this.queue.length;
+            this.queue[tail] = value;
+            this.size++;
             return true;
         }
         return false;
@@ -29,8 +25,8 @@ class MyCircularLinkedListQueue {
     
     public boolean deQueue() {
         if (!isEmpty()) {
-            this.head = this.head.nextNode;
-            this.count--;
+            this.head = (this.head + 1) % this.queue.length;
+            this.size--;
             return true;
         }
         return false;
@@ -38,28 +34,29 @@ class MyCircularLinkedListQueue {
     
     public int Front() {
         if (!isEmpty()) {
-            return this.head.value;
+            return this.queue[head];
         }
         return -1;
     }
     
     public int Rear() {
         if (!isEmpty()) {
-            return this.tail.value;
+            int tail = (this.head + this.size - 1) % this.queue.length;
+            return this.queue[tail];
         }
         return -1;
     }
     
     public boolean isEmpty() {
-        return this.count == 0;
+        return this.size == 0;
     }
     
     public boolean isFull() {
-        return this.count == this.capacity;
+        return this.size == this.queue.length;
     }
 
     public static void main(String[] args) {
-        MyCircularLinkedListQueue myCircularQueue = new MyCircularLinkedListQueue(3);
+        MyCircularArrayQueue myCircularQueue = new MyCircularArrayQueue(3);
         System.out.println(myCircularQueue.enQueue(1));; // return True
         System.out.println(myCircularQueue.enQueue(2));; // return True
         System.out.println(myCircularQueue.enQueue(3));; // return True
