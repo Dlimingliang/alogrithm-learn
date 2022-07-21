@@ -1,8 +1,8 @@
 package com.lml.algorithmlearn.hashtable;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
@@ -15,7 +15,7 @@ public class Hash {
 
     public int[] topKFrequent(int[] nums, int k) {
 
-        Map<Integer, Integer> occurrences = new HashMap<>();
+        Map<Integer, Integer> occurrences = new LinkedHashMap<>();
         for (int num : nums) {
             occurrences.put(num, occurrences.getOrDefault(num, 0) + 1);
         }
